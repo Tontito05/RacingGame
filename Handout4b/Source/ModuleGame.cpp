@@ -21,27 +21,13 @@ bool ModuleGame::Start()
 
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
-	plane = LoadTexture("Assets/Plane.png"); 
 	car = LoadTexture("Assets/Car.png");
-	ship = LoadTexture("Assets/Ship.png");
 	bike = LoadTexture("Assets/Bike.png");
 	
 
-	for (int i = 0; i < 6; ++i) {
-		entities.push_back(new Car(App->physics, i * 100 + SCREEN_WIDTH * 0.25f, 100, this, car));
-	}
 
-	for (int i = 0; i < 2; ++i) {
-		entities.push_back(new Ship(App->physics, i * 300 + SCREEN_WIDTH * 0.35f, SCREEN_HEIGHT * 0.5f, this, ship));
-	}
+	Player = new Car(App->physics,SCREEN_WIDTH/2, SCREEN_HEIGHT/2, this, car);
 
-	for (int i = 0; i < 6; ++i) {
-		entities.push_back(new Bike(App->physics, i * 100 + SCREEN_WIDTH * 0.25f, SCREEN_HEIGHT * 0.5f, this, bike));
-	}
-
-	for (int i = 0; i < 3; ++i) {
-		entities.push_back(new Plane(App->physics, i * 300 + SCREEN_WIDTH * 0.25f, 600, this, plane));
-	}
 
 	return ret;
 }
@@ -104,6 +90,49 @@ update_status ModuleGame::Update()
 			DrawLine((int)(ray.x + destination.x), (int)(ray.y + destination.y), (int)(ray.x + destination.x + normal.x * 25.0f), (int)(ray.y + destination.y + normal.y * 25.0f), Color{ 100, 255, 100, 255 });
 		}
 	}
+
+	//PlayerUpdate
+
+	b2Vec2 Velocity = Player->body->body->GetLinearVelocity();
+
+	if (IsKeyDown(KEY_W) && ((Velocity.x < MaxVelocity.x) || (Velocity.y < MaxVelocity.y)))
+	{
+		Player->body->body->ApplyForce(-Vel, Player->body->body->GetWorldCenter(), true);
+	}
+	if (IsKeyDown(KEY_S) && ((Velocity.x < MaxVelocity.x) || (Velocity.y < MaxVelocity.y)))
+	{
+		Player->body->body->ApplyForce(Vel, Player->body->body->GetWorldCenter(), true);
+	}
+	if (IsKeyDown(KEY_A))
+	{
+		Player->body->body->ApplyTorque(0.1f, true);
+	}
+	if (IsKeyDown(KEY_D))
+	{
+		Player->body->body->ApplyTorque(-0.1f, true);
+	}
+
+	b2Vec2 Fr = Player->body->body->GetLinearVelocity();
+
+	if (Fr.x > 0 )
+	{
+		Player->body->body->ApplyLinearImpulseToCenter({ -Fr.x*Friction,0 }, true);
+	}
+	else if(Fr.x < 0)
+	{
+		Player->body->body->ApplyLinearImpulseToCenter({ -Fr.x * Friction,0 }, true);
+	}
+	if (Fr.y > 0)
+	{
+		Player->body->body->ApplyLinearImpulseToCenter({ 0,-Fr.y * Friction, }, true);
+	}
+	else if (Fr.y < 0)
+	{
+		Player->body->body->ApplyLinearImpulseToCenter({ 0,-Fr.y * Friction, }, true);;
+	}
+
+
+	
 
 	return UPDATE_CONTINUE;
 }

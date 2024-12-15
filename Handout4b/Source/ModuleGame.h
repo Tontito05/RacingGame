@@ -64,13 +64,6 @@ private:
 	Texture2D texture;
 };
 
-class Plane : public Box {
-public:
-	Plane(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture) : Box(physics, _x, _y, 232, 121, _listener, _texture, Group::AIR ) {
-		body->body->ApplyForce(b2Vec2(0.0f, -1000.f), body->body->GetWorldCenter(), true);
-	}
-};
-
 class Bike : public Box {
 public:
 	Bike(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture) : Box(physics, _x, _y, 18, 35, _listener, _texture, Group::LAND) {
@@ -80,14 +73,7 @@ public:
 class Car : public Box {
 public:
 	Car(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture) : Box(physics, _x, _y, 26, 43, _listener, _texture, Group::LAND) {
-		body->body->ApplyForce(b2Vec2(0.0f, 100.f), body->body->GetWorldCenter(), true);
-	}
-};
 
-class Ship : public Box {
-public:
-	Ship(ModulePhysics* physics, int _x, int _y, Module* _listener, Texture2D _texture) : Box(physics, _x, _y, 215, 138, _listener, _texture, Group::SEA)
-	{
 	}
 };
 
@@ -105,11 +91,15 @@ public:
 public:
 
 	std::vector<PhysicEntity*> entities;
+
+	PhysicEntity* Player;
 	
-	Texture2D plane;
 	Texture2D car;
-	Texture2D ship;
 	Texture2D bike;
+
+	float Friction = 0.01;
+	b2Vec2 Vel = { 3,3 };
+	b2Vec2 MaxVelocity = { 20,20 };
 
 	vec2<int> ray;
 	bool ray_on;
