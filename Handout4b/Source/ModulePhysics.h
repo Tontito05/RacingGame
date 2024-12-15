@@ -34,11 +34,14 @@ public:
 	float GetRotation() const;
 	bool Contains(int x, int y) const;
 	int RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const;
+	b2Vec2 Friction( b2Vec2 FR) const;
+	b2Vec2 ComputeVector(float angle, b2Vec2 Force) const;
 
 public:
 	int width, height;
 	b2Body* body;
 	Module* listener;
+	float FrQueficient = 0.4;
 };
 
 // Module --------------------------------------

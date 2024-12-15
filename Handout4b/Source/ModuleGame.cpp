@@ -4,6 +4,8 @@
 #include "ModuleGame.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include <iostream>
+
 
 ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -19,14 +21,15 @@ bool ModuleGame::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	App->renderer->camera.x = App->renderer->camera.y = 0;
+	Player = new Car(App->physics, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, this, car);
 
 	car = LoadTexture("Assets/Car.png");
 	bike = LoadTexture("Assets/Bike.png");
-	
 
-
-	Player = new Car(App->physics,SCREEN_WIDTH/2, SCREEN_HEIGHT/2, this, car);
+	Gears.push_back({ 1,1 });
+	Gears.push_back({ 2,2 });
+	Gears.push_back({ 3,3 });
+	Gears.push_back({ 4,4 });
 
 
 	return ret;
@@ -43,96 +46,84 @@ bool ModuleGame::CleanUp()
 // Update: draw background
 update_status ModuleGame::Update()
 {
-	if(IsKeyPressed(KEY_SPACE))
-	{
-		ray_on = !ray_on;
-		ray.x = GetMouseX();
-		ray.y = GetMouseY();
-	}
-
-	// Prepare for raycast ------------------------------------------------------
-	
-	vec2i mouse;
-	mouse.x = GetMouseX();
-	mouse.y = GetMouseY();
-	int ray_hit = ray.DistanceTo(mouse);
-
-	vec2f normal(0.0f, 0.0f);
-
-	// All draw functions ------------------------------------------------------
-
-
-	for (PhysicEntity* entity : entities)
-	{
-		entity->Update();
-		if (ray_on)
-		{
-			int hit = entity->RayHit(ray, mouse, normal);
-			if (hit >= 0)
-			{
-				ray_hit = hit;
-			}
-		}
-	}
-	
-
-	// ray -----------------
-	if(ray_on == true)
-	{
-		vec2f destination((float)(mouse.x-ray.x), (float)(mouse.y-ray.y));
-		destination.Normalize();
-		destination *= (float)ray_hit;
-
-		DrawLine(ray.x, ray.y, (int)(ray.x + destination.x), (int)(ray.y + destination.y), RED);
-
-		if (normal.x != 0.0f)
-		{
-			DrawLine((int)(ray.x + destination.x), (int)(ray.y + destination.y), (int)(ray.x + destination.x + normal.x * 25.0f), (int)(ray.y + destination.y + normal.y * 25.0f), Color{ 100, 255, 100, 255 });
-		}
-	}
-
 	//PlayerUpdate
 
+	//Get the player linear velocity
 	b2Vec2 Velocity = Player->body->body->GetLinearVelocity();
+	//get the player angular velocity
+	float Angular = Player->body->body->GetAngularVelocity();
+	//Get the player angle
+	float angle = Player->body->body->GetAngle();
 
-	if (IsKeyDown(KEY_W) && ((Velocity.x < MaxVelocity.x) || (Velocity.y < MaxVelocity.y)))
-	{
-		Player->body->body->ApplyForce(-Vel, Player->body->body->GetWorldCenter(), true);
-	}
-	if (IsKeyDown(KEY_S) && ((Velocity.x < MaxVelocity.x) || (Velocity.y < MaxVelocity.y)))
-	{
-		Player->body->body->ApplyForce(Vel, Player->body->body->GetWorldCenter(), true);
-	}
+	//Maje the player Rotate
 	if (IsKeyDown(KEY_A))
 	{
-		Player->body->body->ApplyTorque(0.1f, true);
+		Player->body->body->SetAngularVelocity(-RotForce);
 	}
-	if (IsKeyDown(KEY_D))
+	else if (IsKeyDown(KEY_D))
 	{
-		Player->body->body->ApplyTorque(-0.1f, true);
+		Player->body->body->SetAngularVelocity(RotForce);
+	}
+	//If the player is not pressing any key, make the player stop rotating with a friction only for the rotation
+	else 
+	{
+		if (Angular > 0.1)
+		{
+			Player->body->body->ApplyTorque(-RotFriction, true);
+		}
+		else if (Angular < -0.1)
+		{
+			Player->body->body->ApplyTorque(RotFriction, true);
+		}
+		else
+		{
+			Player->body->body->SetAngularVelocity(0);
+		}
 	}
 
-	b2Vec2 Fr = Player->body->body->GetLinearVelocity();
+	//If the velocity of the player is less than the expected velocity to change the gear, make the player accelerate or brake
+	if (Velocity.Length() < Gears[GearChange].Length())
+	{
+		if (IsKeyDown(KEY_W))
+		{
+			b2Vec2 vec = Player->body->ComputeVector(angle, Vel);
 
-	if (Fr.x > 0 )
-	{
-		Player->body->body->ApplyLinearImpulseToCenter({ -Fr.x*Friction,0 }, true);
+			//We use forces, important, if not the game works wierd
+			Player->body->body->ApplyForceToCenter(vec, true);
+		}
+		if (IsKeyDown(KEY_S))
+		{
+			b2Vec2 vec =  Player->body->ComputeVector(angle, Brake);
+
+			Player->body->body->ApplyForceToCenter(vec, true);
+		}
 	}
-	else if(Fr.x < 0)
+	if (GearChange < 3 && Velocity.Length() > Gears[GearChange].Length() * 0.9)//Manage the gear change
 	{
-		Player->body->body->ApplyLinearImpulseToCenter({ -Fr.x * Friction,0 }, true);
+
+		DrawText("Press G to change the gear", 100, 10, 20, GREEN);
+
+		if (IsKeyPressed(KEY_G))
+		{
+			//Augment the gear and the player acceleration/Brake
+			GearChange++;
+			Vel.x *=1.25;
+			Vel.y *=1.25;
+			Brake.x *= 1.25;
+			Brake.y *= 1.25;
+		}
 	}
-	if (Fr.y > 0)
+	else if (GearChange != 0 && Velocity.Length() < Gears[GearChange - 1].Length())
 	{
-		Player->body->body->ApplyLinearImpulseToCenter({ 0,-Fr.y * Friction, }, true);
-	}
-	else if (Fr.y < 0)
-	{
-		Player->body->body->ApplyLinearImpulseToCenter({ 0,-Fr.y * Friction, }, true);;
+		GearChange--;
 	}
 
+	std::cout<<GearChange<<"     ";
+	std::cout << Velocity.Length() << std::endl;
 
-	
+	//Manage the friction of the player
+	b2Vec2 FrFriction = Player->body->Friction(Velocity);
+	Player->body->body->ApplyForceToCenter(FrFriction, true);
 
 	return UPDATE_CONTINUE;
 }

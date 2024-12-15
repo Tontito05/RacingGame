@@ -7,6 +7,7 @@
 
 #include "raylib.h"
 #include <vector>
+#include <iostream>
 
 class PhysBody;
 class PhysicEntity;
@@ -90,16 +91,29 @@ public:
 
 public:
 
+	//AI
 	std::vector<PhysicEntity*> entities;
 
+	//Player
 	PhysicEntity* Player;
 	
+	//Textures TODO
 	Texture2D car;
 	Texture2D bike;
 
-	float Friction = 0.01;
-	b2Vec2 Vel = { 3,3 };
-	b2Vec2 MaxVelocity = { 20,20 };
+	//Player velocity (Changes with gears)
+	b2Vec2 Vel = { 1,1};
+
+	//Player brake (Changes with gears)
+	b2Vec2 Brake = { 0.5,0.5 };
+
+	//Player rotation and rotation friction (they dont change)
+	float RotForce = 1.5;
+	float RotFriction = 0.05;
+
+	//Gears --> They set a maximum velocity to the car and also can be changed with G
+	std::vector<b2Vec2> Gears;
+	int GearChange = 0;
 
 	vec2<int> ray;
 	bool ray_on;

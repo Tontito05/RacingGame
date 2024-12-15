@@ -409,3 +409,30 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 	if(physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
 }
+b2Vec2 PhysBody::Friction( b2Vec2 FR) const
+{
+	b2Vec2 Force = { 0,0 };
+
+	//Check the velocity on the different axis
+	if (FR.x > 0 || FR.x < 0)
+	{
+		Force.x = -FR.x * FrQueficient;
+	}
+	if (FR.y > 0 || FR.y < 0)
+	{
+		Force.y = -FR.y * FrQueficient;
+	}
+
+	//Return the force that has to be applied
+	return Force;
+
+}
+b2Vec2 PhysBody::ComputeVector(float angle, b2Vec2 impulse) const
+{
+	b2Vec2 vector = { 0,0 };
+
+	vector.x = cos(angle) * impulse.x;
+	vector.y = sin(angle) * impulse.y;
+
+	return vector;
+}
