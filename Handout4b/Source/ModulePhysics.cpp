@@ -395,6 +395,19 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 	return ret;
 }
 
+void PhysBody::AddForce(b2Vec2 f)
+{
+	body->ApplyForceToCenter(f,true);
+}
+void PhysBody::AddTorque(float t)
+{
+	body->ApplyTorque(t, true);
+}
+void PhysBody::AngularVelocity(float w) 
+{
+	body->SetAngularVelocity(w);
+}
+
 void ModulePhysics::BeginContact(b2Contact* contact)
 {
 	b2BodyUserData dataA = contact->GetFixtureA()->GetBody()->GetUserData();
@@ -409,30 +422,4 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 	if(physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
 }
-b2Vec2 PhysBody::Friction( b2Vec2 FR) const
-{
-	b2Vec2 Force = { 0,0 };
 
-	//Check the velocity on the different axis
-	if (FR.x > 0 || FR.x < 0)
-	{
-		Force.x = -FR.x * FrQueficient;
-	}
-	if (FR.y > 0 || FR.y < 0)
-	{
-		Force.y = -FR.y * FrQueficient;
-	}
-
-	//Return the force that has to be applied
-	return Force;
-
-}
-b2Vec2 PhysBody::ComputeVector(float angle, b2Vec2 impulse) const
-{
-	b2Vec2 vector = { 0,0 };
-
-	vector.x = cos(angle) * impulse.x;
-	vector.y = sin(angle) * impulse.y;
-
-	return vector;
-}
