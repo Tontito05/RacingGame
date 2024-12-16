@@ -36,6 +36,14 @@ void Car::MoveForward(float angle) const
 	body->AddForce(vec);
 
 }
+void Car::MoveBackwards(float angle) const
+{
+	b2Vec2 velocity (GetVel().x/2, GetVel().y/2);
+	b2Vec2 vec = ComputeVector(angle, velocity);
+
+	//We use forces, important, if not the game works wierd
+	body->AddForce(-vec);
+}
 void Car::Brake(float angle) const
 {
 	b2Vec2 vec = ComputeVector(angle, brake);

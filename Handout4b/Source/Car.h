@@ -32,6 +32,7 @@ public:
 	void Friction(b2Vec2 Velocity) const;
 	b2Vec2 ComputeVector(float angle, b2Vec2 Force) const;
 	void MoveForward(float angle) const;
+	void MoveBackwards(float angle) const;
 	void Brake(float angle) const;
 	void Rotate(int direction) const;
 

@@ -39,7 +39,6 @@ bool ModuleGame::CleanUp()
 update_status ModuleGame::Update()
 {
 	//PlayerUpdate
-
 	//Get the player linear velocity
 	b2Vec2 Velocity = player->body->body->GetLinearVelocity();
 	//get the player angular velocity
@@ -68,9 +67,9 @@ update_status ModuleGame::Update()
 		{
 			player->MoveForward(angle);
 		}
-		if (IsKeyDown(KEY_W))
+		if (IsKeyDown(KEY_S))
 		{
-			player->MoveForward(angle);
+			player->MoveBackwards(angle);
 		}
 	}
 	if (player->CheckGear()==true)//Manage the gear change
