@@ -39,6 +39,7 @@ public:
 	void AddForce(b2Vec2 f);
 	void AddTorque(float t);
 	void AngularVelocity(float w);
+	b2Vec2 GetVelocity();
 
 public:
 	int width, height;

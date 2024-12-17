@@ -407,6 +407,10 @@ void PhysBody::AngularVelocity(float w)
 {
 	body->SetAngularVelocity(w);
 }
+b2Vec2 PhysBody::GetVelocity()
+{
+	return body->GetLinearVelocity();
+}
 
 void ModulePhysics::BeginContact(b2Contact* contact)
 {

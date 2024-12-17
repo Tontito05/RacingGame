@@ -67,37 +67,37 @@ update_status ModuleGame::Update()
 		{
 			player->MoveForward(angle);
 		}
-		if (IsKeyDown(KEY_S))
+		if (IsKeyDown(KEY_S)  )
 		{
 			player->MoveBackwards(angle);
+		}
+		if (IsKeyDown(KEY_SPACE))
+		{
+			player->Brake(angle);
 		}
 	}
 	if (player->CheckGear()==true)//Manage the gear change
 	{
 		DrawText("Press G to change gear", 10, 10, 20, RED);
 
-		if (IsKeyDown(KEY_G) && Velocity.Length() < player->Gears[player->GearChange].Length())
+		if (IsKeyDown(KEY_G))//TODO put a timer to change the gear
 		{
 			//Augment the gear and the player acceleration/Brake
 			player->GearChange++;
-			player->Vel = player->Gears[player->GearChange];
+			player->brake.x *= 1.3;
+			player->brake.y *= 1.3;
 		}
 	}
-	else if (player->Slowing() == true)
+	else if (player->GearBack() == true)
 	{
 		player->GearChange--;
 		player->Vel = player->Gears[player->GearChange];
 	}
 
-	std::cout << player->GearChange << "     ";
-	std::cout << player->Gears[player->GearChange].Length()*0.6 << "     ";
-	std::cout << Velocity.Length() << std::endl;
-
-
+	std::cout << player->GearChange << "     " << std::endl;
 
 	//Manage the friction of the player
-	player->Friction(Velocity);
-
+	player->ApplyFriction(Velocity);
 
 	return UPDATE_CONTINUE;
 }

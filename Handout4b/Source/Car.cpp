@@ -1,23 +1,25 @@
 #include "Car.h"
 
 
-void Car::Friction(b2Vec2 Velocity) const
+b2Vec2 Car::GetFriction(b2Vec2 Velocity) const
 {
 	b2Vec2 Force = { 0,0 };
 
 	//Check the velocity on the different axis
-	if (Velocity.x > 0 || Velocity.x < 0)
+	if (Velocity.x > 0.1 || Velocity.x < 0.1)
 	{
 		Force.x = -Velocity.x * FrQueficient * GRAV;
 	}
-	if (Velocity.y > 0 || Velocity.y < 0)
+	if (Velocity.y > 0.1 || Velocity.y < -0.1)
 	{
 		Force.y = -Velocity.y * FrQueficient * GRAV;
 	}
 
-	body->body->ApplyForceToCenter(Force, true);
-
-
+	return Force;
+}
+void Car::ApplyFriction(b2Vec2 Velocity)
+{
+	body->AddForce(GetFriction(Velocity));
 }
 b2Vec2 Car::ComputeVector(float angle, b2Vec2 impulse) const
 {
@@ -38,13 +40,13 @@ void Car::MoveForward(float angle) const
 }
 void Car::MoveBackwards(float angle) const
 {
-	b2Vec2 velocity (GetVel().x/2, GetVel().y/2);
+	b2Vec2 velocity (GetVel().x/3, GetVel().y/3);
 	b2Vec2 vec = ComputeVector(angle, velocity);
 
 	//We use forces, important, if not the game works wierd
 	body->AddForce(-vec);
 }
-void Car::Brake(float angle) const
+void Car::Brake(float angle) 
 {
 	b2Vec2 vec = ComputeVector(angle, brake);
 
@@ -83,19 +85,23 @@ void Car::Rotate(int direction) const
 }
 bool Player::CheckGear()
 {
-	if (GearChange < 3 && body->body->GetLinearVelocity().Length() > Gears[GearChange].Length() * 0.6)
+	b2Vec2 PlayerVel = body->GetVelocity();
+
+	if (GearChange < 3 && PlayerVel.Length() > GetMaxVel().Length()*0.8)
 	{
 		return true;
 	}
-	if (body->body->GetLinearVelocity().Length() < Gears[GearChange].Length())
+	if (PlayerVel.Length() < GetMaxVel().Length())
 	{
 		return false;
 	}
 
 }
-bool Player::Slowing()
+bool Player::GearBack()
 {
-	if (GearChange != 0 && body->body->GetLinearVelocity().Length() < Gears[GearChange - 1].Length()*0.6)
+	b2Vec2 PlayerVel = body->GetVelocity();
+
+	if (GearChange != 0 && PlayerVel.Length() < Gears[GearChange - 1].Length()*0.3)
 	{
 		return true;
 	}
@@ -103,4 +109,10 @@ bool Player::Slowing()
 	{
 		return false;
 	}
+}
+b2Vec2 Player::GetMaxVel()
+{
+	b2Vec2 MaxVel = Gears[GearChange];
+	MaxVel += GetFriction(MaxVel);
+	return MaxVel;
 }

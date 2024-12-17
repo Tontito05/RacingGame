@@ -29,11 +29,12 @@ public:
 	}
 
 	//CarFunctions
-	void Friction(b2Vec2 Velocity) const;
+	b2Vec2 GetFriction(b2Vec2 Velocity) const;
+	void ApplyFriction(b2Vec2 Velocity);
 	b2Vec2 ComputeVector(float angle, b2Vec2 Force) const;
 	void MoveForward(float angle) const;
 	void MoveBackwards(float angle) const;
-	void Brake(float angle) const;
+	void Brake(float angle) ;
 	void Rotate(int direction) const;
 
 	b2Vec2 GetVel() const { return Vel; }
@@ -44,16 +45,16 @@ public:
 	//Player velocity (Changes with gears)
 	b2Vec2 Vel;
 
+	//Player brake (Changes with gears)
+	b2Vec2 brake = { -2,-2 };
+
 private:
 	Texture2D texture;
 
 	float FrQueficient = 0.05;
 
-	//Player brake (Changes with gears)
-	b2Vec2 brake = { -1,-1 };
-
 	//Player rotation and rotation friction (they dont change)
-	float RotForce = 2;
+	float RotForce = 1;
 	float RotFriction = 0.1;
 };
 
@@ -63,17 +64,18 @@ public:
 	Player(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Texture2D _texture, Group type)
 		: Car(physics, _x, _y, width, height, _listener, _texture, type)
 	{
-		Gears.push_back({ 2,2 });
-		Gears.push_back({ 4,4 });
+		Gears.push_back({ 3,3 });
 		Gears.push_back({ 6,6 });
 		Gears.push_back({ 8,8 });
+		Gears.push_back({ 10,10 });
 
-		Vel = Gears[0];
+		Vel = { 2,2 };
 	}
 
 
 	bool CheckGear();
-	bool Slowing();
+	bool GearBack();
+	b2Vec2 GetMaxVel();
 
 	//Gears --> They set a maximum velocity to the car and also can be changed with G
 	std::vector<b2Vec2> Gears;
