@@ -29,29 +29,34 @@ public:
 	}
 
 	//CarFunctions
-	b2Vec2 GetFriction(b2Vec2 Velocity) const;
-	void ApplyFriction(b2Vec2 Velocity);
+	b2Vec2 GetFriction(b2Vec2 vec) const;
+	void ApplyFriction(float angle);
 	b2Vec2 ComputeVector(float angle, b2Vec2 Force) const;
-	void MoveForward(float angle) const;
-	void MoveBackwards(float angle) const;
+	void MoveForward(float angle) ;
+	void MoveBackwards(float angle) ;
 	void Brake(float angle) ;
 	void Rotate(int direction) const;
+
+	void SumToVec(b2Vec2 f);
+	void SubToVec(b2Vec2 f);
 
 	b2Vec2 GetVel() const { return Vel; }
 	void SetVel(b2Vec2 _Vel) { Vel = _Vel; }
 	void SetFriction(float FrQuo) { FrQueficient = FrQuo; }
 	void SetRotFriction(float RotFr) { RotFriction = RotFr; }
 
+	b2Vec2 mainVec;
+
 	//Player velocity (Changes with gears)
 	b2Vec2 Vel;
 
 	//Player brake (Changes with gears)
-	b2Vec2 brake = { -2,-2 };
+	b2Vec2 brake = { 0.5,0.5};
 
 private:
 	Texture2D texture;
 
-	float FrQueficient = 0.05;
+	float FrQueficient = 0.2;
 
 	//Player rotation and rotation friction (they dont change)
 	float RotForce = 1;

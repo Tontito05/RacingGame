@@ -38,6 +38,7 @@ bool ModuleGame::CleanUp()
 // Update: draw background
 update_status ModuleGame::Update()
 {
+
 	//PlayerUpdate
 	//Get the player linear velocity
 	b2Vec2 Velocity = player->body->body->GetLinearVelocity();
@@ -60,14 +61,14 @@ update_status ModuleGame::Update()
 	}
 
 	//If the velocity of the player is less than the expected velocity to change the gear, make the player accelerate or brake
-	if (player->CheckGear()==false)
-	{
+
+
 		
 		if (IsKeyDown(KEY_W))
 		{
 			player->MoveForward(angle);
 		}
-		if (IsKeyDown(KEY_S)  )
+		else if (IsKeyDown(KEY_S)  )
 		{
 			player->MoveBackwards(angle);
 		}
@@ -75,29 +76,13 @@ update_status ModuleGame::Update()
 		{
 			player->Brake(angle);
 		}
-	}
-	if (player->CheckGear()==true)//Manage the gear change
-	{
-		DrawText("Press G to change gear", 10, 10, 20, RED);
 
-		if (IsKeyDown(KEY_G))//TODO put a timer to change the gear
-		{
-			//Augment the gear and the player acceleration/Brake
-			player->GearChange++;
-			player->brake.x *= 1.3;
-			player->brake.y *= 1.3;
-		}
-	}
-	else if (player->GearBack() == true)
-	{
-		player->GearChange--;
-		player->Vel = player->Gears[player->GearChange];
-	}
-
-	std::cout << player->GearChange << "     " << std::endl;
 
 	//Manage the friction of the player
-	player->ApplyFriction(Velocity);
+	player->body->body->ApplyForceToCenter(player->mainVec, true);
+	player->ApplyFriction(angle);
+	std::cout << player->mainVec.x << "     " << player->mainVec.y << "     " << std::endl;
+
 
 	return UPDATE_CONTINUE;
 }

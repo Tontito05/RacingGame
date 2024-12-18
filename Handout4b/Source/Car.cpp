@@ -1,25 +1,26 @@
 #include "Car.h"
 
 
-b2Vec2 Car::GetFriction(b2Vec2 Velocity) const
+b2Vec2 Car::GetFriction(b2Vec2 vec) const
 {
 	b2Vec2 Force = { 0,0 };
 
+
 	//Check the velocity on the different axis
-	if (Velocity.x > 0.1 || Velocity.x < 0.1)
+	if (vec.x > 0.1 || vec.x < 0.1)
 	{
-		Force.x = -Velocity.x * FrQueficient * GRAV;
+		Force.x = -vec.x * FrQueficient * GRAV;
 	}
-	if (Velocity.y > 0.1 || Velocity.y < -0.1)
+	if (vec.y > 0.1 || vec.y < -0.1)
 	{
-		Force.y = -Velocity.y * FrQueficient * GRAV;
+		Force.y = -vec.y * FrQueficient * GRAV;
 	}
 
 	return Force;
 }
-void Car::ApplyFriction(b2Vec2 Velocity)
+void Car::ApplyFriction(float angle)
 {
-	body->AddForce(GetFriction(Velocity));
+	SumToVec(GetFriction(mainVec));
 }
 b2Vec2 Car::ComputeVector(float angle, b2Vec2 impulse) const
 {
@@ -30,28 +31,46 @@ b2Vec2 Car::ComputeVector(float angle, b2Vec2 impulse) const
 
 	return vector;
 }
-void Car::MoveForward(float angle) const
+void Car::SumToVec(b2Vec2 f)
 {
-	b2Vec2 vec = ComputeVector(angle, Vel);
-
-	//We use forces, important, if not the game works wierd
-	body->AddForce(vec);
-
+	mainVec.x += f.x;
+	mainVec.y += f.y;
 }
-void Car::MoveBackwards(float angle) const
+void Car::SubToVec(b2Vec2 f)
 {
-	b2Vec2 velocity (GetVel().x/3, GetVel().y/3);
-	b2Vec2 vec = ComputeVector(angle, velocity);
-
+	mainVec.x -= f.x;
+	mainVec.y -= f.y;
+}
+void Car::MoveForward(float angle) 
+{
 	//We use forces, important, if not the game works wierd
-	body->AddForce(-vec);
+	SumToVec(ComputeVector(angle, Vel));
+}
+void Car::MoveBackwards(float angle) 
+{
+	//We use forces, important, if not the game works wierd
+	SubToVec(ComputeVector(angle, brake));
 }
 void Car::Brake(float angle) 
 {
-	b2Vec2 vec = ComputeVector(angle, brake);
 
-	body->AddForce(vec);
+	if (abs(body->GetVelocity().x)>0||abs(body->GetVelocity().y)>0)
+	{
+		b2Vec2 vec = ComputeVector(angle, -body->GetVelocity());
+		vec.x *= brake.x;
+		vec.y *= brake.y;
 
+		if (body->GetVelocity().x < 0)
+		{
+			vec.x *= -1;
+		}
+		if (body->GetVelocity().y < 0)
+		{
+			vec.y *= -1;
+		}
+
+		SumToVec(vec);
+	}
 }
 void Car::Rotate(int direction) const
 {

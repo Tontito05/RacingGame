@@ -394,11 +394,6 @@ int PhysBody::RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& no
 
 	return ret;
 }
-
-void PhysBody::AddForce(b2Vec2 f)
-{
-	body->ApplyForceToCenter(f,true);
-}
 void PhysBody::AddTorque(float t)
 {
 	body->ApplyTorque(t, true);
