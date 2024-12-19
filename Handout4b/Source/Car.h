@@ -2,8 +2,10 @@
 #include "ModulePhysics.h"
 #include "Module.h"
 #include "PhysEntity.h"
+#include "Timer.h"
 #include <iostream>
 #include <vector>
+
 class Car : public PhysicEntity
 {
 public:
@@ -86,6 +88,7 @@ public:
 		Vel = { 0.5,0.5 };
 	}
 
+	void UpdateFollowingVector(b2Vec2& mainVector, b2Vec2& secondaryVector, float deltaTime);
 
 	bool CheckGear();
 	bool GearBack();

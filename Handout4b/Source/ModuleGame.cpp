@@ -81,7 +81,6 @@ update_status ModuleGame::Update()
 		else
 		{
 			player->drifting = false;
-			player->RotForce = 2;
 		}
 	}
 	if (player->CheckGear() == true)//Manage the gear change
@@ -94,7 +93,7 @@ update_status ModuleGame::Update()
 			player->GearChange++;
 		}
 	}
-	else if (player->GearBack() == true)
+	else if (player->GearBack() == true) // on player
 	{
 		player->GearChange--;
 	}
@@ -103,8 +102,17 @@ update_status ModuleGame::Update()
 	float angle = player->body->body->GetAngle();
 
 	//Manage the friction of the player
-	player->ApplyFriction();
-	player->body->body->SetLinearVelocity(player->ComputeVector(angle,player->mainVec));
+	player->ApplyFriction(); //Player
+
+	if (player->drifting == true)
+	{
+
+	}
+	else
+	{
+		player->body->body->SetLinearVelocity(player->ComputeVector(angle, player->mainVec));
+	}
+
 	player->CheckEps();
 
 	std::cout << player->body->body->GetLinearVelocity().x << " " << player->body->body->GetLinearVelocity().y << std::endl;

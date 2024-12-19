@@ -398,7 +398,7 @@ void PhysBody::AddTorque(float t)
 {
 	body->ApplyTorque(t, true);
 }
-void PhysBody::AngularVelocity(float w) 
+void PhysBody::AngularVelocity(float w) //SET
 {
 	body->SetAngularVelocity(w);
 }

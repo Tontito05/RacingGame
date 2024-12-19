@@ -1,6 +1,5 @@
 #include "Car.h"
 
-
 b2Vec2 Car::GetFriction(b2Vec2 vec) const
 {
 	b2Vec2 Force = { 0,0 };
