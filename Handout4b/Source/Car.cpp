@@ -9,16 +9,16 @@ b2Vec2 Car::GetFriction(b2Vec2 vec) const
 	//Check the velocity on the different axis
 	if (vec.x > 0.1 || vec.x < 0.1)
 	{
-		Force.x = -vec.x * FrQueficient * GRAV;
+		Force.x = -vec.x * FrQueficient;
 	}
 	if (vec.y > 0.1 || vec.y < -0.1)
 	{
-		Force.y = -vec.y * FrQueficient * GRAV;
+		Force.y = -vec.y * FrQueficient;
 	}
 
 	return Force;
 }
-void Car::ApplyFriction(float angle)
+void Car::ApplyFriction()
 {
 	SumToVec(GetFriction(mainVec));
 }
@@ -41,22 +41,22 @@ void Car::SubToVec(b2Vec2 f)
 	mainVec.x -= f.x;
 	mainVec.y -= f.y;
 }
-void Car::MoveForward(float angle) 
+void Car::MoveForward() 
 {
 	//We use forces, important, if not the game works wierd
-	SumToVec(ComputeVector(angle, Vel));
+	SumToVec(Vel);
 }
-void Car::MoveBackwards(float angle) 
+void Car::MoveBackwards() 
 {
 	//We use forces, important, if not the game works wierd
-	SubToVec(ComputeVector(angle, brake));
+	SubToVec(brake);
 }
-void Car::Brake(float angle) 
+void Car::Brake() 
 {
 
 	if (abs(body->GetVelocity().x)>0||abs(body->GetVelocity().y)>0)
 	{
-		b2Vec2 vec = ComputeVector(angle, -body->GetVelocity());
+		b2Vec2 vec = -body->GetVelocity();
 		vec.x *= brake.x;
 		vec.y *= brake.y;
 
@@ -134,4 +134,15 @@ b2Vec2 Player::GetMaxVel()
 	b2Vec2 MaxVel = Gears[GearChange];
 	MaxVel += GetFriction(MaxVel);
 	return MaxVel;
+}
+void Car::CheckEps()
+{
+	if (abs(body->GetVelocity().x) < EPS)
+	{
+		SetXvelocity(0);
+	}
+	if (abs(body->GetVelocity().y) < EPS)
+	{
+		SetYvelocity(0);
+	}
 }

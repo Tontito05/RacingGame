@@ -30,15 +30,18 @@ public:
 
 	//CarFunctions
 	b2Vec2 GetFriction(b2Vec2 vec) const;
-	void ApplyFriction(float angle);
+	void ApplyFriction();
 	b2Vec2 ComputeVector(float angle, b2Vec2 Force) const;
-	void MoveForward(float angle) ;
-	void MoveBackwards(float angle) ;
-	void Brake(float angle) ;
+	void MoveForward() ;
+	void MoveBackwards() ;
+	void Brake() ;
 	void Rotate(int direction) const;
 
 	void SumToVec(b2Vec2 f);
 	void SubToVec(b2Vec2 f);
+	void SetXvelocity(float x) { body->body->SetLinearVelocity({ x,body->GetVelocity().y });}
+	void SetYvelocity(float y) { body->body->SetLinearVelocity({ body->GetVelocity().x,y }); }
+	void CheckEps();
 
 	b2Vec2 GetVel() const { return Vel; }
 	void SetVel(b2Vec2 _Vel) { Vel = _Vel; }
@@ -51,16 +54,22 @@ public:
 	b2Vec2 Vel;
 
 	//Player brake (Changes with gears)
-	b2Vec2 brake = { 0.5,0.5};
+	b2Vec2 brake = { 0.1,0.1};
+
+	//
+	b2Vec2 drift = { 0.05,0.05 };
+	bool drifting = false;
+
+	//
+	float RotForce = 2;
 
 private:
 	Texture2D texture;
 
-	float FrQueficient = 0.2;
+	float FrQueficient = 0.05;
 
 	//Player rotation and rotation friction (they dont change)
-	float RotForce = 1;
-	float RotFriction = 0.1;
+	float RotFriction = 0.3;
 };
 
 class Player : public Car
@@ -74,7 +83,7 @@ public:
 		Gears.push_back({ 8,8 });
 		Gears.push_back({ 10,10 });
 
-		Vel = { 2,2 };
+		Vel = { 0.5,0.5 };
 	}
 
 
