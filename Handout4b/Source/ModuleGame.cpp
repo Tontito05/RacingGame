@@ -40,7 +40,7 @@ update_status ModuleGame::Update()
 {
 
 	//PlayerUpdate
-
+	player->Update();
 
 		if (IsKeyDown(KEY_A))
 		{
@@ -71,16 +71,14 @@ update_status ModuleGame::Update()
 		if (IsKeyDown(KEY_SPACE))
 		{
 			player->state = STATES::DRIFTING;
-			player->RotForce = 2;
 		}
 		else if (player->state == STATES::DRIFTING && IsKeyUp(KEY_SPACE))
 		{
 			player->state = STATES::END_DRIFTING;
 		}
-		else
-		{
-			player->RotForce = 1;
-		}
+
+		player->GearBack();
+
 	}
 	if (player->CheckGear() == true)//Manage the gear change
 	{
@@ -90,13 +88,8 @@ update_status ModuleGame::Update()
 		{
 			//Augment the gear and the player acceleration/Brake
 			player->GearChange++;
-			player->brake.x += 2;
-			player->brake.y += 2;
 		}
 	}
-
-	player->GearBack();
-	player->ApplyMovement();
 
 	std::cout << player->body->GetVelocity().Length() << std::endl;
 	std::cout << player->GetMaxVel().Length()*0.8 << std::endl;

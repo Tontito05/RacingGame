@@ -1,5 +1,6 @@
 #include "Car.h"
 
+
 //CAR////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 b2Vec2 Car::GetFriction(b2Vec2 vec) const
 {
@@ -122,6 +123,7 @@ void Car::ApplyMovement()
 	if (state == STATES::DRIFTING)
 	{
 		direction = lerpAngle(GetAngleOfVector(body->GetVelocity()), angle, DriftLerp);
+		RotForce = 2;
 
 	}
 	//if its ending the drift
@@ -134,11 +136,14 @@ void Car::ApplyMovement()
 		{
 			state = STATES::DRIVEING;
 		}
+
+		RotForce = 1;
 	}
 	//Normal movement
 	else
 	{
 		direction = lerpAngle(GetAngleOfVector(body->GetVelocity()), angle, NoDriftLerp);
+		RotForce = 1;
 	}
 
 	//Set all the values to the car with a vector
