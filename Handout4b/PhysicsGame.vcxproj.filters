@@ -72,6 +72,9 @@
     <ClInclude Include="Source\PhysEntity.h">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Map.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">
