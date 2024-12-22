@@ -3,12 +3,11 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Map.h"
-#include "Log.h"
 #include "ModulePhysics.h"
 
 #include <math.h>
 
-Map::Map() : Module(), mapLoaded(false)
+Map::Map() :  Module(), mapLoaded(false)
 {
     name = "map";
 }
@@ -208,21 +207,8 @@ bool Map::Load(std::string path, std::string fileName)
                                 //Dynamic colliders
                                 if (mapLayer->properties.GetProperty("Colision") != NULL && mapLayer->properties.GetProperty("Colision")->value == true)
                                 {
-                                    PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(i * 16 + 8, j * 16 + 8, 14, 14, STATIC);
-                                    c1->ctype = ColliderType::PLATFORM;
+                                    //PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangle(i * 16 + 8, j * 16 + 8, 14, 14, STATIC);
                                     
-                                }
-                                if (mapLayer->properties.GetProperty("CheckPoint") != NULL && mapLayer->properties.GetProperty("CheckPoint")->value == true)
-                                {
-                                    PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangleSensor(i * 16 + 8, j * 16 + 8, 14, 14, STATIC);
-                                    c1->ctype = ColliderType::CHECKPOINT;
-
-                                }
-                                if (mapLayer->properties.GetProperty("End") != NULL && mapLayer->properties.GetProperty("End")->value == true)
-                                {
-                                    PhysBody* c1 = Engine::GetInstance().physics.get()->CreateRectangleSensor(i * 16 + 8, j * 16 + 8, 14, 14, STATIC);
-                                    c1->ctype = ColliderType::END;
-
                                 }
 
                             }
