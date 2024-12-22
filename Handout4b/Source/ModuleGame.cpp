@@ -41,8 +41,7 @@ update_status ModuleGame::Update()
 
 	//PlayerUpdate
 
-	if (player->body->GetVelocity().LengthSquared() > EPS)
-	{
+
 		if (IsKeyDown(KEY_A))
 		{
 			player->Rotate(-1);
@@ -55,32 +54,32 @@ update_status ModuleGame::Update()
 		{
 			player->Rotate(0);
 		}
-	}
-	else
-	{
-		player->Rotate(0);
-	}
+
 
 	
 	if (player->CheckGear() == false)
 	{
-
 		if (IsKeyDown(KEY_W))
 		{
 			player->MoveForward();
 		}
-		if (IsKeyDown(KEY_S))
+		else if (IsKeyDown(KEY_S))
 		{
 			player->MoveBackwards();
 		}
+
 		if (IsKeyDown(KEY_SPACE))
 		{
-			player->Brake();
-			player->drifting = true;
+			player->state = STATES::DRIFTING;
+			player->RotForce = 2;
+		}
+		else if (player->state == STATES::DRIFTING && IsKeyUp(KEY_SPACE))
+		{
+			player->state = STATES::END_DRIFTING;
 		}
 		else
 		{
-			player->drifting = false;
+			player->RotForce = 1;
 		}
 	}
 	if (player->CheckGear() == true)//Manage the gear change
@@ -91,32 +90,16 @@ update_status ModuleGame::Update()
 		{
 			//Augment the gear and the player acceleration/Brake
 			player->GearChange++;
+			player->brake.x += 2;
+			player->brake.y += 2;
 		}
 	}
-	else if (player->GearBack() == true) // on player
-	{
-		player->GearChange--;
-	}
 
+	player->GearBack();
+	player->ApplyMovement();
 
-	float angle = player->body->body->GetAngle();
-
-	//Manage the friction of the player
-	player->ApplyFriction(); //Player
-
-	if (player->drifting == true)
-	{
-
-	}
-	else
-	{
-		player->body->body->SetLinearVelocity(player->ComputeVector(angle, player->mainVec));
-	}
-
-	player->CheckEps();
-
-	std::cout << player->body->body->GetLinearVelocity().x << " " << player->body->body->GetLinearVelocity().y << std::endl;
-	std::cout << player->GearChange << std::endl;
+	std::cout << player->body->GetVelocity().Length() << std::endl;
+	std::cout << player->GetMaxVel().Length()*0.8 << std::endl;
 
 	return UPDATE_CONTINUE;
 }

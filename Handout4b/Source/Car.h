@@ -6,9 +6,18 @@
 #include <iostream>
 #include <vector>
 
+enum class STATES
+{
+	DRIVEING,
+	DRIFTING,
+	END_DRIFTING,
+	JUMPING
+};
+
 class Car : public PhysicEntity
 {
 public:
+
 	Car(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Texture2D _texture, Group type)
 		: PhysicEntity(physics->CreateRectangle(_x, _y, width, height, type), _listener)
 		, texture(_texture)
@@ -30,68 +39,100 @@ public:
 		return body->RayCast(ray.x, ray.y, mouse.x, mouse.y, normal.x, normal.y);;
 	}
 
-	//CarFunctions
+	//CAR FUNCTIONS////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	float normalizeAngle(float angle);
+
+	//FRICTION
 	b2Vec2 GetFriction(b2Vec2 vec) const;
 	void ApplyFriction();
-	b2Vec2 ComputeVector(float angle, b2Vec2 Force) const;
+
+	//MOVEMENT
 	void MoveForward() ;
 	void MoveBackwards() ;
-	void Brake() ;
 	void Rotate(int direction) const;
 
-	void SumToVec(b2Vec2 f);
-	void SubToVec(b2Vec2 f);
+	//VELOCITY SETTERS
 	void SetXvelocity(float x) { body->body->SetLinearVelocity({ x,body->GetVelocity().y });}
 	void SetYvelocity(float y) { body->body->SetLinearVelocity({ body->GetVelocity().x,y }); }
-	void CheckEps();
 
-	b2Vec2 GetVel() const { return Vel; }
-	void SetVel(b2Vec2 _Vel) { Vel = _Vel; }
+	//GETTERS
+	b2Vec2 GetAcceleration();
+	float GetAngleOfVector(const b2Vec2& vec);
+
+	//DRIFT ROTATION AND MOVEMENT
+	float lerpAngle(float from, float to, float t);
+
+	//SETTERS
+	void SetAcceleration(b2Vec2 Acc) { Acceleration = Acc; }
 	void SetFriction(float FrQuo) { FrQueficient = FrQuo; }
 	void SetRotFriction(float RotFr) { RotFriction = RotFr; }
 
+	//APPLY THE VECTOR
+	void ApplyMovement();
+
+	//CHECK EPS
+	void CheckEps();
+
+
+	//VARIABLES///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//The vector that the Car will follow
 	b2Vec2 mainVec;
+	//The direction of the vector
+	float direction = 0;
 
-	//Player velocity (Changes with gears)
-	b2Vec2 Vel;
+	//Car Acceleration
+	b2Vec2 Acceleration;
 
-	//Player brake (Changes with gears)
-	b2Vec2 brake = { 0.1,0.1};
+	//Car Brake
+	b2Vec2 brake = { 10,10};
+
+	//Drift rotation
+	float DriftLerp = 0.01;
+	float EndDriftLerp = 0.05;
+	float NoDriftLerp = 1;
 
 	//
-	b2Vec2 drift = { 0.05,0.05 };
-	bool drifting = false;
+	float RotForce;
 
-	//
-	float RotForce = 2;
+	//Car state
+	STATES state = STATES::DRIVEING;
+
+	float dt  = GetFrameTime();
 
 private:
+
+	//Texture
 	Texture2D texture;
 
-	float FrQueficient = 0.05;
-
-	//Player rotation and rotation friction (they dont change)
+	//Frictions
+	float FrQueficient = 0.2;
 	float RotFriction = 0.3;
 };
 
 class Player : public Car
 {
 public:
+
+	//Player constructor
 	Player(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Texture2D _texture, Group type)
 		: Car(physics, _x, _y, width, height, _listener, _texture, type)
 	{
-		Gears.push_back({ 3,3 });
+		//Set the gears
+		Gears.push_back({ 1,1 });
+		Gears.push_back({ 2,2 });
+		Gears.push_back({ 4,4 });
 		Gears.push_back({ 6,6 });
-		Gears.push_back({ 8,8 });
-		Gears.push_back({ 10,10 });
-
-		Vel = { 0.5,0.5 };
 	}
 
-	void UpdateFollowingVector(b2Vec2& mainVector, b2Vec2& secondaryVector, float deltaTime);
-
+	//Player functions////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//Check if it can change gears
 	bool CheckGear();
-	bool GearBack();
+	//Check if the gear should go back
+	void GearBack();
+	//Get the maximum velocity of the car
 	b2Vec2 GetMaxVel();
 
 	//Gears --> They set a maximum velocity to the car and also can be changed with G
