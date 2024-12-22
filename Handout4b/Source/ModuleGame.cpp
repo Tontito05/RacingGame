@@ -68,13 +68,18 @@ update_status ModuleGame::Update()
 			player->MoveBackwards();
 		}
 
-		if (IsKeyDown(KEY_SPACE))
+		if (IsKeyDown(KEY_LEFT_SHIFT) && player->jump == false)
 		{
 			player->state = STATES::DRIFTING;
 		}
-		else if (player->state == STATES::DRIFTING && IsKeyUp(KEY_SPACE))
+		else if (player->state == STATES::DRIFTING && IsKeyUp(KEY_LEFT_SHIFT))
 		{
 			player->state = STATES::END_DRIFTING;
+		}
+		
+		if (IsKeyDown(KEY_SPACE))
+		{
+			player->TryJump();
 		}
 
 		player->GearBack();
@@ -91,8 +96,13 @@ update_status ModuleGame::Update()
 		}
 	}
 
-	std::cout << player->body->GetVelocity().Length() << std::endl;
-	std::cout << player->GetMaxVel().Length()*0.8 << std::endl;
+	// Update camera position to follow the player
+	int playerX, playerY;
+	playerX = player->body->body->GetPosition().x;
+	playerY = player->body->body->GetPosition().y;
+	App->renderer->camera.x = playerX - (SCREEN_WIDTH / 2);
+	App->renderer->camera.y = playerY - (SCREEN_HEIGHT / 2);
+	std::cout << player->GearChange<< std::endl;
 
 	return UPDATE_CONTINUE;
 }

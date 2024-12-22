@@ -7,6 +7,10 @@
 ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
     background = RAYWHITE;
+    camera.x = 0;
+    camera.y = 0;
+    camera.width = SCREEN_WIDTH;
+    camera.height = SCREEN_HEIGHT;
 }
 
 // Destructor
@@ -66,6 +70,7 @@ void ModuleRender::SetBackgroundColor(Color color)
 // Draw to screen
 bool ModuleRender::Draw(Texture2D texture, int x, int y, const Rectangle* section, double angle, int pivot_x, int pivot_y) const
 {
+
 	bool ret = true;
 
 	float scale = 1.0f;
@@ -74,8 +79,8 @@ bool ModuleRender::Draw(Texture2D texture, int x, int y, const Rectangle* sectio
 
     if (section != NULL) rect = *section;
 
-    position.x = (float)(x-pivot_x) * scale + camera.x;
-    position.y = (float)(y-pivot_y) * scale + camera.y;
+    position.x = (float)(x-pivot_x) * scale ;
+    position.y = (float)(y-pivot_y) * scale ;
 
 	rect.width *= scale;
 	rect.height *= scale;

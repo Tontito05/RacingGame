@@ -78,6 +78,56 @@ void Car::Rotate(int direction) const
 		body->AngularVelocity(0);
 	}
 }
+void Car::Jump()
+{
+	if (recoveryTime.ReadSec() > airTime)
+	{
+		//Start teh timet
+		if (body->GetGroup() == Group::LAND)
+		{
+			jumpTimer.Start();
+		}
+
+		//Go up
+		if (jumpTimer.ReadSec() <= airTime / 2)
+		{
+			state = STATES::JUMPING;
+			scale += jumpaScale;
+			//CChange Collision group
+			body->ChangeGroup(AIR);
+		}
+		//Go down
+		else if (jumpTimer.ReadSec() > airTime / 2 && jumpTimer.ReadSec() <= airTime)
+		{
+			state = STATES::FALLING;
+			scale -= jumpaScale;
+		}
+		//Reset all the values
+		else if (jumpTimer.ReadSec() > airTime)
+		{
+			state = STATES::END_DRIFTING;
+			scale = 1;
+			//Change Collision group
+			body->ChangeGroup(LAND);
+			jump = false;
+			recoveryTime.Start();
+		}
+	}
+}
+bool Car::TryJump() 
+{
+	if (recoveryTime.ReadSec() > 1 && jump == false)
+	{
+		jump = true;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
 
 
 
@@ -119,16 +169,22 @@ void Car::ApplyMovement()
 	//get the angle of the car inside the 360 degree range
 	float angle = normalizeAngle(body->body->GetAngle());
 
-	//If its drifting
-	if (state == STATES::DRIFTING)
+	switch (state)
 	{
+	case STATES::DRIVEING:
+
+		direction = lerpAngle(GetAngleOfVector(body->GetVelocity()), angle, NormalLerp);
+		RotForce = 1;
+
+		break;
+	case STATES::DRIFTING:
+
 		direction = lerpAngle(GetAngleOfVector(body->GetVelocity()), angle, DriftLerp);
 		RotForce = 2;
 
-	}
-	//if its ending the drift
-	else if (state == STATES::END_DRIFTING)
-	{
+		break;
+	case STATES::END_DRIFTING:
+
 		direction = lerpAngle(GetAngleOfVector(body->GetVelocity()), angle, EndDriftLerp);
 
 		//This checks if the angles are as close together to be considered the same
@@ -138,12 +194,22 @@ void Car::ApplyMovement()
 		}
 
 		RotForce = 1;
-	}
-	//Normal movement
-	else
-	{
-		direction = lerpAngle(GetAngleOfVector(body->GetVelocity()), angle, NoDriftLerp);
-		RotForce = 1;
+
+		break;
+	case STATES::JUMPING:
+
+		direction = lerpAngle(GetAngleOfVector(body->GetVelocity()), angle, JumpLerp);
+		RotForce = 0.5;
+
+		break;
+	case STATES::FALLING:
+
+		direction = lerpAngle(GetAngleOfVector(body->GetVelocity()), angle, JumpLerp);
+		RotForce = 0.5;
+
+		break;
+	default:
+		break;
 	}
 
 	//Set all the values to the car with a vector
@@ -210,6 +276,9 @@ bool Player::CheckGear()
 		DriftLerp = 0.04;
 		EndDriftLerp = 0.1;
 
+		jumpaScale = 0.015;
+		airTime = 0.6;
+
 		break;
 
 	case 2:
@@ -220,6 +289,9 @@ bool Player::CheckGear()
 		DriftLerp = 0.02;
 		EndDriftLerp = 0.05;
 
+		jumpaScale = 0.02;
+		airTime = 0.7;
+
 		break;
 
 	case 3:
@@ -228,6 +300,8 @@ bool Player::CheckGear()
 
 		DriftLerp = 0.02;
 		EndDriftLerp = 0.03;
+		jumpaScale = 0.025;
+		airTime = 0.8;
 
 		break;
 

@@ -11,7 +11,8 @@ enum class STATES
 	DRIVEING,
 	DRIFTING,
 	END_DRIFTING,
-	JUMPING
+	JUMPING,
+	FALLING
 };
 
 class Car : public PhysicEntity
@@ -22,7 +23,7 @@ public:
 		: PhysicEntity(physics->CreateRectangle(_x, _y, width, height, type), _listener)
 		, texture(_texture)
 	{
-
+		recoveryTime.Start();
 	}
 
 	void Update() override 
@@ -30,9 +31,17 @@ public:
 		int x, y;
 		body->GetPhysicPosition(x, y);
 		DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
-			Rectangle{ (float)x, (float)y, (float)texture.width, (float)texture.height },
-			Vector2{ (float)texture.width / 2.0f, (float)texture.height / 2.0f }, body->GetRotation() * RAD2DEG, WHITE);
+		Rectangle{ (float)x, (float)y, (float)texture.width * scale, (float)texture.height * scale },
+		Vector2{ (float)texture.width * scale / 2.0f, (float)texture.height * scale / 2.0f }, body->GetRotation() * RAD2DEG, WHITE);
+
+
+
 		ApplyMovement();
+
+		if (jump == true)
+		{
+			Jump();
+		}
 	}
 
 	int RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal) override
@@ -52,6 +61,8 @@ public:
 	void MoveForward() ;
 	void MoveBackwards() ;
 	void Rotate(int direction) const;
+	void Jump();
+	bool TryJump();
 
 	//VELOCITY SETTERS
 	void SetXvelocity(float x) { body->body->SetLinearVelocity({ x,body->GetVelocity().y });}
@@ -89,10 +100,11 @@ public:
 	//Car Brake
 	b2Vec2 brake = { 10,10};
 
-	//Drift rotation
+	//Vector Lerps rotation
 	float DriftLerp = 0.01;
 	float EndDriftLerp = 0.05;
-	float NoDriftLerp = 1;
+	float NormalLerp = 1;
+	float JumpLerp = 0;
 
 	//
 	float RotForce;
@@ -100,7 +112,24 @@ public:
 	//Car state
 	STATES state = STATES::DRIVEING;
 
+	//Delta time
 	float dt  = GetFrameTime();
+
+	//Jump////////////////////////////////
+
+	//Flag
+	bool jump = false;
+
+	//Scaleing
+	float jumpaScale = 0.01;
+	float scale = 1;
+
+	//Jump timer and Recovery time
+	Timer jumpTimer;
+	Timer recoveryTime;
+
+	//max air time
+	float airTime = 0.5;
 
 private:
 

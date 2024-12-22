@@ -421,5 +421,14 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 	if(physB && physB->listener != NULL)
 		physB->listener->OnCollision(physB, physA);
 }
-
-
+void PhysBody::ChangeGroup(Group type)
+{
+	b2Filter filter = body->GetFixtureList()->GetFilterData();
+	filter.categoryBits = type;
+	filter.maskBits = type;
+	body->GetFixtureList()->SetFilterData(filter);
+}
+uint16 PhysBody::GetGroup()
+{
+	return body->GetFixtureList()->GetFilterData().categoryBits;
+}

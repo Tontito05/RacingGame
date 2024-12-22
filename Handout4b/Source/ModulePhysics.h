@@ -39,6 +39,8 @@ public:
 	void AddTorque(float t);
 	void AngularVelocity(float w);
 	b2Vec2 GetVelocity();
+	void ChangeGroup(Group type);
+	uint16 GetGroup();
 
 public:
 	int width, height;
