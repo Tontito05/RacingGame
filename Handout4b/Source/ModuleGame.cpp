@@ -32,6 +32,8 @@ bool ModuleGame::CleanUp()
 {
 	LOG("Unloading Intro scene");
 
+
+
 	return true;
 }
 
@@ -42,11 +44,13 @@ update_status ModuleGame::Update()
 	//PlayerUpdate
 	player->Update();
 
-		if (IsKeyDown(KEY_A))
+	float leftJoystickX = GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X);
+
+		if (IsKeyDown(KEY_A) || leftJoystickX < -0.2f)
 		{
 			player->Rotate(-1);
 		}
-		else if (IsKeyDown(KEY_D))
+		else if (IsKeyDown(KEY_D) || leftJoystickX > 0.2f)
 		{
 			player->Rotate(1);
 		}
@@ -56,28 +60,29 @@ update_status ModuleGame::Update()
 		}
 
 
+
 	
 	if (player->CheckGear() == false)
 	{
-		if (IsKeyDown(KEY_W))
+		if (IsKeyDown(KEY_W) || GetGamepadAxisMovement(0, GAMEPAD_AXIS_RIGHT_TRIGGER) > 0.5f)
 		{
 			player->MoveForward();
 		}
-		else if (IsKeyDown(KEY_S))
+		else if (IsKeyDown(KEY_S) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT))
 		{
 			player->MoveBackwards();
 		}
 
-		if (IsKeyDown(KEY_LEFT_SHIFT) && player->jump == false)
+		if ((IsKeyDown(KEY_LEFT_SHIFT) || GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_TRIGGER) > 0.5f) && player->jump == false)
 		{
 			player->state = STATES::DRIFTING;
 		}
-		else if (player->state == STATES::DRIFTING && IsKeyUp(KEY_LEFT_SHIFT))
+		else if (player->state == STATES::DRIFTING && (IsKeyUp(KEY_LEFT_SHIFT) || GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_TRIGGER) > 0.5f))
 		{
 			player->state = STATES::END_DRIFTING;
 		}
 		
-		if (IsKeyDown(KEY_SPACE))
+		if (IsKeyDown(KEY_SPACE)|| IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN))
 		{
 			player->TryJump();
 		}
@@ -89,7 +94,7 @@ update_status ModuleGame::Update()
 	{
 		DrawText("Press G to change gear", 10, 10, 20, RED);
 
-		if (IsKeyDown(KEY_G))//TODO put a timer to change the gear
+		if (IsKeyDown(KEY_G) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT))//TODO put a timer to change the gear
 		{
 			//Augment the gear and the player acceleration/Brake
 			player->GearChange++;

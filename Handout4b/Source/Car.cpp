@@ -166,6 +166,8 @@ void Car::ApplyMovement()
 	//Check The values of the velocities to stop it moveing
 	CheckEps();
 
+
+
 	//get the angle of the car inside the 360 degree range
 	float angle = normalizeAngle(body->body->GetAngle());
 
