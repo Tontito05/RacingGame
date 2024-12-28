@@ -23,6 +23,7 @@ bool ModuleGame::Start()
 
 	car = LoadTexture("Assets/Car.png");
 	player = new Player(App->physics, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 40,25,this,car,LAND);
+	mud = new Mud(App->physics, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, 40, 40, this, LAND);
 
 	return ret;
 }
@@ -43,6 +44,9 @@ update_status ModuleGame::Update()
 
 	//PlayerUpdate
 	player->Update();
+
+	//mudUpdate
+	mud->Update();
 
 	float leftJoystickX = GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X);
 

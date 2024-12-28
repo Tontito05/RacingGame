@@ -184,6 +184,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Source\Map.h" />
+    <ClInclude Include="Source\Mud.h" />
     <ClInclude Include="Source\PhysEntity.h" />
     <ClInclude Include="Source\Car.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -201,6 +202,7 @@
     <ClInclude Include="Source\Timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Mud.cpp" />
     <ClCompile Include="Source\PhysEntity.cpp" />
     <ClCompile Include="Source\Car.cpp" />
     <ClCompile Include="Source/Application.cpp" />

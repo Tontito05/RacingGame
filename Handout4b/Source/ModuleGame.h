@@ -5,6 +5,7 @@
 #include "ModulePhysics.h"
 #include "p2Point.h"
 #include "Car.h"
+#include "Mud.h"
 #include "raylib.h"
 #include <vector>
 #include <iostream>
@@ -30,6 +31,9 @@ public:
 
 	//Player
 	Player* player;
+
+	//Mud patches
+	Mud* mud;
 
 	//Textures TODO
 	Texture2D car;

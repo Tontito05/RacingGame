@@ -26,9 +26,6 @@ void Car::ApplyFriction()
 	mainVec.y += GetFriction(mainVec).y;
 }
 
-
-
-
 void Car::MoveForward() 
 {
 	//Accelerate the car

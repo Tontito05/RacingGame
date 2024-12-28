@@ -133,7 +133,7 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, Gr
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height)
+PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height, Group type)
 {
 	PhysBody* pbody = new PhysBody();
 
@@ -151,6 +151,10 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 	fixture.shape = &box;
 	fixture.density = 1.0f;
 	fixture.isSensor = true;
+
+	fixture.filter.groupIndex = 0;
+	fixture.filter.categoryBits = type;
+	fixture.filter.maskBits = type;
 
 	b->CreateFixture(&fixture);
 

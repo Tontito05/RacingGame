@@ -120,7 +120,7 @@ public:
 	//Flag
 	bool jump = false;
 
-	//Scaleing
+	//Scaling
 	float jumpaScale = 0.01;
 	float scale = 1;
 
@@ -165,8 +165,13 @@ public:
 	//Get the maximum velocity of the car
 	b2Vec2 GetMaxVel();
 
+
 	//Gears --> They set a maximum velocity to the car and also can be changed with G
 	std::vector<b2Vec2> Gears;
 	int GearChange = 0;
+
+	private:
+
+
 
 };
