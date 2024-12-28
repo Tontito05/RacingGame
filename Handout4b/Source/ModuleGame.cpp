@@ -123,10 +123,12 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderTypes::CAR:
 		break;
 	case ColliderTypes::MUD:
+		bodyA->body->SetLinearDamping(200);
 		break;
 	case ColliderTypes::NULLCOL:
 		break;
 	default:
+		
 		break;
 	}
 }
