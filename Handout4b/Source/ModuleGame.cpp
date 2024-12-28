@@ -118,5 +118,15 @@ update_status ModuleGame::Update()
 
 void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
-	
+	switch (bodyB->entity->colType)
+	{
+	case ColliderTypes::CAR:
+		break;
+	case ColliderTypes::MUD:
+		break;
+	case ColliderTypes::NULLCOL:
+		break;
+	default:
+		break;
+	}
 }

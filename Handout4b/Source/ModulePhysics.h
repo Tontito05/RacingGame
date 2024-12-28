@@ -16,6 +16,8 @@
 #define METERS_TO_PIXELS(m) ((int) floor(PIXELS_PER_METER * m))
 #define PIXEL_TO_METERS(p)  ((float) METER_PER_PIXEL * p)
 
+class PhysicEntity;
+
 enum Group
 {
 	DEFAULD = 1<<0,
@@ -28,7 +30,7 @@ enum Group
 class PhysBody
 {
 public:
-	PhysBody() : listener(NULL), body(NULL)
+	PhysBody() : listener(NULL), body(NULL), entity(NULL)
 	{}
 
 	//void GetPosition(int& x, int& y) const;
@@ -46,6 +48,7 @@ public:
 	int width, height;
 	b2Body* body;
 	Module* listener;
+	PhysicEntity* entity;
 };
 
 // Module --------------------------------------
@@ -60,10 +63,10 @@ public:
 	update_status PostUpdate();
 	bool CleanUp();
 
-	PhysBody* CreateCircle(int x, int y, int radius);
-	PhysBody* CreateRectangle(int x, int y, int width, int height, Group type);
-	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, Group type);
-	PhysBody* CreateChain(int x, int y, const int* points, int size);
+	PhysBody* CreateCircle(int x, int y, int radius, PhysicEntity* entity_);
+	PhysBody* CreateRectangle(int x, int y, int width, int height, Group type, PhysicEntity* entity_);
+	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, Group type, PhysicEntity* entity_);
+	PhysBody* CreateChain(int x, int y, const int* points, int size, PhysicEntity* entity_);
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);

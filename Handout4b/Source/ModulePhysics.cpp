@@ -73,9 +73,10 @@ update_status ModulePhysics::PreUpdate()
 	return UPDATE_CONTINUE;
 }
 
-PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
+PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, PhysicEntity* entity_)
 {
 	PhysBody* pbody = new PhysBody();
+	pbody->entity = entity_;
 
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
@@ -99,9 +100,10 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, Group type)
+PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, Group type, PhysicEntity* entity_)
 {
 	PhysBody* pbody = new PhysBody();
+	pbody->entity = entity_;
 
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
@@ -133,9 +135,10 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, Gr
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height, Group type)
+PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int height, Group type, PhysicEntity* entity_)
 {
 	PhysBody* pbody = new PhysBody();
+	pbody->entity = entity_;
 
 	b2BodyDef body;
 	body.type = b2_staticBody;
@@ -165,9 +168,10 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size)
+PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size, PhysicEntity* entity_)
 {
 	PhysBody* pbody = new PhysBody();
+	pbody->entity = entity_;
 
 	b2BodyDef body;
 	body.type = b2_dynamicBody;

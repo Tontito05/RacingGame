@@ -13,7 +13,7 @@ class Mud : public PhysicEntity
 	public:
 
 		Mud(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Group type)
-		: PhysicEntity(physics->CreateRectangleSensor(_x, _y, width, height, type), _listener, ColliderTypes::MUD)
+		: PhysicEntity(physics->CreateRectangleSensor(_x, _y, width, height, type, this), _listener, ColliderTypes::MUD)
 		{
 		
 		}
