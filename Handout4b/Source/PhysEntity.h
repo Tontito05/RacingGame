@@ -3,14 +3,21 @@
 #include "ModulePhysics.h"
 #include "p2Point.h"
 
+enum class ColliderTypes
+{
+	NULLCOL, 
+	MUD,
+	CAR
+};
 
 class PhysicEntity
 {
 protected:
 
-	PhysicEntity(PhysBody* _body, Module* _listener)
+	PhysicEntity(PhysBody* _body, Module* _listener, ColliderTypes _colType = ColliderTypes::NULLCOL)
 		: body(_body)
 		, listener(_listener)
+		, colType(_colType)
 	{
 		body->listener = listener;
 	}
@@ -27,6 +34,5 @@ public:
 public:
 	PhysBody* body;
 	Module* listener;
-
-
+	ColliderTypes colType;
 };

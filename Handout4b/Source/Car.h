@@ -20,7 +20,7 @@ class Car : public PhysicEntity
 public:
 
 	Car(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Texture2D _texture, Group type)
-		: PhysicEntity(physics->CreateRectangle(_x, _y, width, height, type), _listener)
+		: PhysicEntity(physics->CreateRectangle(_x, _y, width, height, type), _listener, ColliderTypes::CAR)
 		, texture(_texture)
 	{
 		recoveryTime.Start();
