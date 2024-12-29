@@ -126,6 +126,7 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		bodyA->body->SetLinearDamping(200);
 		break;
 	case ColliderTypes::NULLCOL:
+		cout << "WARNING: " << bodyB << "'s ColliderType is NULL" << endl;
 		break;
 	default:
 		
