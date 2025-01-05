@@ -7,7 +7,8 @@ enum class ColliderTypes
 {
 	NULLCOL, 
 	MUD,
-	CAR
+	CAR,
+	MAP
 };
 
 class PhysicEntity

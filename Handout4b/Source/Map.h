@@ -1,171 +1,147 @@
 #pragma once
-
-
-#include <list>
-#include <vector>
-#include <iostream>
+#include "ModulePhysics.h"
 #include "Module.h"
-#include "pugixml.hpp"
-#include "SDL2/SDL.h"
-#include "Vector2D.h"
+#include "PhysEntity.h"
+#include "Timer.h"
+#include <iostream>
+#include <vector>
 
+using namespace std;
 
-// L10: TODO 2: Define a property to store the Map Orientation and Load it from the map
-enum MapOrientation
-{
-    ORTOGRAPHIC = 0,
-    ISOMETRIC
-};
-
-// L09: TODO 5: Add attributes to the property structure
-struct Properties
-{
-    struct Property
-    {
-        std::string name;
-        bool value; //We assume that we are going to work only with bool for the moment
-    };
-
-    std::list<Property*> propertyList;
-
-    ~Properties()
-    {
-        for (const auto& property : propertyList)
-        {
-            delete property;
-        }
-
-        propertyList.clear();
-    }
-
-    // L09: DONE 7: Method to ask for the value of a custom property
-    Property* GetProperty(const char* name);
-
-};
-
-struct MapLayer
-{
-    // L07: TODO 1: Add the info to the MapLayer Struct
-    int id;
-    std::string name;
-    int width;
-    int height;
-    std::vector<int> tiles;
-    Properties properties;
-
-    // L07: TODO 6: Short function to get the gid value of i,j
-    int Get(int i, int j) const
-    {
-        return tiles[(j * width) + i];
-    }
-};
-
-// L06: TODO 2: Create a struct to hold information for a TileSet
-// Ignore Terrain Types and Tile Types for now, but we want the image!
-
-struct TileSet
-{
-    int firstGid;
-    std::string name;
-    int tileWidth;
-    int tileHeight;
-    int spacing;
-    int margin;
-    int tileCount;
-    int columns;
-    SDL_Texture* texture;
-
-    // L07: TODO 7: Implement the method that receives the gid and returns a Rect
-    SDL_Rect GetRect(unsigned int gid) {
-        SDL_Rect rect = { 0 };
-
-        int relativeIndex = gid - firstGid;
-        rect.w = tileWidth;
-        rect.h = tileHeight;
-        rect.x = margin + (tileWidth + spacing) * (relativeIndex % columns);
-        rect.y = margin + (tileHeight + spacing) * (relativeIndex / columns);
-
-        return rect;
-    }
-
-};
-
-// L06: TODO 1: Create a struct needed to hold the information to Map node
-struct MapData
-{
-    int width;
-    int height;
-    int tileWidth;
-    int tileHeight;
-    std::list<TileSet*> tilesets;
-    // L10: TODO 2: Define a property to store the Map Orientation and Load it from the map
-    MapOrientation orientation = MapOrientation::ORTOGRAPHIC;;
-
-    // L07: TODO 2: Add the info to the MapLayer Struct
-    std::list<MapLayer*> layers;
-};
-
-class Map : public Module
+class Map : public PhysicEntity
 {
 public:
 
-    Map();
+	Map(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Group type)
+		: PhysicEntity(physics->CreateChain(_x, _y, points, 224, this), _listener, ColliderTypes::MAP)
+	{
 
-    // Destructor
-    virtual ~Map();
-
-    // Called before render is available
-    bool Awake();
-
-    // Called before the first frame
-    bool Start();
-
-    // Called each loop iteration
-    bool Update(float dt);
-
-    // Called before quitting
-    bool CleanUp();
-
-    // Load new map
-    bool Load(std::string path, std::string mapFileName);
-
-    // L07: TODO 8: Create a method that translates x,y coordinates from map positions to world positions
-    Vector2D MapToWorld(int x, int y) const;
-
-    // L10: TODO 5: Add method WorldToMap to obtain  map coordinates from screen coordinates 
-    Vector2D WorldToMap(int x, int y);
-
-    // L09: TODO 2: Implement function to the Tileset based on a tile id
-    TileSet* GetTilesetFromTileId(int gid) const;
-
-    // L09: TODO 6: Load a group of properties 
-    bool LoadProperties(pugi::xml_node& node, Properties& properties);
-
-    int GetWidth() {
-        return mapData.width;
-    }
-
-    int GetHeight() {
-        return mapData.height;
-    }
-
-    int GetTileWidth() {
-        return mapData.tileWidth;
-    }
-
-    int GetTileHeight() {
-        return mapData.tileHeight;
-    }
-
-    MapLayer* GetNavigationLayer();
-
-
-public:
-    std::string mapFileName;
-    std::string mapPath;
-
+	}
+	void Update() override
+	{
+		int x, y;
+		body->GetPhysicPosition(x, y);
+		DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
+			Rectangle{ (float)x, (float)y, (float)texture.width * scale, (float)texture.height * scale },
+			Vector2{ (float)texture.width * scale / 2.0f, (float)texture.height * scale / 2.0f }, body->GetRotation() * RAD2DEG, WHITE);
+	}
 private:
-    bool mapLoaded;
-    // L06: DONE 1: Declare a variable data of the struct MapData
-    MapData mapData;
+
+	Texture2D texture = LoadTexture("Assets/Level/Map.png");
+	float scale = 1.0f;
+	int points[224] = {
+		1176, 47,
+		1177, 245,
+		1225, 337,
+		1224, 544,
+		1174, 636,
+		1176, 763,
+		1175, 816,
+		1157, 842,
+		1129, 858,
+		443, 856,
+		443, 896,
+		487, 988,
+		488, 1391,
+		440, 1486,
+		442, 1523,
+		1382, 1523,
+		1380, 1480,
+		680, 1481,
+		637, 1470,
+		615, 1435,
+		615, 1313,
+		632, 1286,
+		660, 1270,
+		1555, 1270,
+		1602, 1273,
+		1640, 1304,
+		1640, 2174,
+		1642, 2247,
+		1700, 2248,
+		1734, 2279,
+		1736, 2352,
+		1708, 2389,
+		1657, 2392,
+		1437, 2394,
+		1398, 2377,
+		1381, 2347,
+		1381, 1896,
+		633, 1896,
+		633, 1934,
+		621, 1972,
+		584, 1992,
+		541, 1992,
+		475, 1993,
+		475, 2033,
+		521, 2128,
+		521, 2283,
+		472, 2382,
+		473, 2677,
+		515, 2677,
+		517, 2565,
+		535, 2535,
+		566, 2518,
+		740, 2518,
+		775, 2532,
+		792, 2564,
+		792, 2612,
+		793, 3148,
+		741, 3148,
+		740, 2568,
+		570, 2568,
+		567, 2647,
+		561, 2705,
+		532, 2725,
+		493, 2728,
+		452, 2722,
+		425, 2691,
+		423, 2614,
+		421, 2026,
+		422, 1984,
+		448, 1950,
+		492, 1941,
+		581, 1941,
+		581, 1899,
+		592, 1868,
+		620, 1847,
+		677, 1844,
+		1309, 1844,
+		1368, 1844,
+		1407, 1856,
+		1429, 1883,
+		1434, 1936,
+		1480, 2030,
+		1480, 2207,
+		1432, 2301,
+		1432, 2338,
+		1683, 2338,
+		1683, 2296,
+		1644, 2296,
+		1605, 2281,
+		1588, 2242,
+		1588, 2173,
+		1590, 1322,
+		665, 1320,
+		665, 1429,
+		1380, 1430,
+		1414, 1444,
+		1434, 1475,
+		1434, 1524,
+		1423, 1556,
+		1392, 1576,
+		1348, 1576,
+		1284, 1576,
+		492, 1576,
+		439, 1576,
+		404, 1560,
+		389, 1524,
+		389, 897,
+		392, 845,
+		409, 818,
+		440, 804,
+		1124, 804,
+		1127, 47
+	};
+
 };

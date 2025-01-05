@@ -3,12 +3,21 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "Map.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "fileStates": {
         "": {
             "scaleInDock": 1
+        },
+        "Map.tmx": {
+            "scale": 2,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 99,
+                "y": -2555.75
+            }
         },
         "Sprite Sheet Road def.tsx": {
             "dynamicWrapping": false,
@@ -30,10 +39,13 @@
     "map.tileHeight": 16,
     "map.tileWidth": 16,
     "openFiles": [
+        "Map.tmx",
+        "Sprite Sheet Road def.tsx"
     ],
     "project": "Racing.tiled-project",
     "recentFiles": [
         "Sprite Sheet Road def.tsx",
+        "Map.tmx",
         "Sprite Sheet Road.tsx",
         "Sprite Sheet Road defDef.tsx"
     ],

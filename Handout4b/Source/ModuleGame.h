@@ -6,12 +6,14 @@
 #include "p2Point.h"
 #include "Car.h"
 #include "Mud.h"
+#include "Map.h"
 #include "raylib.h"
 #include <vector>
 #include <iostream>
 
 class PhysBody;
 class PhysicEntity;
+
 
 class ModuleGame : public Module
 {
@@ -29,11 +31,11 @@ public:
 	//AI
 	std::vector<Car*> entities;
 
-	//Player
+	//
 	Player* player;
-
-	//Mud patches
 	Mud* mud;
+	Map* map;
+
 
 	//Textures TODO
 	Texture2D car;

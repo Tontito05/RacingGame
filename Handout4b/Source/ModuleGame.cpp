@@ -21,9 +21,11 @@ bool ModuleGame::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	car = LoadTexture("Assets/Car.png");
-	player = new Player(App->physics, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 40,25,this,car,LAND);
+	car = LoadTexture("Assets/MiniPixelPack2/Cars/Player.png");
+	player = new Player(App->physics, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 18,16,this,car,LAND);
 	mud = new Mud(App->physics, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, 40, 40, this, LAND);
+	map = new Map(App->physics, 0,0, 2048, 3840, this, LAND);
+
 
 	return ret;
 }
@@ -42,11 +44,11 @@ bool ModuleGame::CleanUp()
 update_status ModuleGame::Update()
 {
 
-	//PlayerUpdate
+	//Update Entities
+	map->Update();
 	player->Update();
-
-	//mudUpdate
 	mud->Update();
+
 
 	float leftJoystickX = GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X);
 

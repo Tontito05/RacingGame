@@ -138,7 +138,7 @@ private:
 
 	//Frictions
 	float FrQueficient = 0.2;
-	float RotFriction = 0.3;
+	float RotFriction = 0.05;
 };
 
 class Player : public Car
