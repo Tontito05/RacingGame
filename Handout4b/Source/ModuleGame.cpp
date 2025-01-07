@@ -119,6 +119,7 @@ update_status ModuleGame::Update()
 	
 	//std::cout << player->GearChange<< std::endl;
 
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -129,7 +130,24 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderTypes::CAR:
 		break;
 	case ColliderTypes::MUD:
-		bodyA->body->SetLinearDamping(200);
+		bodyA->body->SetLinearDamping(100);
+		break;
+	case ColliderTypes::NULLCOL:
+		cout << "WARNING: " << bodyB << "'s ColliderType is NULL" << endl;
+		break;
+	default:
+		break;
+	}
+}
+
+void ModuleGame::EndCollision(PhysBody* bodyA, PhysBody* bodyB)
+{
+	switch (bodyB->entity->colType)
+	{
+	case ColliderTypes::CAR:
+		break;
+	case ColliderTypes::MUD:
+		bodyA->body->SetLinearDamping(0);
 		break;
 	case ColliderTypes::NULLCOL:
 		cout << "WARNING: " << bodyB << "'s ColliderType is NULL" << endl;

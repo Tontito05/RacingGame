@@ -52,7 +52,7 @@ update_status ModuleRender::Update()
 	App->scene_intro->ia->Render();
     App->scene_intro->mud->Render();
 
-    std::cout << "Camera target: " << camera.target.x << " / " << camera.target.y << std::endl;
+    //std::cout << "Camera target: " << camera.target.x << " / " << camera.target.y << std::endl;
 
     EndMode2D();
 

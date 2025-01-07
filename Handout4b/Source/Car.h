@@ -6,6 +6,8 @@
 #include <iostream>
 #include <vector>
 
+using namespace std;
+
 enum class STATES
 {
 	DRIVEING,
@@ -28,6 +30,7 @@ public:
 
 	void Update() override 
 	{
+		//cout << isColiding << endl;
 		ApplyMovement();
 
 		if (jump == true)
@@ -145,6 +148,7 @@ private:
 	//Frictions
 	float FrQueficient = 0.2;
 	float RotFriction = 0.05;
+
 };
 
 class Player : public Car
