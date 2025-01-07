@@ -32,9 +32,9 @@ public:
 		body->GetPhysicPosition(x, y);
 		
 		//Get The top left corner of the car to draw from there ;)
-		x -= ((texture.width) /2) * cos(body->GetRotation())*SCALE;
-		y -= ((texture.height) /2) * sin(body->GetRotation())*SCALE;
-
+		x -= ((texture.width * SCALE) /2) * cos(body->GetRotation());
+		y -= ((texture.height * SCALE) /2) * sin(body->GetRotation());
+		
 		DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
 		Rectangle{ (float)x, (float)y, (float)texture.width * scale * SCALE, (float)texture.height * scale * SCALE },
 		Vector2{ (float)texture.width * scale / 2.0f, (float)texture.height * scale / 2.0f }, body->GetRotation() * RAD2DEG, WHITE);

@@ -37,44 +37,34 @@ update_status ModuleRender::PreUpdate()
 // Update: debug camera
 update_status ModuleRender::Update()
 {
-    float playerX, playerY;
-    playerX = App->scene_intro->player->GetPosition().x;
-    playerY = App->scene_intro->player->GetPosition().y;
-    
-    camera1.target = { playerX + 20, playerY + 20 };
-    
-    BeginDrawing();
-    ClearBackground(background);
-    BeginMode2D(camera1);
-
-    EndMode2D();
-    
-    camera1.target = { 0, 0};
-    camera1.offset.x = -playerX + SCREEN_WIDTH / 2;
-    camera1.offset.y = -playerY + SCREEN_HEIGHT / 2;
+    camera1.target = App->scene_intro->player->GetPosition();
+    camera1.offset = { SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f };
     camera1.rotation = 0.0f;
     camera1.zoom = 1.0f;
 
-    std::cout << playerX << " / " << playerY << std::endl;
-    std::cout << playerX << " / " << playerY << std::endl;
+    BeginDrawing();
+    ClearBackground(RAYWHITE);
+    BeginMode2D(camera1); 
 
-    // NOTE: This function setups render batching system for
-    // maximum performance, all consecutive Draw() calls are
-    // not processed until EndDrawing() is called
-    
-    
-    EndTextureMode();
+	App->scene_intro->map->Update();    
+    App->scene_intro->player->Update();
+    App->scene_intro->mud->Update();
 
-	return UPDATE_CONTINUE;
+    std::cout << "Camera target: " << camera1.target.x << " / " << camera1.target.y << std::endl;
+
+    EndMode2D();
+
+    EndDrawing(); 
+
+    return UPDATE_CONTINUE;
 }
+
 
 // PostUpdate present buffer to screen
 update_status ModuleRender::PostUpdate()
 {
     // Draw everything in our batch!
     DrawFPS(10, 10);
-
-    EndDrawing();
 
 	return UPDATE_CONTINUE;
 }
