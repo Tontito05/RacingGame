@@ -44,11 +44,6 @@ bool ModuleGame::CleanUp()
 update_status ModuleGame::Update()
 {
 
-	//Update Entities
-	map->Update();
-	player->Update();
-	mud->Update();
-
 
 	float leftJoystickX = GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X);
 

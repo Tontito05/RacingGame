@@ -19,6 +19,7 @@ public:
 	}
 	void Update() override
 	{
+
 		int x, y;
 		body->GetPhysicPosition(x, y);
 		DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
