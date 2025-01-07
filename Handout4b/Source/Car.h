@@ -165,13 +165,15 @@ public:
 	//Get the maximum velocity of the car
 	b2Vec2 GetMaxVel();
 
+	// Method to get the car's position
+	Vector2 GetPosition();
+
 
 	//Gears --> They set a maximum velocity to the car and also can be changed with G
 	std::vector<b2Vec2> Gears;
 	int GearChange = 0;
 
 	private:
-
 
 
 };

@@ -108,12 +108,12 @@ update_status ModuleGame::Update()
 	}
 
 	// Update camera position to follow the player
-	int playerX, playerY;
+	float playerX, playerY;
 	playerX = player->body->body->GetPosition().x;
 	playerY = player->body->body->GetPosition().y;
-	App->renderer->camera.x = playerX - (SCREEN_WIDTH / 2);
-	App->renderer->camera.y = playerY - (SCREEN_HEIGHT / 2);
-	std::cout << player->GearChange<< std::endl;
+	
+	
+	//std::cout << player->GearChange<< std::endl;
 
 	return UPDATE_CONTINUE;
 }

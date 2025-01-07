@@ -338,3 +338,9 @@ b2Vec2 Player::GetMaxVel()
 	return MaxVel;
 }
 
+Vector2 Player::GetPosition() {
+	int x, y;
+	body->GetPhysicPosition(x, y);
+	return Vector2{ (float)x, (float)y };
+}
+

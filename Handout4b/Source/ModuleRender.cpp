@@ -2,15 +2,17 @@
 #include "Application.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
+#include "ModuleGame.h"
+#include "Car.h"
 #include <math.h>
 
 ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
     background = RAYWHITE;
-    camera.x = 0;
+    /*camera.x = 0;
     camera.y = 0;
     camera.width = SCREEN_WIDTH;
-    camera.height = SCREEN_HEIGHT;
+    camera.height = SCREEN_HEIGHT;*/
 }
 
 // Destructor
@@ -35,12 +37,33 @@ update_status ModuleRender::PreUpdate()
 // Update: debug camera
 update_status ModuleRender::Update()
 {
+    float playerX, playerY;
+    playerX = App->scene_intro->player->GetPosition().x;
+    playerY = App->scene_intro->player->GetPosition().y;
+    
+    camera1.target = { playerX + 20, playerY + 20 };
+    
+    BeginDrawing();
     ClearBackground(background);
+    BeginMode2D(camera1);
+
+    EndMode2D();
+    
+    camera1.target = { 0, 0};
+    camera1.offset.x = -playerX + SCREEN_WIDTH / 2;
+    camera1.offset.y = -playerY + SCREEN_HEIGHT / 2;
+    camera1.rotation = 0.0f;
+    camera1.zoom = 1.0f;
+
+    std::cout << playerX << " / " << playerY << std::endl;
+    std::cout << playerX << " / " << playerY << std::endl;
 
     // NOTE: This function setups render batching system for
     // maximum performance, all consecutive Draw() calls are
     // not processed until EndDrawing() is called
-    BeginDrawing();
+    
+    
+    EndTextureMode();
 
 	return UPDATE_CONTINUE;
 }
@@ -100,3 +123,4 @@ bool ModuleRender::DrawText(const char * text, int x, int y, Font font, int spac
 
     return ret;
 }
+
