@@ -20,7 +20,7 @@ class Car : public PhysicEntity
 public:
 
 	Car(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Texture2D _texture, Group type)
-		: PhysicEntity(physics->CreateRectangle(_x, _y, width, height, type, this), _listener, ColliderTypes::CAR)
+		: PhysicEntity(physics->CreateRectangle(_x, _y, width* SCALE, height* SCALE, type, this), _listener, ColliderTypes::CAR)
 		, texture(_texture)
 	{
 		recoveryTime.Start();
@@ -30,8 +30,13 @@ public:
 	{
 		int x, y;
 		body->GetPhysicPosition(x, y);
+		
+		//Get The top left corner of the car to draw from there ;)
+		x -= ((texture.width) /2) * cos(body->GetRotation())*SCALE;
+		y -= ((texture.height) /2) * sin(body->GetRotation())*SCALE;
+
 		DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
-		Rectangle{ (float)x, (float)y, (float)texture.width * scale, (float)texture.height * scale },
+		Rectangle{ (float)x, (float)y, (float)texture.width * scale * SCALE, (float)texture.height * scale * SCALE },
 		Vector2{ (float)texture.width * scale / 2.0f, (float)texture.height * scale / 2.0f }, body->GetRotation() * RAD2DEG, WHITE);
 
 

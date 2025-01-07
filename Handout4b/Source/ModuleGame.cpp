@@ -22,7 +22,7 @@ bool ModuleGame::Start()
 	bool ret = true;
 
 	car = LoadTexture("Assets/MiniPixelPack2/Cars/Player.png");
-	player = new Player(App->physics, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 18,16,this,car,LAND);
+	player = new Player(App->physics, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, car.width,car.height,this,car,LAND);
 	mud = new Mud(App->physics, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, 40, 40, this, LAND);
 	map = new Map(App->physics, 0,0, 2048, 3840, this, LAND);
 
