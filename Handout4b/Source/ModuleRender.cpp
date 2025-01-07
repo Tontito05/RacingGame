@@ -41,19 +41,27 @@ update_status ModuleRender::Update()
     playerX = App->scene_intro->player->GetPosition().x;
     playerY = App->scene_intro->player->GetPosition().y;
     
-    camera1.target = { playerX + 20, playerY + 20 };
-    
+        
     BeginDrawing();
     ClearBackground(background);
-    BeginMode2D(camera1);
-
-    EndMode2D();
     
-    camera1.target = { 0, 0};
-    camera1.offset.x = -playerX + SCREEN_WIDTH / 2;
-    camera1.offset.y = -playerY + SCREEN_HEIGHT / 2;
-    camera1.rotation = 0.0f;
-    camera1.zoom = 1.0f;
+    BeginMode2D(camera);
+
+    // Draw camera guides (debug purposes Mario)
+    for (int i = 0; i < SCREEN_WIDTH / 32 + 1; i++)
+    {
+        DrawLineV({ (float)32*i, 0 },  { (float)32 * i, (float)SCREEN_HEIGHT }, LIGHTGRAY);
+    }
+
+    for (int i = 0; i < SCREEN_HEIGHT / 32 + 1; i++)
+    {
+        DrawLineV( { 0, (float)32*i },  { (float)SCREEN_WIDTH, (float)32*i }, LIGHTGRAY);
+    }
+        
+    
+    camera.offset.x = playerX - SCREEN_WIDTH / 2;
+    camera.offset.y = playerY - SCREEN_HEIGHT / 2;
+    
 
     std::cout << playerX << " / " << playerY << std::endl;
     std::cout << playerX << " / " << playerY << std::endl;
@@ -63,7 +71,7 @@ update_status ModuleRender::Update()
     // not processed until EndDrawing() is called
     
     
-    EndTextureMode();
+    //EndTextureMode();
 
 	return UPDATE_CONTINUE;
 }

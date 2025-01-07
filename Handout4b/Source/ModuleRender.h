@@ -25,7 +25,12 @@ public:
 public:
 
 	Color background;
-	Camera2D camera1 = { 0 };	
+	Camera2D camera = {
+		camera.offset = { 200, 200 },
+		camera.target = { 0, 0 },
+		camera.rotation = 0.0f,
+		camera.zoom = 1.0f,
+	};
 
 	Vector2* playerPosition; // Player position
 };
