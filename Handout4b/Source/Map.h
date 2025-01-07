@@ -29,7 +29,7 @@ private:
 
 	Texture2D texture = LoadTexture("Assets/Level/Map.png");
 	float scale = 1.0f;
-	int points[224] = {
+	static constexpr int points[224] = {
 		1176, 47,
 		1177, 245,
 		1225, 337,
