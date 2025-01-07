@@ -131,6 +131,7 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	case ColliderTypes::MUD:
 		bodyA->body->SetLinearDamping(100);
+		bodyA->body->SetAngularDamping(100);
 		break;
 	case ColliderTypes::NULLCOL:
 		cout << "WARNING: " << bodyB << "'s ColliderType is NULL" << endl;
@@ -148,6 +149,7 @@ void ModuleGame::EndCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	case ColliderTypes::MUD:
 		bodyA->body->SetLinearDamping(0);
+		bodyA->body->SetAngularDamping(0);
 		break;
 	case ColliderTypes::NULLCOL:
 		cout << "WARNING: " << bodyB << "'s ColliderType is NULL" << endl;

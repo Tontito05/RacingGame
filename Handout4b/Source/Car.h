@@ -147,7 +147,7 @@ private:
 
 	//Frictions
 	float FrQueficient = 0.2;
-	float RotFriction = 0.05;
+	float RotFriction = 0.1;
 
 };
 
