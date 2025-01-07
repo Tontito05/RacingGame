@@ -37,21 +37,21 @@ update_status ModuleRender::PreUpdate()
 // Update: debug camera
 update_status ModuleRender::Update()
 {
-    camera1.target = App->scene_intro->player->GetPosition();
-    camera1.offset = { SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f };
-    camera1.rotation = 0.0f;
-    camera1.zoom = 1.0f;
+    camera.target = App->scene_intro->player->GetPosition();
+    camera.offset = { SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f };
+    camera.rotation = 0.0f;
+    camera.zoom = 1.0f;
 
     BeginDrawing();
     ClearBackground(RAYWHITE);
-    BeginMode2D(camera1); 
+    BeginMode2D(camera); 
 
 	//Render all the entities (I know this shouldnt be this way but or naw it works)
 	App->scene_intro->map->Render();    
     App->scene_intro->player->Render();
     App->scene_intro->mud->Render();
 
-    std::cout << "Camera target: " << camera1.target.x << " / " << camera1.target.y << std::endl;
+    std::cout << "Camera target: " << camera.target.x << " / " << camera.target.y << std::endl;
 
     EndMode2D();
 
