@@ -19,12 +19,18 @@ class Mud : public PhysicEntity
 		}
 		void Update() override
 		{
+
+		}
+		
+		void Render() override
+		{
 			int x, y;
 			body->GetPhysicPosition(x, y);
 			DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
 				Rectangle{ (float)x, (float)y, (float)texture.width * scale, (float)texture.height * scale },
 				Vector2{ (float)texture.width * scale / 2.0f, (float)texture.height * scale / 2.0f }, body->GetRotation() * RAD2DEG, WHITE);
 		}
+
 	private:
 
 		Texture2D texture = LoadTexture("Assets/Mud.png");;

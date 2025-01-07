@@ -28,25 +28,26 @@ public:
 
 	void Update() override 
 	{
-		int x, y;
-		body->GetPhysicPosition(x, y);
-		
-		//Get The top left corner of the car to draw from there ;)
-		x -= ((texture.width * SCALE) /2) * cos(body->GetRotation());
-		y -= ((texture.height * SCALE) /2) * sin(body->GetRotation());
-		
-		DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
-		Rectangle{ (float)x, (float)y, (float)texture.width * scale * SCALE, (float)texture.height * scale * SCALE },
-		Vector2{ (float)texture.width * scale / 2.0f, (float)texture.height * scale / 2.0f }, body->GetRotation() * RAD2DEG, WHITE);
-
-
-
 		ApplyMovement();
 
 		if (jump == true)
 		{
 			Jump();
 		}
+	}
+
+	void Render() override
+	{
+		int x, y;
+		body->GetPhysicPosition(x, y);
+
+		//Get The top left corner of the car to draw from there ;)
+		x -= ((texture.width * SCALE) / 2) * cos(body->GetRotation());
+		y -= ((texture.height * SCALE) / 2) * sin(body->GetRotation());
+
+		DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
+			Rectangle{ (float)x, (float)y, (float)texture.width * scale * SCALE, (float)texture.height * scale * SCALE },
+			Vector2{ (float)texture.width * scale / 2.0f, (float)texture.height * scale / 2.0f }, body->GetRotation() * RAD2DEG, WHITE);
 	}
 
 	int RayHit(vec2<int> ray, vec2<int> mouse, vec2<float>& normal) override

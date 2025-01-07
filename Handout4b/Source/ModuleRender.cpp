@@ -46,9 +46,10 @@ update_status ModuleRender::Update()
     ClearBackground(RAYWHITE);
     BeginMode2D(camera1); 
 
-	App->scene_intro->map->Update();    
-    App->scene_intro->player->Update();
-    App->scene_intro->mud->Update();
+	//Render all the entities (I know this shouldnt be this way but or naw it works)
+	App->scene_intro->map->Render();    
+    App->scene_intro->player->Render();
+    App->scene_intro->mud->Render();
 
     std::cout << "Camera target: " << camera1.target.x << " / " << camera1.target.y << std::endl;
 
