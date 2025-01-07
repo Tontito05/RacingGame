@@ -7,6 +7,7 @@
 #include "Car.h"
 #include "Mud.h"
 #include "Map.h"
+#include "IA.h"
 #include "raylib.h"
 #include <vector>
 #include <iostream>
@@ -35,10 +36,12 @@ public:
 	Player* player;
 	Mud* mud;
 	Map* map;
+	IA* ia;
 
 
 	//Textures TODO
 	Texture2D car;
+	Texture2D carOpponent;
 
 	vec2<int> ray;
 	bool ray_on;

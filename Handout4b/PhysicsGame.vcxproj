@@ -183,6 +183,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\IA.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\Mud.h" />
     <ClInclude Include="Source\PhysEntity.h" />
@@ -202,6 +203,7 @@
     <ClInclude Include="Source\Timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\IA.cpp" />
     <ClCompile Include="Source\Mud.cpp" />
     <ClCompile Include="Source\PhysEntity.cpp" />
     <ClCompile Include="Source\Car.cpp" />

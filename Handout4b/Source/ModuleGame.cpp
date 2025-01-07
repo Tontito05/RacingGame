@@ -22,7 +22,9 @@ bool ModuleGame::Start()
 	bool ret = true;
 
 	car = LoadTexture("Assets/MiniPixelPack2/Cars/Player.png");
+	carOpponent = LoadTexture("Assets/MiniPixelPack2/Cars/Bronze.png");
 	player = new Player(App->physics, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, car.width,car.height,this,car,LAND);
+	ia = new IA(App->physics, SCREEN_WIDTH / 2 - 64, SCREEN_HEIGHT / 2 -64, carOpponent.width, carOpponent.height, this, carOpponent, LAND);
 	mud = new Mud(App->physics, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, 40, 40, this, LAND);
 	map = new Map(App->physics, 0,0, 2048, 3840, this, LAND);
 
@@ -47,6 +49,8 @@ update_status ModuleGame::Update()
 	//Update Entities
 	map->Update();
 	player->Update();
+	ia->Pattern();
+	//ia->Update();
 	mud->Update();
 
 
@@ -131,7 +135,6 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		cout << "WARNING: " << bodyB << "'s ColliderType is NULL" << endl;
 		break;
 	default:
-		
 		break;
 	}
 }
