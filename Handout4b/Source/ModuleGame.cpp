@@ -129,6 +129,9 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	{
 	case ColliderTypes::CAR:
 		break;
+	case ColliderTypes::MAP:
+		cout << "MAP" << endl;
+		break;
 	case ColliderTypes::MUD:
 		bodyA->body->SetLinearDamping(100);
 		bodyA->body->SetAngularDamping(100);
@@ -146,6 +149,8 @@ void ModuleGame::EndCollision(PhysBody* bodyA, PhysBody* bodyB)
 	switch (bodyB->entity->colType)
 	{
 	case ColliderTypes::CAR:
+		break;
+	case ColliderTypes::MAP:
 		break;
 	case ColliderTypes::MUD:
 		bodyA->body->SetLinearDamping(0);

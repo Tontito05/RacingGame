@@ -15,7 +15,7 @@ public:
 	Map(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Group type)
 		: PhysicEntity(physics->CreateChain(_x, _y, points, 224, this), _listener, ColliderTypes::MAP)
 	{
-
+		readCSV(mapCSV);
 	}
 	void Update() override
 	{
@@ -147,5 +147,8 @@ private:
 		1124, 804,
 		1127, 47
 	};
+
+	string mapCSV = "Assets/Level/Map_Decoration.csv";
+	vector<vector<int>> readCSV(const string& filename);
 
 };

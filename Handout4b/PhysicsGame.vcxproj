@@ -204,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\IA.cpp" />
+    <ClCompile Include="Source\Map.cpp" />
     <ClCompile Include="Source\Mud.cpp" />
     <ClCompile Include="Source\PhysEntity.cpp" />
     <ClCompile Include="Source\Car.cpp" />
