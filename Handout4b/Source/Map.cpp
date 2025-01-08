@@ -39,7 +39,7 @@ void Map::createCollidersFromMap(const vector<vector<int>>& map, float tileWidth
             
             if (tileID == 194) 
             {
-                mPhysics->CreateRectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight, Group::LAND, this);
+                mPhysics->CreateRectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight, Group::LAND, this, b2_staticBody);
             }
         }
     }

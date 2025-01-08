@@ -100,13 +100,13 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, PhysicEntity* en
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, Group type, PhysicEntity* entity_)
+PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, Group type, PhysicEntity* entity_, b2BodyType btype)
 {
 	PhysBody* pbody = new PhysBody();
 	pbody->entity = entity_;
 
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = btype;
 	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
 	body.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
 
