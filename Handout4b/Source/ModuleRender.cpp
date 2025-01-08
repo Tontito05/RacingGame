@@ -48,11 +48,9 @@ update_status ModuleRender::Update()
 
 	//Render all the entities (I know this shouldnt be this way but or naw it works)
 
-
-
 	if (App->scene_intro->UI->inGame == true)
 	{
-		//App->scene_intro->map->Render();
+		App->scene_intro->map->Render();
 		App->scene_intro->player->Render();
 		App->scene_intro->ia->Render();
 		App->scene_intro->mud->Render();
