@@ -2,6 +2,8 @@
 #include <sstream>
 #include <string>
 
+#include "ModulePhysics.h"
+#include "Application.h"
 #include "Map.h"
 
 vector<vector<int>> Map::readCSV(const string& filename) {
@@ -26,4 +28,19 @@ vector<vector<int>> Map::readCSV(const string& filename) {
     }
 
     return map;
+}
+
+void Map::createCollidersFromMap(const vector<vector<int>>& map, float tileWidth, float tileHeight)
+{
+    for (size_t y = 0; y < map.size(); ++y) {
+        for (size_t x = 0; x < map[y].size(); ++x) {
+            int tileID = map[y][x];
+
+            
+            if (tileID == 194) 
+            {
+                mPhysics->CreateRectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight, Group::LAND, this);
+            }
+        }
+    }
 }

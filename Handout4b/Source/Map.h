@@ -3,6 +3,7 @@
 #include "Module.h"
 #include "PhysEntity.h"
 #include "Timer.h"
+#include "Globals.h"
 #include <iostream>
 #include <vector>
 
@@ -15,7 +16,9 @@ public:
 	Map(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Group type)
 		: PhysicEntity(physics->CreateChain(_x, _y, points, 224, this), _listener, ColliderTypes::MAP)
 	{
-		readCSV(mapCSV);
+		mPhysics = physics;
+		map = readCSV(mapCSV);
+		createCollidersFromMap(map, 16, 16);
 	}
 	void Update() override
 	{
@@ -149,6 +152,10 @@ private:
 	};
 
 	string mapCSV = "Assets/Level/Map_Decoration.csv";
+	vector<vector<int>> map;
+	ModulePhysics* mPhysics;
+
 	vector<vector<int>> readCSV(const string& filename);
+	void createCollidersFromMap(const vector<vector<int>>& map, float tileWidth, float tileHeight);
 
 };
