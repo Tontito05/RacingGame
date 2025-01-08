@@ -40,11 +40,8 @@
     <ClCompile Include="Source\IA.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-<<<<<<< Updated upstream
     <ClCompile Include="Source\Map.cpp">
-=======
     <ClCompile Include="Source\UIManager.cpp">
->>>>>>> Stashed changes
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
