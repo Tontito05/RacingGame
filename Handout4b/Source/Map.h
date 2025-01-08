@@ -17,8 +17,8 @@ public:
 		: PhysicEntity(physics->CreateChain(_x, _y, points, 224, this), _listener, ColliderTypes::MAP)
 	{
 		mPhysics = physics;
-		map = readCSV(mapCSV);
-		createCollidersFromMap(map, 16, 16);
+		decorationMap = readCSV(mapDecorationCSV);
+		mapDecorationFromCSV(decorationMap, 16, 16);
 	}
 	void Update() override
 	{
@@ -36,6 +36,19 @@ public:
 private:
 
 	Texture2D texture = LoadTexture("Assets/Level/Map.png");
+
+	ModulePhysics* mPhysics;
+
+	string mapDecorationCSV = "Assets/Level/Map_Decoration.csv";
+
+	vector<vector<int>> decorationMap;
+	vector<vector<int>> mudMap;
+
+
+	vector<vector<int>> readCSV(const string& filename);
+	void mapDecorationFromCSV(const vector<vector<int>>& map, float tileWidth, float tileHeight);
+
+
 	static constexpr int points[224] = {
 		1176, 47,
 		1177, 245,
@@ -150,12 +163,4 @@ private:
 		1124, 804,
 		1127, 47
 	};
-
-	string mapCSV = "Assets/Level/Map_Decoration.csv";
-	vector<vector<int>> map;
-	ModulePhysics* mPhysics;
-
-	vector<vector<int>> readCSV(const string& filename);
-	void createCollidersFromMap(const vector<vector<int>>& map, float tileWidth, float tileHeight);
-
 };

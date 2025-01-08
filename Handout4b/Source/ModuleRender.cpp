@@ -38,13 +38,19 @@ update_status ModuleRender::PreUpdate()
 update_status ModuleRender::Update()
 {
     camera.target = App->scene_intro->player->GetPosition();
+    //Previous Attempt Commented -Wakiren
+    //camera.target.x = App->scene_intro->player->body->body->GetPosition().x;
+    //camera.target.y = App->scene_intro->player->body->body->GetPosition().y;
     camera.offset = { SCREEN_WIDTH / 2.0f, SCREEN_HEIGHT / 2.0f };
     camera.rotation = 0.0f;
-    camera.zoom = 1.0f;
+    camera.zoom = 1.f;
 
     BeginDrawing();
     ClearBackground(RAYWHITE);
     BeginMode2D(camera); 
+
+    //cout << "PlayerX:" << App->scene_intro->player->body->body->GetPosition().x << endl;
+    //cout << "CameraX:" << camera.target.x - camera.offset.x;
 
 	//Render all the entities (I know this shouldnt be this way but or naw it works)
 

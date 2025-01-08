@@ -124,7 +124,7 @@ update_status ModuleGame::Update()
 	playerY = player->body->body->GetPosition().y;
 	
 	
-	std::cout << player->GearChange<< std::endl;
+	//std::cout << player->GearChange<< std::endl;
 
 	
 	return UPDATE_CONTINUE;
@@ -137,7 +137,7 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderTypes::CAR:
 		break;
 	case ColliderTypes::MAP:
-		cout << "MAP" << endl;
+		//cout << "MAP" << endl;
 		break;
 	case ColliderTypes::MUD:
 		bodyA->body->SetLinearDamping(100);
