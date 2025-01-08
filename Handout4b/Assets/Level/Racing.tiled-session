@@ -19,6 +19,10 @@
                 "y": -2555.75
             }
         },
+        "Mud.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "Sprite Sheet Road def.tsx": {
             "dynamicWrapping": false,
             "scaleInDock": 1,
@@ -28,13 +32,17 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "Sprite Sheet Road defada.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "Sprite Sheet Road.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
         }
     },
     "last.exportedFilePath": "D:/localRepos/RacingGame/Handout4b/Assets/Level",
-    "last.imagePath": "D:/localRepos/RacingGame/Handout4b/Assets/Level",
+    "last.imagePath": "D:/localRepos/RacingGame/Handout4b/Assets/MiniPixelPack2/Levels",
     "map.fixedSize": false,
     "map.lastUsedExportFilter": "Archivos CSV (*.csv)",
     "map.lastUsedFormat": "tmx",
@@ -46,6 +54,8 @@
     ],
     "project": "Racing.tiled-project",
     "recentFiles": [
+        "Mud.tsx",
+        "Sprite Sheet Road defada.tsx",
         "Sprite Sheet Road def.tsx",
         "Map.tmx",
         "Sprite Sheet Road.tsx",
