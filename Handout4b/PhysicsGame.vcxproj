@@ -202,6 +202,7 @@
     <ClInclude Include="Source\ModuleGame.h" />
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\UIManager.h" />
+    <ClInclude Include="Source\Text.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\IA.cpp" />
@@ -219,6 +220,7 @@
     <ClCompile Include="Source\ModuleGame.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
     <ClCompile Include="Source\UIManager.cpp" />
+    <ClCompile Include="Source\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(SolutionDir)raylib.vcxproj">

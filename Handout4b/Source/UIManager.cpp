@@ -2,6 +2,7 @@
 #include "Module.h"
 #include "ModuleRender.h"
 #include "UIManager.h"
+#include "Text.h"
 
 UIManager::UIManager()
 {
@@ -32,6 +33,9 @@ void UIManager::Start()
 	GearVisual = new UIelement(LoadTexture("Assets/UI_GENERAL/Gear.png"), KEY_ZERO, GAMEPAD_BUTTON_UNKNOWN);
 	GearVisual->setSetxture2(LoadTexture("Assets/UI_GENERAL/Gear.png"));
 
+	Chrono.Initialise("Assets/UI_GENERAL/Font.png", '0', 48);
+	Velocity.Initialise("Assets/UI_GENERAL/Font.png", '0', 48);
+
 	menuState = TITLE_SCREEN;
 }
 
@@ -60,6 +64,7 @@ update_status UIManager::Update()
 		else if (IsKeyReleased(InGame->key) || IsGamepadButtonReleased(0, InGame->button))
 		{
 			menuState = INGAME;
+			timer.Start();
 		}
 		else if (IsKeyReleased(Back_Keyboard) || IsGamepadButtonReleased(0, Back_Controller))
 		{
@@ -160,6 +165,9 @@ void UIManager::Render(Vector2 CameraPos)
 
 		JumpVisual->Draw(CameraPos);
 		GearVisual->Draw(CameraPos);
+
+		Chrono.Draw(CameraPos.x + 1110, CameraPos.y + 70, std::to_string(timer.ReadSec()), WHITE,2);
+		Velocity.Draw(CameraPos.x + 240, CameraPos.y + 25, std::to_string(PlayerVelocity*5), WHITE,3);
 
 		break;
 	default:

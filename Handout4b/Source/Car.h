@@ -32,7 +32,6 @@ public:
 	{
 		//cout << isColiding << endl;
 		ApplyMovement();
-
 		if (jump == true)
 		{
 			Jump();
@@ -194,8 +193,5 @@ public:
 	std::vector<b2Vec2> Gears;
 	int GearChange = 0;
 	bool CanChangeGear = false;
-
-	private:
-
 
 };

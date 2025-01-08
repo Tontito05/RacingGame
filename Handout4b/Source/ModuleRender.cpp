@@ -66,6 +66,7 @@ update_status ModuleRender::Update()
 	//Give the player to the UI to get some values from it
     App->scene_intro->UI->GetPlayerGear(App->scene_intro->player->CanChangeGear);
 	App->scene_intro->UI->GetPlayerJump(App->scene_intro->player->CanJump());
+	App->scene_intro->UI->GetPlayerVelocity(App->scene_intro->player->body->GetVelocity().LengthSquared());
 
     //std::cout << "Camera target: " << camera.target.x << " / " << camera.target.y << std::endl;
     EndMode2D();

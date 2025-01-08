@@ -1,6 +1,8 @@
 #pragma once
 #include "Globals.h"
 #include "Module.h"
+#include "Text.h"
+#include "Timer.h"
 
 class UIelement
 {
@@ -61,9 +63,14 @@ public:
 	{
 		activeGear = Pgear;
 	}
+	void GetPlayerVelocity(float f)
+	{
+		PlayerVelocity = f;
+	}
 
 	bool activeGear;
 	bool activeJump;
+	float PlayerVelocity;
 
 private:
 
@@ -76,6 +83,11 @@ private:
 
 	UIelement* JumpVisual;
 	UIelement* GearVisual;
+
+	Text Velocity;
+	Text Chrono;
+
+	Timer timer;
 
 	KeyboardKey Back_Keyboard = KEY_B;
 	GamepadButton Back_Controller = GAMEPAD_BUTTON_RIGHT_FACE_RIGHT;

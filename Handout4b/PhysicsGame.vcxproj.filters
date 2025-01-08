@@ -1,110 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source/Application.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source/Log.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source/Main.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source/ModuleAudio.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source/ModulePhysics.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source/ModuleRender.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source/ModuleWindow.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Timer.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ModuleGame.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Car.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\PhysEntity.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mud.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\IA.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Map.cpp">
-    <ClCompile Include="Source\UIManager.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
+    <ClCompile Include="Source\IA.cpp" />
+    <ClCompile Include="Source\Map.cpp" />
+    <ClCompile Include="Source\Mud.cpp" />
+    <ClCompile Include="Source\PhysEntity.cpp" />
+    <ClCompile Include="Source\Car.cpp" />
+    <ClCompile Include="Source/Application.cpp" />
+    <ClCompile Include="Source/Log.cpp" />
+    <ClCompile Include="Source/Main.cpp" />
+    <ClCompile Include="Source/ModuleAudio.cpp" />
+    <ClCompile Include="Source/ModulePhysics.cpp" />
+    <ClCompile Include="Source/ModuleRender.cpp" />
+    <ClCompile Include="Source/ModuleWindow.cpp" />
+    <ClCompile Include="Source\ModuleGame.cpp" />
+    <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\UIManager.cpp" />
+    <ClCompile Include="Source\Text.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source/p2Point.h">
-      <Filter>Headers\Containers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source/Application.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source/Globals.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source/Module.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source/ModuleAudio.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source/ModulePhysics.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source/ModuleRender.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source/ModuleWindow.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Timer.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ModuleGame.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Car.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\PhysEntity.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Mud.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Map.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\IA.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\UIManager.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="Headers">
-      <UniqueIdentifier>{d82c32f1-eea9-456f-981b-a7e64f40f8d1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources">
-      <UniqueIdentifier>{8fd46c61-4dab-4d27-8542-1af6dd78d6d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Headers\Containers">
-      <UniqueIdentifier>{39bd4360-6afc-44b3-8ba5-578b26392b24}</UniqueIdentifier>
-    </Filter>
+    <ClInclude Include="Source\IA.h" />
+    <ClInclude Include="Source\Map.h" />
+    <ClInclude Include="Source\Mud.h" />
+    <ClInclude Include="Source\PhysEntity.h" />
+    <ClInclude Include="Source\Car.h" />
+    <ClInclude Include="Source/Application.h" />
+    <ClInclude Include="Source/Globals.h" />
+    <ClInclude Include="Source/ModulePhysics.h" />
+    <ClInclude Include="Source/Module.h" />
+    <ClInclude Include="Source/ModuleAudio.h" />
+    <ClInclude Include="Source/ModuleRender.h" />
+    <ClInclude Include="Source/ModuleWindow.h" />
+    <ClInclude Include="Source/p2Point.h" />
+    <ClInclude Include="Source\ModuleGame.h" />
+    <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\UIManager.h" />
+    <ClInclude Include="Source\Text.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\resources.rc" />

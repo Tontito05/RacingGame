@@ -122,11 +122,7 @@ update_status ModuleGame::Update()
 	float playerX, playerY;
 	playerX = player->body->body->GetPosition().x;
 	playerY = player->body->body->GetPosition().y;
-	
-	
-	//std::cout << player->GearChange<< std::endl;
 
-	
 	return UPDATE_CONTINUE;
 }
 
