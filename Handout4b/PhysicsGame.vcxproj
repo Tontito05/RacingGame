@@ -201,6 +201,7 @@
     <ClInclude Include="Source/p2Point.h" />
     <ClInclude Include="Source\ModuleGame.h" />
     <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\UIManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\IA.cpp" />
@@ -217,6 +218,7 @@
     <ClCompile Include="Source/ModuleWindow.cpp" />
     <ClCompile Include="Source\ModuleGame.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(SolutionDir)raylib.vcxproj">

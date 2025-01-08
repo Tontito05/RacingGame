@@ -47,13 +47,22 @@ update_status ModuleRender::Update()
     BeginMode2D(camera); 
 
 	//Render all the entities (I know this shouldnt be this way but or naw it works)
-	//App->scene_intro->map->Render();    
-    App->scene_intro->player->Render();
-	App->scene_intro->ia->Render();
-    App->scene_intro->mud->Render();
+
+	if (App->scene_intro->UI->inGame == true)
+	{
+		//App->scene_intro->map->Render();
+		App->scene_intro->player->Render();
+		App->scene_intro->ia->Render();
+		App->scene_intro->mud->Render();
+	}
+    App->scene_intro->UI->Render(getCameraPosition());
+
+	//Give the player to the UI to get some values from it
+    App->scene_intro->UI->GetPlayerGear(App->scene_intro->player->CanChangeGear);
+	App->scene_intro->UI->GetPlayerJump(App->scene_intro->player->CanJump());
+
 
     //std::cout << "Camera target: " << camera.target.x << " / " << camera.target.y << std::endl;
-
     EndMode2D();
 
     EndDrawing(); 
@@ -116,3 +125,8 @@ bool ModuleRender::DrawText(const char * text, int x, int y, Font font, int spac
     return ret;
 }
 
+Vector2 ModuleRender::getCameraPosition() const
+{
+	Vector2 position = { camera.target.x-SCREEN_WIDTH/2, camera.target.y-SCREEN_HEIGHT/2 };
+	return position;
+}

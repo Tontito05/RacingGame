@@ -4,6 +4,7 @@
 #include "ModuleGame.h"
 #include "ModuleAudio.h"
 #include "ModulePhysics.h"
+#include "UIManager.h"
 #include <iostream>
 
 
@@ -27,6 +28,7 @@ bool ModuleGame::Start()
 	ia = new IA(App->physics, SCREEN_WIDTH / 2 - 64, SCREEN_HEIGHT / 2 -64, carOpponent.width, carOpponent.height, this, carOpponent, LAND);
 	mud = new Mud(App->physics, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, 40, 40, this, LAND);
 	map = new Map(App->physics, 0,0, 2048, 3840, this, LAND);
+	UI = new UIManager();
 
 
 	return ret;
@@ -45,14 +47,17 @@ bool ModuleGame::CleanUp()
 // Update: draw background
 update_status ModuleGame::Update()
 {
-
-	//Update Entities
-	map->Update();
-	player->Update();
-	ia->Pattern();
-	//ia->Update();
-	mud->Update();
-
+	//Check if in game, if not, just update the UI
+	if (UI->inGame == true)
+	{
+		//Update Entities
+		map->Update();
+		player->Update();
+		ia->Pattern();
+		//ia->Update();
+		mud->Update();
+	}
+	UI->Update();
 
 	float leftJoystickX = GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X);
 
@@ -100,15 +105,17 @@ update_status ModuleGame::Update()
 		player->GearBack();
 
 	}
-	if (player->CheckGear() == true)//Manage the gear change
+	if (player->CanChangeGear == true && player->GearChange <3)//Manage the gear change
 	{
-		DrawText("Press G to change gear", 10, 10, 20, RED);
-
-		if (IsKeyDown(KEY_G) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT))//TODO put a timer to change the gear
+		if (IsKeyPressed(KEY_G) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_LEFT))//TODO put a timer to change the gear
 		{
 			//Augment the gear and the player acceleration/Brake
 			player->GearChange++;
 		}
+	}
+	else
+	{
+		player->CanChangeGear = false;
 	}
 
 	// Update camera position to follow the player
@@ -117,7 +124,7 @@ update_status ModuleGame::Update()
 	playerY = player->body->body->GetPosition().y;
 	
 	
-	//std::cout << player->GearChange<< std::endl;
+	std::cout << player->GearChange<< std::endl;
 
 	
 	return UPDATE_CONTINUE;

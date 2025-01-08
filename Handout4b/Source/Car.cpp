@@ -111,17 +111,16 @@ void Car::Jump()
 		}
 	}
 }
-bool Car::TryJump() 
+bool Car::TryJump()
 {
-	if (recoveryTime.ReadSec() > 1 && jump == false)
+	if (recoveryTime.ReadSec() > 1 )
 	{
 		jump = true;
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+
+	return false;
+
 }
 
 
@@ -260,7 +259,7 @@ bool Player::CheckGear()
 	switch (GearChange)
 	{
 	case 0:
-		Acceleration = { 3,3 };
+		Acceleration = { 4,4 };
 		brake = { Acceleration.x/2,Acceleration.y/2 };
 
 		DriftLerp = 0.05;
@@ -269,7 +268,7 @@ bool Player::CheckGear()
 		break;
 	case 1:
 
-		Acceleration = { 5,5 };
+		Acceleration = { 6,6 };
 		brake = { Acceleration.x / 2,Acceleration.y / 2 };
 
 		DriftLerp = 0.04;
@@ -294,7 +293,7 @@ bool Player::CheckGear()
 		break;
 
 	case 3:
-		Acceleration = { 15,15 };
+		Acceleration = { 12,12 };
 		brake = { Acceleration.x / 2,Acceleration.y / 2 };
 
 		DriftLerp = 0.02;
@@ -309,24 +308,22 @@ bool Player::CheckGear()
 	}
 
 	//Naw chack if the player should or not change the gear
-	if (GearChange < 3 && PlayerVel.Length() > GetMaxVel().Length()*0.8)
+	if (GearChange < 3 && PlayerVel.Length() > GetMaxVel().Length())
 	{
+		CanChangeGear = true;
 		return true;
 	}
-	if (PlayerVel.Length() < GetMaxVel().Length())
-	{
-		return false;
-	}
-
-
+	 
+	return false;
 
 }
 void Player::GearBack()
 {
 	b2Vec2 PlayerVel = body->GetVelocity();
 	//Set the gears back if nessessary
-	if (GearChange != 0 && PlayerVel.Length() < Gears[GearChange - 1].Length()*0.3)
+	if (GearChange != 0 && PlayerVel.Length() < Gears[GearChange - 1].Length()*0.8)
 	{
+		CanChangeGear = false;
 		GearChange--;
 	}
 }

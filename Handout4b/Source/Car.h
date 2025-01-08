@@ -140,6 +140,17 @@ public:
 	//max air time
 	float airTime = 0.5;
 
+	//Check
+	bool CanJump() 
+	{
+		if (recoveryTime.ReadSec() > airTime) 
+		{ 
+			return true; 
+		} 
+		
+		return false;
+	}
+
 private:
 
 	//Texture
@@ -182,6 +193,7 @@ public:
 	//Gears --> They set a maximum velocity to the car and also can be changed with G
 	std::vector<b2Vec2> Gears;
 	int GearChange = 0;
+	bool CanChangeGear = false;
 
 	private:
 

@@ -11,10 +11,10 @@
 #include "raylib.h"
 #include <vector>
 #include <iostream>
+#include "UIManager.h"
 
 class PhysBody;
 class PhysicEntity;
-
 
 class ModuleGame : public Module
 {
@@ -38,7 +38,7 @@ public:
 	Mud* mud;
 	Map* map;
 	IA* ia;
-
+	UIManager* UI;
 
 	//Textures TODO
 	Texture2D car;
