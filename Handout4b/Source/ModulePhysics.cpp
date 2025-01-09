@@ -168,7 +168,7 @@ PhysBody* ModulePhysics::CreateRectangleSensor(int x, int y, int width, int heig
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size, PhysicEntity* entity_)
+PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size, Group type, PhysicEntity* entity_)
 {
 	PhysBody* pbody = new PhysBody();
 	pbody->entity = entity_;
@@ -194,6 +194,11 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size, 
 	b2FixtureDef fixture;
 	fixture.shape = &shape;
 
+
+	fixture.filter.groupIndex = 0;
+	fixture.filter.categoryBits = type;
+	fixture.filter.maskBits = type;
+
 	b->CreateFixture(&fixture);
 
 	delete p;
@@ -204,6 +209,47 @@ PhysBody* ModulePhysics::CreateChain(int x, int y, const int* points, int size, 
 	return pbody;
 }
 
+PhysBody* ModulePhysics::CreateChainSensor(int x, int y, const int* points, int size, Group type, PhysicEntity* entity_)
+{
+	PhysBody* pbody = new PhysBody();
+	pbody->entity = entity_;
+
+	b2BodyDef body;
+	body.type = b2_dynamicBody;
+	body.position.Set(PIXEL_TO_METERS(x), PIXEL_TO_METERS(y));
+	body.userData.pointer = reinterpret_cast<uintptr_t>(pbody);
+
+	b2Body* b = world->CreateBody(&body);
+
+	b2ChainShape shape;
+	b2Vec2* p = new b2Vec2[size / 2];
+
+	for (int i = 0; i < size / 2; ++i)
+	{
+		p[i].x = PIXEL_TO_METERS(points[i * 2 + 0]);
+		p[i].y = PIXEL_TO_METERS(points[i * 2 + 1]);
+	}
+
+	shape.CreateLoop(p, size / 2);
+
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	fixture.density = 1.0f;
+	fixture.isSensor = true;
+
+	fixture.filter.groupIndex = 0;
+	fixture.filter.categoryBits = type;
+	fixture.filter.maskBits = type;
+
+	b->CreateFixture(&fixture);
+
+	delete p;
+
+	pbody->body = b;
+	pbody->width = pbody->height = 0;
+
+	return pbody;
+}
 // 
 update_status ModulePhysics::PostUpdate()
 {

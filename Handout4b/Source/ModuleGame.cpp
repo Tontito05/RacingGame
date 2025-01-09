@@ -126,7 +126,7 @@ update_status ModuleGame::Update()
 		player->SetYvelocity(0);
 	}
 
-	std::cout << GetMousePosition().x << "     " << GetMousePosition().y << endl;
+	//std::cout << GetMousePosition().x << "     " << GetMousePosition().y << endl;
 
 	// Update camera position to follow the player
 	float playerX, playerY;
@@ -143,7 +143,11 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderTypes::CAR:
 		break;
 	case ColliderTypes::MAP:
-		//cout << "MAP" << endl;
+		if (bodyA->entity->colType == ColliderTypes::CAR) 
+		{
+			
+		}
+
 		break;
 	case ColliderTypes::MUD:
 		bodyA->body->SetLinearDamping(100);
@@ -164,6 +168,7 @@ void ModuleGame::EndCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderTypes::CAR:
 		break;
 	case ColliderTypes::MAP:
+
 		break;
 	case ColliderTypes::MUD:
 		bodyA->body->SetLinearDamping(0);

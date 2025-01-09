@@ -66,7 +66,8 @@ public:
 	PhysBody* CreateCircle(int x, int y, int radius, PhysicEntity* entity_);
 	PhysBody* CreateRectangle(int x, int y, int width, int height, Group type, PhysicEntity* entity_, b2BodyType btype = b2_dynamicBody);
 	PhysBody* CreateRectangleSensor(int x, int y, int width, int height, Group type, PhysicEntity* entity_);
-	PhysBody* CreateChain(int x, int y, const int* points, int size, PhysicEntity* entity_);
+	PhysBody* CreateChain(int x, int y, const int* points, int size, Group type, PhysicEntity* entity_);
+	PhysBody* CreateChainSensor(int x, int y, const int* points, int size, Group type, PhysicEntity* entity_);
 
 	// b2ContactListener ---
 	void BeginContact(b2Contact* contact);

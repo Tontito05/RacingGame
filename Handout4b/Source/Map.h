@@ -14,7 +14,7 @@ class Map : public PhysicEntity
 public:
 
 	Map(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Group type)
-		: PhysicEntity(physics->CreateChain(_x, _y, points, 224, this), _listener, ColliderTypes::MAP)
+		: PhysicEntity(physics->CreateChainSensor(_x, _y, points, 224, LAND, this), _listener, ColliderTypes::MAP)
 	{
 		mPhysics = physics;
 		decorationMap = readCSV(mapDecorationCSV);
