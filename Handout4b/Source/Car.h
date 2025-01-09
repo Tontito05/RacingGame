@@ -3,6 +3,7 @@
 #include "Module.h"
 #include "PhysEntity.h"
 #include "Timer.h"
+#include "Map.h"
 #include <iostream>
 #include <vector>
 
@@ -167,9 +168,11 @@ class Player : public Car
 public:
 
 	//Player constructor
-	Player(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Texture2D _texture, Group type)
+	Player(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Texture2D _texture, Group type, Map* _map)
 		: Car(physics, _x, _y, width, height, _listener, _texture, type)
 	{
+		map = _map;
+		trackPoints = B2Vec2ListFromArray(map->points, 224);
 		//Set the gears
 		Gears.push_back({ 1,1 });
 		Gears.push_back({ 2,2 });
@@ -178,6 +181,16 @@ public:
 	}
 
 	//Player functions////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	void Update() override 
+	{
+		ApplyMovement();
+		if (jump == true)
+		{
+			Jump();
+		}
+		cout << PointInsidePoly({ body->body->GetPosition().x, body->body->GetPosition().y }, trackPoints) << endl;
+	}
 
 	//Check if it can change gears
 	bool CheckGear();
@@ -189,10 +202,17 @@ public:
 	// Method to get the car's position
 	Vector2 GetPosition();
 
+	vector<b2Vec2> B2Vec2ListFromArray(const int* points, int numPoints);
+
+	bool PointInsidePoly(const b2Vec2& point, vector<b2Vec2> trackBoundaryPoints);
 
 	//Gears --> They set a maximum velocity to the car and also can be changed with G
 	std::vector<b2Vec2> Gears;
 	int GearChange = 0;
 	bool CanChangeGear = false;
+
+	Map* map;
+
+	vector<b2Vec2> trackPoints;
 
 };

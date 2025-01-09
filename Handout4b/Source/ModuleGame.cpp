@@ -25,9 +25,9 @@ bool ModuleGame::Start()
 	car = LoadTexture("Assets/MiniPixelPack2/Cars/Player.png");
 	carOpponent = LoadTexture("Assets/MiniPixelPack2/Cars/Bronze.png");
 	ia = new IA(App->physics, 332*SCALE -632, 330*SCALE -64, carOpponent.width, carOpponent.height, this, carOpponent, LAND);
-	player = new Player(App->physics, 332*SCALE -600, 330 * SCALE, car.width,car.height,this,car,LAND);
+	map = new Map(App->physics, 0, 0, 79 * 16, 4 * 16, this, LAND);
+	player = new Player(App->physics, 332*SCALE -600, 330 * SCALE, car.width,car.height,this,car,LAND, map);
 	mud = new Mud(App->physics, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, 40, 40, this, LAND);
-	map = new Map(App->physics, 0,0, 79*16, 4*16, this, LAND);
 	UI = new UIManager(App);
 
 
