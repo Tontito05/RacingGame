@@ -28,7 +28,7 @@ bool ModuleGame::Start()
 	ia = new IA(App->physics, SCREEN_WIDTH / 2 - 64, SCREEN_HEIGHT / 2 -64, carOpponent.width, carOpponent.height, this, carOpponent, LAND);
 	mud = new Mud(App->physics, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, 40, 40, this, LAND);
 	map = new Map(App->physics, 0,0, 79*16, 4*16, this, LAND);
-	UI = new UIManager();
+	UI = new UIManager(App);
 
 
 	return ret;
@@ -47,6 +47,7 @@ bool ModuleGame::CleanUp()
 // Update: draw background
 update_status ModuleGame::Update()
 {
+		
 	//Check if in game, if not, just update the UI
 	if (UI->inGame == true)
 	{
