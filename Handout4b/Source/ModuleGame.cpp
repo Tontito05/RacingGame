@@ -62,18 +62,18 @@ update_status ModuleGame::Update()
 
 	float leftJoystickX = GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_X);
 
-		if (IsKeyDown(KEY_A) || leftJoystickX < -0.2f)
-		{
-			player->Rotate(-1);
-		}
-		else if (IsKeyDown(KEY_D) || leftJoystickX > 0.2f)
-		{
-			player->Rotate(1);
-		}
-		else
-		{
-			player->Rotate(0);
-		}
+	if (IsKeyDown(KEY_A) || leftJoystickX < -0.2f)
+	{
+		player->Rotate(-1);
+	}
+	else if (IsKeyDown(KEY_D) || leftJoystickX > 0.2f)
+	{
+		player->Rotate(1);
+	}
+	else
+	{
+		player->Rotate(0);
+	}
 
 	if (IsKeyDown(KEY_A) || leftJoystickX < -0.2f)
 	{
