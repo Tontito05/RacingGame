@@ -163,14 +163,14 @@ void Car::ApplyMovement()
 	CheckEps();
 
 	//Check Road Limits
-	RoadLimits();
+	//RoadLimits();
 
 	//get the angle of the car inside the 360 degree range
 	float angle = normalizeAngle(body->body->GetAngle());
 
 	switch (state)
 	{
-	case STATES::DRIVEING:
+	case STATES::DRIVING:
 
 		direction = lerpAngle(GetAngleOfVector(body->GetVelocity()), angle, NormalLerp);
 		RotForce = 1;
@@ -189,7 +189,7 @@ void Car::ApplyMovement()
 		//This checks if the angles are as close together to be considered the same
 		if (std::fabs(GetAngleOfVector(body->GetVelocity()) - angle) <= EPS)
 		{
-			state = STATES::DRIVEING;
+			state = STATES::DRIVING;
 		}
 
 		RotForce = 1;

@@ -174,14 +174,14 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		
 		if (bodyA->entity->colType == ColliderTypes::CAR && bodyB->body->GetFixtureList()->IsSensor() == true) 
 		{
-			bodyA->entity->OnRoad = !bodyA->entity->OnRoad;
+			//bodyA->entity->OnRoad = !bodyA->entity->OnRoad;
 		}
 
 		break;
 	case ColliderTypes::MUD:
 		if (bodyA->entity->colType == ColliderTypes::CAR) 
 		{
-			bodyA->body->SetLinearDamping(1000);
+			bodyA->body->SetLinearDamping(100);
 			bodyA->body->SetAngularDamping(100);
 		}
 

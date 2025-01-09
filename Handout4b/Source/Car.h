@@ -10,7 +10,7 @@ using namespace std;
 
 enum class STATES
 {
-	DRIVEING,
+	DRIVING,
 	DRIFTING,
 	END_DRIFTING,
 	JUMPING,
@@ -119,7 +119,7 @@ public:
 	float RotForce;
 
 	//Car state
-	STATES state = STATES::DRIVEING;
+	STATES state = STATES::DRIVING;
 
 	//Delta time
 	float dt  = GetFrameTime();
