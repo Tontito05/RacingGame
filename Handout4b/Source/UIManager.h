@@ -31,13 +31,13 @@ private:
 
 };
 
-class UIManager
+class UIManager : public Module
 {
 public:
-	UIManager();
+	UIManager(Application* app, bool start_enabled = true);
 	~UIManager();
 
-	void Start();
+	bool Start();
 
 	enum MenuStates
 	{
@@ -96,4 +96,8 @@ private:
 
 	KeyboardKey Back_Keyboard = KEY_B;
 	GamepadButton Back_Controller = GAMEPAD_BUTTON_RIGHT_FACE_RIGHT;
+
+	Application* app;
+
+	Music menuMusic;
 };

@@ -3,12 +3,16 @@
 #include "ModuleRender.h"
 #include "UIManager.h"
 #include "Text.h"
+#include "Application.h"
+#include "ModuleAudio.h"
 
-UIManager::UIManager()
+UIManager::UIManager(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	Start();
 }
-void UIManager::Start()
+UIManager::~UIManager() {}
+
+bool UIManager::Start()
 {
 	TitleScreen = new UIelement(LoadTexture("Assets/UI_PC/PC_Title.png"), KEY_SPACE, GAMEPAD_BUTTON_RIGHT_FACE_DOWN);
 	TitleScreen->setSetxture2(LoadTexture("Assets/UI_CONTROLLER/Controller_Title.png"));
@@ -47,10 +51,19 @@ void UIManager::Start()
 	Velocity.Initialise("Assets/UI_GENERAL/Font.png", '0', 48);
 
 	menuState = TITLE_SCREEN;
+		
+	// Use ModuleAudio to play music
+	if (App->audio != nullptr) {
+		SetMasterVolume(1.0f);
+		App->audio->PlayMusic("Assets/Audio/menuMusic.wav");
+	}
+
+	return true;
 }
 
 update_status UIManager::Update()
 {
+	
 	switch (menuState)
 	{
 	case MenuStates::TITLE_SCREEN:
@@ -58,7 +71,7 @@ update_status UIManager::Update()
 		if (IsKeyReleased(TitleScreen->key) || IsGamepadButtonReleased(0, TitleScreen->button))
 		{
 			menuState = MAIN_MENU;
-		}
+		}		
 
 		break;
 	case MenuStates::MAIN_MENU:

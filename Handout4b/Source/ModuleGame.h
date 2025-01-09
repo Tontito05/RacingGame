@@ -47,11 +47,4 @@ public:
 	vec2<int> ray;
 	bool ray_on;
 
-	//Music & sfx
-	uint32 menuMusic;
-	uint32 ingameMusic;
-
-	uint32 click_fx;
-	uint32 drift_fx;
-	uint32 jump_fx;
 };
