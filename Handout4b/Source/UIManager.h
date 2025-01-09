@@ -101,4 +101,7 @@ private:
 
 	uint32 menuMusic;
 	uint32 inGameMusic;
+
+	uint32 menuMusicMP3;
+	uint32 inGameMusicMP3;
 };
