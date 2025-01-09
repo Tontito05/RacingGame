@@ -30,7 +30,6 @@ public:
 
 	void Update() override 
 	{
-		//cout << isColiding << endl;
 		ApplyMovement();
 		if (jump == true)
 		{
@@ -94,6 +93,8 @@ public:
 	//CHECK EPS
 	void CheckEps();
 
+	//ROAD LIMITS
+	void RoadLimits();
 
 	//VARIABLES///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	

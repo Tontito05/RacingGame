@@ -145,7 +145,7 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderTypes::MAP:
 		if (bodyA->entity->colType == ColliderTypes::CAR) 
 		{
-			
+			bodyA->entity->OnRoad = !bodyA->entity->OnRoad;
 		}
 
 		break;

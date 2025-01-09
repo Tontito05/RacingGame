@@ -38,4 +38,5 @@ public:
 	PhysBody* body;
 	Module* listener;
 	ColliderTypes colType;
+	bool OnRoad;
 };

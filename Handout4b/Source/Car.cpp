@@ -162,7 +162,8 @@ void Car::ApplyMovement()
 	//Check The values of the velocities to stop it moveing
 	CheckEps();
 
-
+	//Check Road Limits
+	RoadLimits();
 
 	//get the angle of the car inside the 360 degree range
 	float angle = normalizeAngle(body->body->GetAngle());
@@ -228,6 +229,18 @@ void Car::CheckEps()
 	if (abs(body->GetVelocity().y) < EPS)
 	{
 		SetYvelocity(0);
+	}
+}
+
+void Car::RoadLimits()
+{
+	if (body->entity->OnRoad) 
+	{
+		body->body->SetLinearDamping(0);
+	}
+	else 
+	{
+		body->body->SetLinearDamping(50);
 	}
 }
 
