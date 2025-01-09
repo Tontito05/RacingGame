@@ -24,8 +24,8 @@ bool ModuleGame::Start()
 
 	car = LoadTexture("Assets/MiniPixelPack2/Cars/Player.png");
 	carOpponent = LoadTexture("Assets/MiniPixelPack2/Cars/Bronze.png");
-	player = new Player(App->physics, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, car.width,car.height,this,car,LAND);
-	ia = new IA(App->physics, SCREEN_WIDTH / 2 - 64, SCREEN_HEIGHT / 2 -64, carOpponent.width, carOpponent.height, this, carOpponent, LAND);
+	ia = new IA(App->physics, 332*SCALE -632, 330*SCALE -64, carOpponent.width, carOpponent.height, this, carOpponent, LAND);
+	player = new Player(App->physics, 332*SCALE -600, 330 * SCALE, car.width,car.height,this,car,LAND);
 	mud = new Mud(App->physics, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, 40, 40, this, LAND);
 	map = new Map(App->physics, 0,0, 79*16, 4*16, this, LAND);
 	UI = new UIManager(App);
@@ -74,6 +74,22 @@ update_status ModuleGame::Update()
 		{
 			player->Rotate(0);
 		}
+
+	if (IsKeyDown(KEY_A) || leftJoystickX < -0.2f)
+	{
+		player->Rotate(-1);
+	}
+	else if (IsKeyDown(KEY_D) || leftJoystickX > 0.2f)
+	{
+		player->Rotate(1);
+	}
+	else
+	{
+		player->Rotate(0);
+	}
+
+
+
 	
 	if (player->CheckGear() == false)
 	{
@@ -90,7 +106,7 @@ update_status ModuleGame::Update()
 		{
 			player->state = STATES::DRIFTING;
 		}
-		else if (player->state == STATES::DRIFTING && (IsKeyUp(KEY_LEFT_SHIFT) || GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_TRIGGER) > 0.5f))
+		else if (player->state == STATES::DRIFTING && (IsKeyUp(KEY_LEFT_SHIFT) || ia->state == STATES::END_DRIFTING || GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_TRIGGER) > 0.5f))
 		{
 			player->state = STATES::END_DRIFTING;
 		}
@@ -122,7 +138,22 @@ update_status ModuleGame::Update()
 		UI->menuState = UIManager::MenuStates::FINISH;
 		player->SetXvelocity(0);
 		player->SetYvelocity(0);
+		ia->SetXvelocity(0);
+		ia->SetYvelocity(0);
 	}
+
+	//std::cout << GetMousePosition().x << "     " << GetMousePosition().y << endl;
+
+	// Update camera position to follow the player
+	float playerX, playerY;
+	playerX = player->body->body->GetPosition().x;
+	playerY = player->body->body->GetPosition().y;
+
+	float iaX, iaY;
+	iaX = ia->body->body->GetPosition().x;
+	iaY = ia->body->body->GetPosition().y;
+
+	std::cout << "Player: " << playerX << " " << playerY << " IA: " << iaX << " " << iaY << endl;
 
 	return UPDATE_CONTINUE;
 }
