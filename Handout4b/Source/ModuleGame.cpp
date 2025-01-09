@@ -118,6 +118,16 @@ update_status ModuleGame::Update()
 		player->CanChangeGear = false;
 	}
 
+	//DEBUG FINISH
+	if (IsKeyPressed(KEY_F))
+	{
+		UI->menuState = UIManager::MenuStates::FINISH;
+		player->SetXvelocity(0);
+		player->SetYvelocity(0);
+	}
+
+	std::cout << GetMousePosition().x << "     " << GetMousePosition().y << endl;
+
 	// Update camera position to follow the player
 	float playerX, playerY;
 	playerX = player->body->body->GetPosition().x;

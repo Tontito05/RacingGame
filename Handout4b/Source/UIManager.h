@@ -47,6 +47,7 @@ public:
 		CREDITS,
 		PAUSE_MENU,
 		INGAME,
+		FINISH
 	};
 
 	MenuStates menuState = TITLE_SCREEN;
@@ -80,9 +81,13 @@ private:
 	UIelement* Credits;
 	UIelement* PauseMenu;
 	UIelement* InGame;
+	UIelement* Finish;
 
 	UIelement* JumpVisual;
 	UIelement* GearVisual;
+	UIelement* Star1;
+	UIelement* Star2;
+	UIelement* Star3;
 
 	Text Velocity;
 	Text Chrono;

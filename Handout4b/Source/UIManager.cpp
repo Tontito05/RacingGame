@@ -28,10 +28,20 @@ void UIManager::Start()
 	InGame = new UIelement(LoadTexture("Assets/UI_PC/PC_InGame.png"), KEY_W, GAMEPAD_BUTTON_LEFT_FACE_UP);
 	InGame->setSetxture2(LoadTexture("Assets/UI_CONTROLLER/Controller_InGame.png"));
 
+	Finish = new UIelement(LoadTexture("Assets/UI_PC/PC_Finish.png"), KEY_TAB, GAMEPAD_BUTTON_MIDDLE_RIGHT);
+	Finish->setSetxture2(LoadTexture("Assets/UI_CONTROLLER/Controller_Finish.png"));
+
 	JumpVisual = new UIelement(LoadTexture("Assets/UI_GENERAL/Jump.png"), KEY_ZERO, GAMEPAD_BUTTON_UNKNOWN);
 	JumpVisual->setSetxture2(LoadTexture("Assets/UI_GENERAL/Jump.png"));
 	GearVisual = new UIelement(LoadTexture("Assets/UI_GENERAL/Gear.png"), KEY_ZERO, GAMEPAD_BUTTON_UNKNOWN);
 	GearVisual->setSetxture2(LoadTexture("Assets/UI_GENERAL/Gear.png"));
+
+	Star1 = new UIelement(LoadTexture("Assets/UI_GENERAL/Star1.png"), KEY_ZERO, GAMEPAD_BUTTON_UNKNOWN);
+	Star1->setSetxture2(LoadTexture("Assets/UI_GENERAL/Star1.png"));
+	Star2 = new UIelement(LoadTexture("Assets/UI_GENERAL/Star2.png"), KEY_ZERO, GAMEPAD_BUTTON_UNKNOWN);
+	Star2->setSetxture2(LoadTexture("Assets/UI_GENERAL/Star2.png"));
+	Star3 = new UIelement(LoadTexture("Assets/UI_GENERAL/Star3.png"), KEY_ZERO, GAMEPAD_BUTTON_UNKNOWN);
+	Star3->setSetxture2(LoadTexture("Assets/UI_GENERAL/Star3.png"));
 
 	Chrono.Initialise("Assets/UI_GENERAL/Font.png", '0', 48);
 	Velocity.Initialise("Assets/UI_GENERAL/Font.png", '0', 48);
@@ -110,6 +120,21 @@ update_status UIManager::Update()
 		}
 
 		break;
+	case MenuStates::FINISH:
+
+		timer.Stop();
+
+		if (IsKeyReleased(Finish->key) || IsGamepadButtonReleased(0, Finish->button))
+		{
+			menuState = MAIN_MENU;
+		}
+		if (IsKeyReleased(Back_Keyboard) || IsGamepadButtonReleased(0, Back_Controller))
+		{
+			menuState = MAIN_MENU;
+		}
+
+		break;
+
 	default:
 		break;
 	}
@@ -166,10 +191,29 @@ void UIManager::Render()
 		JumpVisual->Draw();
 		GearVisual->Draw();
 
-		Chrono.Draw(  1110,   70, std::to_string(timer.ReadSec()), WHITE,2);
+		Chrono.Draw(1110, 70, std::to_string(timer.ReadSec()), WHITE, 2);
 		Velocity.Draw(  240,  25, std::to_string(PlayerVelocity*5), WHITE,3);
 
 		break;
+	case MenuStates::FINISH:
+
+		Finish->Draw();
+		InGame->Draw();
+
+		JumpVisual->Draw();
+		GearVisual->Draw();
+
+		Chrono.Draw(1110, 70, std::to_string(timer.ReadSec()), WHITE, 2);
+		Chrono.Draw(470, 300, std::to_string(timer.ReadSec()), WHITE, 2);
+
+		Velocity.Draw(240, 25, "0.000", WHITE, 3);
+
+		Star1->Draw();
+		Star2->Draw();
+		Star3->Draw();
+
+		break;
+
 	default:
 		break;
 	}
