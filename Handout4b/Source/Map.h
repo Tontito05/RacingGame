@@ -4,6 +4,7 @@
 #include "PhysEntity.h"
 #include "Timer.h"
 #include "Globals.h"
+#include "Mud.h"
 #include <iostream>
 #include <vector>
 
@@ -48,6 +49,8 @@ private:
 	vector<vector<int>> readCSV(const string& filename);
 	void mapDecorationFromCSV(const vector<vector<int>>& map, float tileWidth, float tileHeight);
 
+	Mud* mud;
+	vector<Mud*> mudTiles;
 
 	static constexpr int points[224] = {
 		1176, 47,
