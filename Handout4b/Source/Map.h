@@ -31,15 +31,15 @@ public:
 		body->GetPhysicPosition(x, y);
 		DrawTexturePro(texture, Rectangle{ 0, 0, (float)texture.width, (float)texture.height },
 			Rectangle{ (float)x, (float)y, (float)texture.width * SCALE, (float)texture.height * SCALE },
-			Vector2{ (float)texture.width * SCALE / 2.0f, (float)texture.height * SCALE / 2.0f }, body->GetRotation() * RAD2DEG, WHITE);
+			Vector2{ 0, 0 }, body->GetRotation() * RAD2DEG, WHITE);
 	}
 private:
 
-	Texture2D texture = LoadTexture("Assets/Level/Map.png");
+	Texture2D texture = LoadTexture("Assets/Level/AltMap.png");
 
 	ModulePhysics* mPhysics;
 
-	string mapDecorationCSV = "Assets/Level/Map_Decoration.csv";
+	string mapDecorationCSV = "Assets/Level/AltMap._Outside obstacles.csv";
 
 	vector<vector<int>> decorationMap;
 	vector<vector<int>> mudMap;
