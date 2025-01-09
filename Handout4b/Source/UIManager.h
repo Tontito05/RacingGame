@@ -13,7 +13,7 @@ public:
 	}
 	~UIelement();
 
-	void Draw(Vector2 position);
+	void Draw();
 	KeyboardKey key;
 	GamepadButton button;
 
@@ -53,7 +53,7 @@ public:
 	bool inGame = false;
 
 	update_status Update();
-	void Render(Vector2 CameraPos);
+	void Render();
 
 	void GetPlayerJump(bool Pjump)
 	{

@@ -119,39 +119,39 @@ update_status UIManager::Update()
 	return UPDATE_CONTINUE;
 }
 
-void UIManager::Render(Vector2 CameraPos)
+void UIManager::Render()
 {
 	switch (menuState)
 	{
 	case MenuStates::TITLE_SCREEN:
 
-		TitleScreen->Draw( CameraPos);
+		TitleScreen->Draw( );
 
 		break;
 	case MenuStates::MAIN_MENU:
 
-		MainMenu->Draw(CameraPos);
+		MainMenu->Draw();
 
 		break;
 	case MenuStates::CONTROLS:
 
-		Controls->Draw(CameraPos);
+		Controls->Draw();
 
 		break;
 	case MenuStates::CREDITS:
 
-		Credits->Draw(CameraPos);
+		Credits->Draw();
 
 		break;
 	case MenuStates::PAUSE_MENU:
 
-		PauseMenu->Draw(CameraPos);
-		InGame->Draw(CameraPos);
+		PauseMenu->Draw();
+		InGame->Draw();
 
 		break;
 	case MenuStates::INGAME:
 
-		InGame->Draw(CameraPos);
+		InGame->Draw();
 
 		if (activeJump)
 			JumpVisual->color.a = 255;
@@ -163,11 +163,11 @@ void UIManager::Render(Vector2 CameraPos)
 		else
 			GearVisual->color.a = 100;
 
-		JumpVisual->Draw(CameraPos);
-		GearVisual->Draw(CameraPos);
+		JumpVisual->Draw();
+		GearVisual->Draw();
 
-		Chrono.Draw(CameraPos.x + 1110, CameraPos.y + 70, std::to_string(timer.ReadSec()), WHITE,2);
-		Velocity.Draw(CameraPos.x + 240, CameraPos.y + 25, std::to_string(PlayerVelocity*5), WHITE,3);
+		Chrono.Draw(  1110,   70, std::to_string(timer.ReadSec()), WHITE,2);
+		Velocity.Draw(  240,  25, std::to_string(PlayerVelocity*5), WHITE,3);
 
 		break;
 	default:
@@ -176,15 +176,15 @@ void UIManager::Render(Vector2 CameraPos)
 
 }
 
-void UIelement::Draw(Vector2 pos)
+void UIelement::Draw()
 {
 	if (IsGamepadAvailable(0) == false)
 	{
-		DrawTexturePro(texture_pc, { 0.0f, 0.0f, (float)texture_pc.width, (float)texture_pc.height }, { pos.x, pos.y, (float)texture_pc.width, (float)texture_pc.height }, { 0, 0 }, 0.0f, color);
+		DrawTexturePro(texture_pc, { 0.0f, 0.0f, (float)texture_pc.width, (float)texture_pc.height }, { 0, 0, (float)texture_pc.width, (float)texture_pc.height }, { 0, 0 }, 0.0f, color);
 	}
 	else
 	{
-		DrawTexturePro(texture_con, { 0.0f, 0.0f, (float)texture_con.width, (float)texture_con.height }, { pos.x, pos.y, (float)texture_con.width, (float)texture_con.height }, { 0, 0 }, 0.0f, color);
+		DrawTexturePro(texture_con, { 0.0f, 0.0f, (float)texture_con.width, (float)texture_con.height }, { 0, 0, (float)texture_con.width, (float)texture_con.height }, { 0, 0 }, 0.0f, color);
 	}
 	
 }
