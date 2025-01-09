@@ -52,6 +52,11 @@ private:
 	Mud* mud;
 	vector<Mud*> mudTiles;
 
+	vector<b2Vec2> B2Vec2ListFromArray(const float* points, int numPoints);
+
+	bool PointInsidePoly(const b2Vec2& point, vector<b2Vec2> trackBoundaryPoints);
+
+
 	static constexpr int points[224] = {
 		1176, 47,
 		1177, 245,

@@ -53,4 +53,41 @@ void Map::mapDecorationFromCSV(const vector<vector<int>>& map, float tileWidth, 
     }
 }
 
+vector<b2Vec2> Map::B2Vec2ListFromArray(const float* points, int numPoints)
+{
+       vector<b2Vec2> vec2List;
+
+        for (size_t i = 0; i < numPoints; ++i) {
+            float x = points[i * 2];      
+            float y = points[i * 2 + 1];  
+
+            vec2List.push_back(b2Vec2(x, y));
+        }
+
+        return vec2List;
+}
+
+bool Map::PointInsidePoly(const b2Vec2& point, vector<b2Vec2> trackBoundaryPoints)
+{
+
+        int crossings = 0;
+        int numPoints = trackBoundaryPoints.size();
+
+        for (size_t i = 0; i < numPoints; ++i) {
+            b2Vec2 p1 = trackBoundaryPoints[i];          
+            b2Vec2 p2 = trackBoundaryPoints[(i + 1) % numPoints];
+
+            // Check if the ray from the point crosses the edge between p1 and p2
+            if ((point.y > p1.y) != (point.y > p2.y) &&
+                point.x < (p2.x - p1.x) * (point.y - p1.y) / (p2.y - p1.y) + p1.x)
+            {
+                crossings++; 
+            }
+        }
+
+        // If crossings are odd point is inside the polygon
+        return (crossings % 2) == 1;
+    
+}
+
 
