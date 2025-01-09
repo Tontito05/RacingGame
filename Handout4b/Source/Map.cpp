@@ -46,6 +46,8 @@ void Map::mapDecorationFromCSV(const vector<vector<int>>& map, float tileWidth, 
             if (tileID == 197)
             {
                 //MUD
+                mud = new Mud(mPhysics, x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, listener, LAND);
+                mudTiles.push_back(mud);
             }
         }
     }

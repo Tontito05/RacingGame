@@ -29,4 +29,6 @@ private:
 	Music music;
 	Sound fx[MAX_SOUNDS];
     unsigned int fx_count;
+
+
 };
