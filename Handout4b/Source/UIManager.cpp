@@ -54,6 +54,9 @@ bool UIManager::Start()
 		
 	menuMusic = App->audio->LoadFx("Assets/Audio/menuMusic.wav");
 	inGameMusic = App->audio->LoadFx("Assets/Audio/ingameMusic.wav");
+
+	menuMusicMP3 = App->audio->LoadFx("Assets/Audio/Main menu (edited).mp3");
+	inGameMusicMP3 = App->audio->LoadFx("Assets/Audio/in game (edited).mp3");
 	
 	
 	App->audio->PlayFx(menuMusic);
