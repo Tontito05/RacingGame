@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Map.tmx",
+    "activeFile": "Sprite Sheet Road def.tsx",
     "expandedProjectPaths": [
         "."
     ],
@@ -11,12 +11,20 @@
         "": {
             "scaleInDock": 1
         },
-        "Map.tmx": {
-            "scale": 2,
-            "selectedLayer": 1,
+        "AltMap.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 99,
-                "y": -2555.75
+                "x": 674.5,
+                "y": 384.5
+            }
+        },
+        "Map.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": -0.6666666666666288,
+                "y": -1152.6666666666665
             }
         },
         "Mud.tsx": {
@@ -50,14 +58,17 @@
     "map.tileWidth": 16,
     "openFiles": [
         "Map.tmx",
-        "Sprite Sheet Road def.tsx"
+        "Sprite Sheet Road def.tsx",
+        "Mud.tsx",
+        "AltMap.tmx"
     ],
     "project": "Racing.tiled-project",
     "recentFiles": [
-        "Mud.tsx",
-        "Sprite Sheet Road defada.tsx",
-        "Sprite Sheet Road def.tsx",
         "Map.tmx",
+        "AltMap.tmx",
+        "Mud.tsx",
+        "Sprite Sheet Road def.tsx",
+        "Sprite Sheet Road defada.tsx",
         "Sprite Sheet Road.tsx",
         "Sprite Sheet Road defDef.tsx"
     ],
