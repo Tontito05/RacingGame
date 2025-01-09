@@ -8,7 +8,7 @@ bool IA::CheckGear()
 	switch (GearChange)
 	{
 	case 0:
-		Acceleration = { 3,3 };
+		Acceleration = { 4,4 };
 		brake = { Acceleration.x / 2,Acceleration.y / 2 };
 
 		DriftLerp = 0.05;
@@ -17,7 +17,7 @@ bool IA::CheckGear()
 		break;
 	case 1:
 
-		Acceleration = { 5,5 };
+		Acceleration = { 6,6 };
 		brake = { Acceleration.x / 2,Acceleration.y / 2 };
 
 		DriftLerp = 0.04;
@@ -42,7 +42,7 @@ bool IA::CheckGear()
 		break;
 
 	case 3:
-		Acceleration = { 15,15 };
+		Acceleration = { 12,12 };
 		brake = { Acceleration.x / 2,Acceleration.y / 2 };
 
 		DriftLerp = 0.02;
@@ -90,81 +90,52 @@ Vector2 IA::GetPosition() {
 	return Vector2{ (float)x, (float)y };
 }
 
+void IA::MoveAlwaysForward(float speed) {
+	// Get the current angle of the body
+	float angle = body->body->GetAngle();
+
+	// Calculate the forward direction vector
+	b2Vec2 forwardVec(cos(angle), sin(angle));
+
+	// Set the body's velocity in the forward direction
+	b2Vec2 velocity = speed * forwardVec;
+	body->body->SetLinearVelocity(velocity);
+}
+
 void IA::Pattern()
 {
-	/*if (waypointsIndex < waypoints.size())
-	{
-		b2Vec2 diff = waypoints[waypointsIndex] - body->body->GetPosition();
-		transform.right = diff;
-		transform.Translate(Vector3.right * speed * Time.deltaTime);
-
-		if (diff.magnitude < .1f) {
-			waypointsIndex++;
-		}
-	}
-	else {
-		Destroy(gameObject);
-	}*/
-
-	if (waypointsIndex < waypoints.size()) {
-		// Calcular la dirección hacia el siguiente waypoint
+	if (waypointsIndex < waypoints.size()-1) {
+		
+		// Waypoint direction
 		b2Vec2 currentPosition = body->body->GetPosition();
-		b2Vec2 diff = waypoints[waypointsIndex] - currentPosition;
+		b2Vec2 diff;
+		diff.x = (PIXEL_TO_METERS(waypoints[waypointsIndex].x)*SCALE - currentPosition.x);
+		diff.y = (PIXEL_TO_METERS(waypoints[waypointsIndex].y)*SCALE - currentPosition.y);
 
-		// Normalize
 		float distance = diff.Length();
 		if (distance > 0) {
 			b2Vec2 direction = diff;
 			direction.Normalize();
+			
+			float desiredAngle = atan2(direction.y, direction.x);
+			body->body->SetTransform(currentPosition, desiredAngle);
 
-			// Move
-			/*b2Vec2 velocity = direction;
-			velocity *= 2.0f;
-			body->body->SetLinearVelocity(velocity);*/
-			Rotate(0);
-			MoveForward();
-			Update();
+			float speed = 2.75f;
+
+			MoveAlwaysForward(speed);
 		}
 
-		// Verificar si hemos alcanzado el waypoint actual
 		if (distance < 0.1f) {
 			waypointsIndex++;
+			
+			cout << "Waypoint: " << waypointsIndex << " x: " << waypoints[waypointsIndex].x << " y: " << waypoints[waypointsIndex].y << endl;
+			
+			cout << "Waypoint: " << waypointsIndex << " x: " << PIXEL_TO_METERS(waypoints[waypointsIndex].x) << " y: " << PIXEL_TO_METERS(waypoints[waypointsIndex].y) << endl;
 		}
 	}
 	else {
-		// Destruir el cuerpo si hemos terminado (simulando Destroy en Unity)
-		std::cout << "Waypoints completados. Destruyendo objeto." << std::endl;
-		/*body->body->GetWorld()->DestroyBody(body->body);*/
+		std::cout << "Waypoints completed." << std::endl;
 	}
 
 
 }
-
-//void Update(b2Body* body, std::vector<b2Vec2>& waypoints, int& waypointsIndex, float speed, float deltaTime) {
-//	if (waypointsIndex < waypoints.size()) {
-//		// Calcular la dirección hacia el siguiente waypoint
-//		b2Vec2 currentPosition = body->GetPosition();
-//		b2Vec2 diff = waypoints[waypointsIndex] - currentPosition;
-//
-//		// Normalizar la dirección
-//		float distance = diff.Length();
-//		if (distance > 0) {
-//			b2Vec2 direction = diff;
-//			direction.Normalize();
-//
-//			// Mover el cuerpo en la dirección hacia el waypoint
-//			b2Vec2 velocity = direction * speed;
-//			body->SetLinearVelocity(velocity);
-//		}
-//
-//		// Verificar si hemos alcanzado el waypoint actual
-//		if (distance < 0.1f) {
-//			waypointsIndex++;
-//		}
-//	}
-//	else {
-//		// Destruir el cuerpo si hemos terminado (simulando Destroy en Unity)
-//		std::cout << "Waypoints completados. Destruyendo objeto." << std::endl;
-//		body->GetWorld()->DestroyBody(body);
-//	}
-//}
