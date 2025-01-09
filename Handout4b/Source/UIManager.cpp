@@ -52,18 +52,10 @@ bool UIManager::Start()
 
 	menuState = TITLE_SCREEN;
 		
-	menuMusic = App->audio->LoadFx("Assets/Audio/menuMusic.wav");
-	inGameMusic = App->audio->LoadFx("Assets/Audio/ingameMusic.wav");
+	//menuMusic = App->audio->LoadFx("Assets/Audio/menuMusic.wav");
+	//inGameMusic = App->audio->LoadFx("Assets/Audio/ingameMusic.wav");
 	clickFx = App->audio->LoadFx("Assets/Audio/click.wav");
-	driftFx = App->audio->LoadFx("Assets/Audio/drift.wav");
-	jumpFx = App->audio->LoadFx("Assets/Audio/jump.wav");
-
-	//menuMusicMP3 = App->audio->LoadFx("Assets/Audio/Main menu (edited).mp3");
-	//inGameMusicMP3 = App->audio->LoadFx("Assets/Audio/in game (edited).mp3");
-	
-	
-	//App->audio->PlayFx(menuMusic);
-	
+		
 
 	return true;
 }
@@ -147,7 +139,7 @@ update_status UIManager::Update()
 			App->audio->PlayFx(clickFx);
 			menuState = PAUSE_MENU;
 		}
-
+		
 		break;
 	case MenuStates::FINISH:
 

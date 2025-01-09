@@ -102,8 +102,7 @@ private:
 	uint32 menuMusic;
 	uint32 inGameMusic;
 	uint32 clickFx;
-	uint32 driftFx;
-	uint32 jumpFx;
+	
 
 	uint32 menuMusicMP3;
 	uint32 inGameMusicMP3;
