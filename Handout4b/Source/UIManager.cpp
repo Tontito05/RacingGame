@@ -52,11 +52,11 @@ bool UIManager::Start()
 
 	menuState = TITLE_SCREEN;
 		
-	// Use ModuleAudio to play music
-	if (App->audio != nullptr) {
-		SetMasterVolume(1.0f);
-		App->audio->PlayMusic("Assets/Audio/menuMusic.wav");
-	}
+	menuMusic = App->audio->LoadFx("Assets/Audio/menuMusic.wav");
+	inGameMusic = App->audio->LoadFx("Assets/Audio/ingameMusic.wav");
+	
+	
+	App->audio->PlayFx(menuMusic);
 
 	return true;
 }

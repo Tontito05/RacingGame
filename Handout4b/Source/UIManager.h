@@ -99,5 +99,6 @@ private:
 
 	Application* app;
 
-	Music menuMusic;
+	uint32 menuMusic;
+	uint32 inGameMusic;
 };
