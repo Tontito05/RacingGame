@@ -39,25 +39,14 @@ void Map::mapDecorationFromCSV(const vector<vector<int>>& map, float tileWidth, 
         for (size_t x = 0; x < map[y].size(); ++x) {
             int tileID = map[y][x];
 
-            switch (tileID)
+			if (tileID == 179 || tileID == 180 || tileID == 194 || tileID == 193 || tileID == 192 || tileID == 191 || tileID == 190)
+			{
+				mPhysics->CreateRectangle(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this, b2_staticBody);
+			}
+            if (tileID == 197)
             {
-
-            case 179:
-                mPhysics->CreateRectangle(x * tileWidth + tileWidth/2, y * tileHeight + tileHeight/2, tileWidth, tileHeight, Group::LAND, this, b2_staticBody);
-                break;
-            case 180:
-                mPhysics->CreateRectangle(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this, b2_staticBody);
-                break;
-            case 194:
-                mPhysics->CreateRectangle(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this, b2_staticBody);
-                break;
-            case 193:
-                mPhysics->CreateRectangle(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this, b2_staticBody);
-                break;
-            default:
-                break;
+                //MUD
             }
-
         }
     }
 }

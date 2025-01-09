@@ -32,7 +32,7 @@ bool ModuleRender::Init()
 update_status ModuleRender::PreUpdate()
 {
     BeginDrawing();
-    ClearBackground(RAYWHITE);
+    ClearBackground(BEIGE);
     BeginMode2D(camera);
 
 	return UPDATE_CONTINUE;
