@@ -39,7 +39,7 @@ private:
 
 	ModulePhysics* mPhysics;
 
-	string mapDecorationCSV = "Assets/Level/AltMap._Outside obstacles.csv";
+	string mapDecorationCSV = "Assets/Level/AltMap_Tile Layer 2.csv";
 
 	vector<vector<int>> decorationMap;
 	vector<vector<int>> mudMap;

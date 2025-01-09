@@ -42,16 +42,16 @@ void Map::mapDecorationFromCSV(const vector<vector<int>>& map, float tileWidth, 
             switch (tileID)
             {
 
-            case 222:
+            case 179:
                 mPhysics->CreateRectangle(x * tileWidth + tileWidth/2, y * tileHeight + tileHeight/2, tileWidth, tileHeight, Group::LAND, this, b2_staticBody);
                 break;
-            case 237:
+            case 180:
+                mPhysics->CreateRectangle(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this, b2_staticBody);
+                break;
+            case 194:
                 mPhysics->CreateRectangle(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this, b2_staticBody);
                 break;
             case 193:
-                mPhysics->CreateRectangle(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this, b2_staticBody);
-                break;
-            case 198:
                 mPhysics->CreateRectangle(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this, b2_staticBody);
                 break;
             default:

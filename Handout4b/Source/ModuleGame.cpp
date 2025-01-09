@@ -27,7 +27,7 @@ bool ModuleGame::Start()
 	player = new Player(App->physics, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, car.width,car.height,this,car,LAND);
 	ia = new IA(App->physics, SCREEN_WIDTH / 2 - 64, SCREEN_HEIGHT / 2 -64, carOpponent.width, carOpponent.height, this, carOpponent, LAND);
 	mud = new Mud(App->physics, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, 40, 40, this, LAND);
-	map = new Map(App->physics, 0,0, 79*16, 44*16, this, LAND);
+	map = new Map(App->physics, 0,0, 79*16, 4*16, this, LAND);
 	UI = new UIManager();
 
 
@@ -83,7 +83,7 @@ update_status ModuleGame::Update()
 		{
 			player->MoveForward();
 		}
-		else if (IsKeyDown(KEY_S) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT))
+		if (IsKeyDown(KEY_S) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT))
 		{
 			player->MoveBackwards();
 		}
