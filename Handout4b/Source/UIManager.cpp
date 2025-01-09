@@ -59,7 +59,7 @@ bool UIManager::Start()
 	inGameMusicMP3 = App->audio->LoadFx("Assets/Audio/in game (edited).mp3");
 	
 	
-	App->audio->PlayFx(menuMusic);
+	//App->audio->PlayFx(menuMusic);
 
 	return true;
 }
