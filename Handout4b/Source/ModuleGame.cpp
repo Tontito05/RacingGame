@@ -73,9 +73,6 @@ update_status ModuleGame::Update()
 		{
 			player->Rotate(0);
 		}
-
-
-
 	
 	if (player->CheckGear() == false)
 	{
@@ -126,13 +123,6 @@ update_status ModuleGame::Update()
 		player->SetYvelocity(0);
 	}
 
-	//std::cout << GetMousePosition().x << "     " << GetMousePosition().y << endl;
-
-	// Update camera position to follow the player
-	float playerX, playerY;
-	playerX = player->body->body->GetPosition().x;
-	playerY = player->body->body->GetPosition().y;
-
 	return UPDATE_CONTINUE;
 }
 
@@ -143,7 +133,14 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderTypes::CAR:
 		break;
 	case ColliderTypes::MAP:
-		if (bodyA->entity->colType == ColliderTypes::CAR) 
+
+		/*EXPLANATION:
+		1 - We check that coltype is CAR in case other bodies which are not cars are colliding with the map
+		2 - We check that the fixture of the bodyB is a sensor because we are interested in checking the chain sensor that limits the road, the decoration such
+		as cactus and rocks are also in the map class but we don't want anything to happen when colliding with them
+		*/
+		
+		if (bodyA->entity->colType == ColliderTypes::CAR && bodyB->body->GetFixtureList()->IsSensor() == true) 
 		{
 			bodyA->entity->OnRoad = !bodyA->entity->OnRoad;
 		}

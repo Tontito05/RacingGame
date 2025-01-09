@@ -21,7 +21,7 @@ b2Vec2 Car::GetFriction(b2Vec2 vec) const
 }
 void Car::ApplyFriction()
 {
-	//apply the friction to the Car
+	//Apply the friction to the Car
 	mainVec.x += GetFriction(mainVec).x;
 	mainVec.y += GetFriction(mainVec).y;
 }
@@ -44,7 +44,7 @@ void Car::Rotate(int direction) const
 	//Check if the car is moving
 	if (body->GetVelocity().LengthSquared() > EPS)
 	{
-		//Maje the player Rotate
+		//Make the player Rotate
 		if (direction == -1)
 		{
 			body->AngularVelocity(-RotForce);
@@ -79,7 +79,7 @@ void Car::Jump()
 {
 	if (recoveryTime.ReadSec() > airTime)
 	{
-		//Start teh timet
+		//Start the timer
 		if (body->GetGroup() == Group::LAND)
 		{
 			jumpTimer.Start();
@@ -90,7 +90,7 @@ void Car::Jump()
 		{
 			state = STATES::JUMPING;
 			scale += jumpaScale;
-			//CChange Collision group
+			//Change Collision group
 			body->ChangeGroup(AIR);
 		}
 		//Go down

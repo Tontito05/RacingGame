@@ -9,10 +9,6 @@
 ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
     background = RAYWHITE;
-    /*camera.x = 0;
-    camera.y = 0;
-    camera.width = SCREEN_WIDTH;
-    camera.height = SCREEN_HEIGHT;*/
 }
 
 // Destructor
@@ -60,13 +56,11 @@ update_status ModuleRender::Update()
     EndMode2D();
     App->scene_intro->UI->Render();
     BeginMode2D(camera);
+
 	//Give the player to the UI to get some values from it
     App->scene_intro->UI->GetPlayerGear(App->scene_intro->player->CanChangeGear);
 	App->scene_intro->UI->GetPlayerJump(App->scene_intro->player->CanJump());
 	App->scene_intro->UI->GetPlayerVelocity(App->scene_intro->player->body->GetVelocity().LengthSquared());
-
-    //std::cout << "Camera target: " << camera.target.x << " / " << camera.target.y << std::endl;
-
 
     return UPDATE_CONTINUE;
 }

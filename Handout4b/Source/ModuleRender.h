@@ -31,5 +31,5 @@ public:
 		camera.zoom = 1.0f,
 	};
 
-	Vector2* playerPosition; // Player position
+	Vector2* playerPosition; 
 };
