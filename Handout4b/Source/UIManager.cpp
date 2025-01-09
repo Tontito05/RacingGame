@@ -54,12 +54,16 @@ bool UIManager::Start()
 		
 	menuMusic = App->audio->LoadFx("Assets/Audio/menuMusic.wav");
 	inGameMusic = App->audio->LoadFx("Assets/Audio/ingameMusic.wav");
+	clickFx = App->audio->LoadFx("Assets/Audio/click.wav");
+	driftFx = App->audio->LoadFx("Assets/Audio/drift.wav");
+	jumpFx = App->audio->LoadFx("Assets/Audio/jump.wav");
 
-	menuMusicMP3 = App->audio->LoadFx("Assets/Audio/Main menu (edited).mp3");
-	inGameMusicMP3 = App->audio->LoadFx("Assets/Audio/in game (edited).mp3");
+	//menuMusicMP3 = App->audio->LoadFx("Assets/Audio/Main menu (edited).mp3");
+	//inGameMusicMP3 = App->audio->LoadFx("Assets/Audio/in game (edited).mp3");
 	
 	
 	//App->audio->PlayFx(menuMusic);
+	
 
 	return true;
 }
@@ -81,19 +85,23 @@ update_status UIManager::Update()
 
 		if (IsKeyReleased(Controls->key) || IsGamepadButtonReleased(0, Controls->button))
 		{
+			App->audio->PlayFx(clickFx);
 			menuState = CONTROLS;
 		}
 		else if (IsKeyReleased(Credits->key) || IsGamepadButtonReleased(0, Credits->button))
 		{
+			App->audio->PlayFx(clickFx);
 			menuState = CREDITS;
 		}
 		else if (IsKeyReleased(InGame->key) || IsGamepadButtonReleased(0, InGame->button))
 		{
+			App->audio->PlayFx(clickFx);
 			menuState = INGAME;
 			timer.Start();
 		}
 		else if (IsKeyReleased(Back_Keyboard) || IsGamepadButtonReleased(0, Back_Controller))
 		{
+			App->audio->PlayFx(clickFx);
 			menuState = TITLE_SCREEN;
 		}
 
@@ -102,6 +110,7 @@ update_status UIManager::Update()
 
 		if (IsKeyReleased(Back_Keyboard) || IsGamepadButtonReleased(0, Back_Controller))
 		{
+			App->audio->PlayFx(clickFx);
 			menuState = MAIN_MENU;
 		}
 
@@ -110,6 +119,7 @@ update_status UIManager::Update()
 
 		if (IsKeyReleased(Back_Keyboard) || IsGamepadButtonReleased(0, Back_Controller))
 		{
+			App->audio->PlayFx(clickFx);
 			menuState = MAIN_MENU;
 		}
 
@@ -118,10 +128,12 @@ update_status UIManager::Update()
 
 		if (IsKeyReleased(PauseMenu->key) || IsGamepadButtonReleased(0, PauseMenu->button))
 		{
+			App->audio->PlayFx(clickFx);
 			menuState = INGAME;
 		}
 		if (IsKeyReleased(MainMenu->key) || IsGamepadButtonReleased(0, MainMenu->button))
 		{
+			App->audio->PlayFx(clickFx);
 			menuState = MAIN_MENU;
 		}
 
@@ -132,6 +144,7 @@ update_status UIManager::Update()
 
 		if (IsKeyReleased(PauseMenu->key) || IsGamepadButtonReleased(0, PauseMenu->button))
 		{
+			App->audio->PlayFx(clickFx);
 			menuState = PAUSE_MENU;
 		}
 
