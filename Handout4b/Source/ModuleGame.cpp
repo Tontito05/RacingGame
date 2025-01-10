@@ -204,14 +204,14 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		
 		if (bodyA->entity->colType == ColliderTypes::CAR ) 
 		{
-			bodyA->body->SetLinearDamping(50);
+			player->SetFriction(0.5f);
 		}
 
 		break;
 	case ColliderTypes::MUD:
 		if (bodyA->entity->colType == ColliderTypes::CAR) 
 		{
-			bodyA->body->SetLinearDamping(75);
+			player->SetFriction(0.4f);
 		}
 
 		break;
@@ -232,14 +232,14 @@ void ModuleGame::EndCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderTypes::MAP:
 		if (bodyA->entity->colType == ColliderTypes::CAR)
 		{
-			bodyA->body->SetLinearDamping(0);
+			player->SetFriction(0.2f);
 		}
 		break;
 	case ColliderTypes::MUD:
 
 		if (bodyA->entity->colType == ColliderTypes::CAR)
 		{
-			bodyA->body->SetLinearDamping(0);
+			player->SetFriction(0.2f);
 		};
 
 		break;
