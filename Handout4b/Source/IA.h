@@ -6,7 +6,7 @@ class IA : public Car
 public:
 	//IA constructor
 	IA(ModulePhysics* physics, int x, int y, int width, int height, Module* listener, Texture2D texture, Group type, int rank)
-		: Car(physics, x, y, width, height, listener, texture, type)
+		: Car(physics, x, y, width, height, listener, texture, type, ColliderTypes::CAR)
 	{
 
 		//Set the waypoints
@@ -247,6 +247,7 @@ public:
 	std::vector<b2Vec2> waypoints;
 
 	float speed;
+	bool finished = false;
 
 private:
 

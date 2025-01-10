@@ -22,8 +22,8 @@ class Car : public PhysicEntity
 {
 public:
 
-	Car(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Texture2D _texture, Group type)
-		: PhysicEntity(physics->CreateRectangle(_x, _y, width* SCALE, height* SCALE, type, this), _listener, ColliderTypes::CAR)
+	Car(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Texture2D _texture, Group type, ColliderTypes Ctype)
+		: PhysicEntity(physics->CreateRectangle(_x, _y, width* SCALE, height* SCALE, type, this), _listener, Ctype)
 		, texture(_texture)
 	{
 		recoveryTime.Start();
@@ -169,7 +169,7 @@ public:
 
 	//Player constructor
 	Player(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Texture2D _texture, Group type, Map* _map)
-		: Car(physics, _x, _y, width, height, _listener, _texture, type)
+		: Car(physics, _x, _y, width, height, _listener, _texture, type, ColliderTypes::PLAYER)
 	{
 		map = _map;
 		//Set the gears

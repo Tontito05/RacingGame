@@ -171,23 +171,36 @@ update_status ModuleGame::Update()
 		player->CanChangeGear = false;
 	}
 
-	//DEBUG FINISH
-	if (IsKeyPressed(KEY_F))
-	{
-		UI->menuState = UIManager::MenuStates::FINISH;
-
-	}
 	if (UI->menuState == UIManager::MenuStates::FINISH)
 	{
+		if (ia_1->finished == true && UI->position == 1)
+		{
+			UI->position++;
+		}
+		if (ia_2->finished == true && UI->position == 2)
+		{
+			UI->position++;
+		}
+		if (ia_3->finished == true && UI->position == 3)
+		{
+			UI->position++;
+		}
+
 		player->SetXvelocity(0);
 		player->SetYvelocity(0);
 
+
 		b2Vec2 start = { 332 * SCALE - 600, 330 * SCALE };
 
-		player = new Player(App->physics, start.x, start.y, car.width, car.height, this, car, LAND, map);
-		ia_1 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carP, LAND, 1);
-		ia_2 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carS, LAND, 2);
-		ia_3 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carB, LAND, 3);
+		if (UI->inGame == true)
+		{
+			player = new Player(App->physics, start.x, start.y, car.width, car.height, this, car, LAND, map);
+			ia_1 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carP, LAND, 1);
+			ia_2 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carS, LAND, 2);
+			ia_3 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carB, LAND, 3);
+			UI->inGame = false;
+		}
+
 	}
 
 	return UPDATE_CONTINUE;
@@ -203,7 +216,7 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	case ColliderTypes::MAP:
 		
-		if (bodyA->entity->colType == ColliderTypes::CAR ) 
+		if (bodyA->entity->colType == ColliderTypes::PLAYER)
 
 		{
 			player->SetFriction(0.5f);
@@ -211,16 +224,20 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 		break;
 	case ColliderTypes::MUD:
-		if (bodyA->entity->colType == ColliderTypes::CAR) 
+		if (bodyA->entity->colType == ColliderTypes::PLAYER)
 		{
 			player->SetFriction(0.4f);
 		}
 
 		break;
 	case ColliderTypes::FINISHLINE:
-		if (UI->activeFinish)
-		UI->menuState = UIManager::MenuStates::FINISH;
-		UI->activeFinish = false;
+
+		if (bodyA->entity->colType == ColliderTypes::PLAYER)
+		{
+
+			UI->menuState = UIManager::MenuStates::FINISH;
+
+		}
 		break;
 	case ColliderTypes::NULLCOL:
 		cout << "WARNING: " << bodyB << "'s ColliderType is NULL" << endl;
@@ -237,17 +254,23 @@ void ModuleGame::EndCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderTypes::CAR:
 		break;
 	case ColliderTypes::MAP:
-		if (bodyA->entity->colType == ColliderTypes::CAR)
+		if (bodyA->entity->colType == ColliderTypes::PLAYER)
 		{
 			player->SetFriction(0.2f);
 		}
 		break;
 	case ColliderTypes::MUD:
 
-		if (bodyA->entity->colType == ColliderTypes::CAR)
+		if (bodyA->entity->colType == ColliderTypes::PLAYER)
 		{
 			player->SetFriction(0.2f);
-		};
+		}
+		if (bodyA->entity->colType == ColliderTypes::CAR)
+		{
+			ia_1->SetFriction(0.2f);
+			ia_2->SetFriction(0.2f);
+			ia_3->SetFriction(0.2f);
+		}
 
 		break;
 	case ColliderTypes::NULLCOL:
@@ -257,7 +280,7 @@ void ModuleGame::EndCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	
 	case ColliderTypes::FINISHLINE:
-		UI->activeFinish = true;
+
 		break;
 	}
 

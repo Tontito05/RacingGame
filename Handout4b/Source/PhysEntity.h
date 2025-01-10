@@ -9,6 +9,7 @@ enum class ColliderTypes
 	NULLCOL, 
 	MUD,
 	CAR,
+	PLAYER,
 	MAP,
 	FINISHLINE
 };

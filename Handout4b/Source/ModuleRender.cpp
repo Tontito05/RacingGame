@@ -28,7 +28,16 @@ bool ModuleRender::Init()
 update_status ModuleRender::PreUpdate()
 {
     BeginDrawing();
-    ClearBackground(BEIGE);
+
+	if (App->scene_intro->UI->inGame == true)
+	{
+		ClearBackground(BEIGE);
+	}
+	else
+	{
+		ClearBackground(BLACK);
+	}
+
     BeginMode2D(camera);
 
 	return UPDATE_CONTINUE;
@@ -48,10 +57,17 @@ update_status ModuleRender::Update()
 	if (App->scene_intro->UI->inGame == true)
 	{
 		App->scene_intro->map->Render();
-        App->scene_intro->ia_1->Render();
-        App->scene_intro->ia_2->Render();
-        App->scene_intro->ia_3->Render();
-        App->scene_intro->player->Render();
+
+		if (App->scene_intro->player != nullptr)
+        {
+            
+            App->scene_intro->ia_1->Render();
+            App->scene_intro->ia_2->Render();
+            App->scene_intro->ia_3->Render();
+            App->scene_intro->player->Render();
+
+        }
+
 
 	}
 
@@ -60,9 +76,13 @@ update_status ModuleRender::Update()
     BeginMode2D(camera);
 
 	//Give the player to the UI to get some values from it
-    App->scene_intro->UI->GetPlayerGear(App->scene_intro->player->CanChangeGear);
-	App->scene_intro->UI->GetPlayerJump(App->scene_intro->player->CanJump());
-	App->scene_intro->UI->GetPlayerVelocity(App->scene_intro->player->body->GetVelocity().LengthSquared());
+    if (App->scene_intro->player != nullptr)
+    {
+        App->scene_intro->UI->GetPlayerGear(App->scene_intro->player->CanChangeGear);
+        App->scene_intro->UI->GetPlayerJump(App->scene_intro->player->CanJump());
+        App->scene_intro->UI->GetPlayerVelocity(App->scene_intro->player->body->GetVelocity().LengthSquared());
+    }
+
 
     return UPDATE_CONTINUE;
 }

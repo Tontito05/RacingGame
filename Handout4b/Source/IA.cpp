@@ -46,6 +46,7 @@ void IA::Pattern()
 		
 		SetXvelocity(0);
 		SetYvelocity(0);
+		finished = true;
 	}
 
 

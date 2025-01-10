@@ -166,6 +166,7 @@ update_status UIManager::Update()
 			App->audio->StopFx(finishMusic);
 			App->audio->PlayFx(clickFx);
 			App->audio->PlayFx(menuMusic);
+			inGame = false;
 		}
 		if (IsKeyReleased(Back_Keyboard) || IsGamepadButtonReleased(0, Back_Controller))
 		{
@@ -173,6 +174,7 @@ update_status UIManager::Update()
 			App->audio->StopFx(finishMusic);
 			App->audio->PlayFx(clickFx);
 			App->audio->PlayFx(menuMusic);
+			inGame = false;
 		}
 
 		break;
@@ -256,9 +258,13 @@ void UIManager::Render()
 
 		Velocity.Draw(240, 25, "0.000", WHITE, 3);
 
-		Star1->Draw();
-		Star2->Draw();
-		Star3->Draw();
+		if(position== 1)
+			Star3->Draw();
+		if (position == 2)
+			Star2->Draw();
+		if (position == 3)
+			Star1->Draw();
+
 
 		break;
 
