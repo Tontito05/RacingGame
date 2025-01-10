@@ -173,8 +173,8 @@ update_status ModuleGame::Update()
 		ia->SetXvelocity(0);
 		ia->SetYvelocity(0);
 
-		//player = new Player(App->physics, 332 * SCALE - 600, 330 * SCALE, car.width, car.height, this, car, LAND, map);
-		//ia = new IA(App->physics, 332 * SCALE - 632, 330 * SCALE - 64, carOpponent.width, carOpponent.height, this, carOpponent, LAND);
+		/*player = new Player(App->physics, 332 * SCALE - 600, 330 * SCALE, car.width, car.height, this, car, LAND, map);
+		ia = new IA(App->physics, 332 * SCALE - 632, 330 * SCALE - 64, carOpponent.width, carOpponent.height, this, carOpponent, LAND);*/
 	}
 
 	// Update camera position to follow the player
@@ -214,7 +214,9 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 		break;
 	case ColliderTypes::FINISHLINE:
+		if (UI->activeFinish)
 		UI->menuState = UIManager::MenuStates::FINISH;
+		UI->activeFinish = false;
 		break;
 	case ColliderTypes::NULLCOL:
 		cout << "WARNING: " << bodyB << "'s ColliderType is NULL" << endl;
@@ -249,5 +251,10 @@ void ModuleGame::EndCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	default:
 		break;
+	
+	case ColliderTypes::FINISHLINE:
+		UI->activeFinish = true;
+		break;
 	}
+
 }
