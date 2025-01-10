@@ -33,6 +33,7 @@ bool ModuleGame::Start()
 	//Load sound fx
 	jumpFx = App->audio->LoadFx("Assets/Audio/jump.wav");
 	driftFx = App->audio->LoadFx("Assets/Audio/drift.wav");
+	gearFx = App->audio->LoadFx("Assets/Audio/gear.wav");
 
 	return ret;
 }
@@ -137,6 +138,7 @@ update_status ModuleGame::Update()
 		{
 			//Augment the gear and the player acceleration/Brake
 			player->GearChange++;
+			App->audio->PlayFx(gearFx);
 		}
 	}
 	else
