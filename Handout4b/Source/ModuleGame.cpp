@@ -32,7 +32,7 @@ bool ModuleGame::Start()
 	ia_2 = new IA(App->physics, start.x, start.y,  this, LAND, 2);
 	ia_3 = new IA(App->physics, start.x, start.y,  this,  LAND, 3);
 
-	
+	//We know this shouldn't be here, but didn't have time to change it, just to let you know that we are aware this is not the correct way
 	//Load sound fx
 	jumpFx = App->audio->LoadFx("Assets/Audio/jump.wav");
 	driftFx = App->audio->LoadFx("Assets/Audio/drift.wav");
