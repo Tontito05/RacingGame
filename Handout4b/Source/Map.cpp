@@ -39,7 +39,7 @@ void Map::mapDecorationFromCSV(const vector<vector<int>>& map, float tileWidth, 
         for (size_t x = 0; x < map[y].size(); ++x) {
             int tileID = map[y][x];
 
-			if (tileID == 179 || tileID == 180 || tileID == 194 || tileID == 193 || tileID == 192 || tileID == 191 || tileID == 190)
+			if (tileID == 179 || tileID == 180 || tileID == 194 || tileID == 193 || tileID == 192 || tileID == 191 || tileID == 190 || tileID == 213 || tileID == 214 || tileID == 169 || tileID == 270)
 			{
 				mPhysics->CreateRectangle(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this, b2_staticBody);
 			}
@@ -51,7 +51,11 @@ void Map::mapDecorationFromCSV(const vector<vector<int>>& map, float tileWidth, 
             }
             else 
             {
-                mPhysics->CreateRectangleSensor(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this);
+				if (tileID != 177 && tileID != 178 && tileID != 195 && tileID != 196)
+				{
+                    mPhysics->CreateRectangleSensor(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this);
+
+				}
             }
         }
     }

@@ -34,7 +34,7 @@ bool ModuleGame::Start()
 	jumpFx = App->audio->LoadFx("Assets/Audio/jump.wav");
 	driftFx = App->audio->LoadFx("Assets/Audio/drift.wav");
 	gearFx = App->audio->LoadFx("Assets/Audio/gear.wav");
-	runFx = App->audio->LoadFx("Assets/Audio/run.wav");
+	//runFx = App->audio->LoadFx("Assets/Audio/run.wav");
 
 	return ret;
 }
@@ -101,15 +101,15 @@ update_status ModuleGame::Update()
 		if (IsKeyDown(KEY_W) || GetGamepadAxisMovement(0, GAMEPAD_AXIS_RIGHT_TRIGGER) > 0.5f)
 		{
 			player->MoveForward();
-			if (!isRunFxPlaying) {
-				App->audio->PlayFx(runFx);
-				isRunFxPlaying = true;
-			}
+			//if (!isRunFxPlaying) {
+			//	App->audio->PlayFx(runFx);
+			//	isRunFxPlaying = true;
+			//}
 		}
-		else if (isRunFxPlaying) {
-			App->audio->StopFx(runFx);
-			isRunFxPlaying = false;
-		}
+		//else if (isRunFxPlaying) {
+		//	App->audio->StopFx(runFx);
+		//	isRunFxPlaying = false;
+		//}
 		if (IsKeyDown(KEY_S) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT))
 		{
 			player->MoveBackwards();
@@ -132,7 +132,7 @@ update_status ModuleGame::Update()
 			}
 		}
 		
-		if (IsKeyDown(KEY_SPACE) && App->scene_intro->UI->inGame|| IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN && App->scene_intro->UI->inGame))
+		if (IsKeyDown(KEY_SPACE) && App->scene_intro->UI->inGame|| IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN ) && App->scene_intro->UI->inGame)
 		{
 			player->TryJump();
 			if (!isJumpFxPlaying && player->TryJump())
@@ -171,6 +171,9 @@ update_status ModuleGame::Update()
 		player->SetYvelocity(0);
 		ia->SetXvelocity(0);
 		ia->SetYvelocity(0);
+
+		player = new Player(App->physics, 332 * SCALE - 600, 330 * SCALE, car.width, car.height, this, car, LAND, map);
+		ia = new IA(App->physics, 332 * SCALE - 632, 330 * SCALE - 64, carOpponent.width, carOpponent.height, this, carOpponent, LAND);
 	}
 
 	//std::cout << GetMousePosition().x << "     " << GetMousePosition().y << endl;
