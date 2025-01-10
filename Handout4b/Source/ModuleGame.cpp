@@ -195,8 +195,7 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderTypes::MUD:
 		if (bodyA->entity->colType == ColliderTypes::CAR) 
 		{
-			bodyA->body->SetLinearDamping(100);
-			bodyA->body->SetAngularDamping(100);
+			player->SetFriction(0.5f);
 		}
 
 		break;
@@ -218,8 +217,9 @@ void ModuleGame::EndCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 		break;
 	case ColliderTypes::MUD:
-		bodyA->body->SetLinearDamping(0);
-		bodyA->body->SetAngularDamping(0);
+
+		player->SetFriction(0.2f);
+
 		break;
 	case ColliderTypes::NULLCOL:
 		cout << "WARNING: " << bodyB << "'s ColliderType is NULL" << endl;
