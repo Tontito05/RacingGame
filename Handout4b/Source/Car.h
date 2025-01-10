@@ -168,10 +168,9 @@ class Player : public Car
 public:
 
 	//Player constructor
-	Player(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Texture2D _texture, Group type, Map* _map)
+	Player(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Texture2D _texture, Group type)
 		: Car(physics, _x, _y, width, height, _listener, _texture, type, ColliderTypes::PLAYER)
 	{
-		map = _map;
 		//Set the gears
 		Gears.push_back({ 1,1 });
 		Gears.push_back({ 2,2 });
@@ -206,7 +205,6 @@ public:
 	int GearChange = 0;
 	bool CanChangeGear = false;
 
-	Map* map;
 
 	vector<b2Vec2> trackPoints;
 

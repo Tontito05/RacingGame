@@ -28,11 +28,10 @@ bool ModuleGame::Start()
 	carP = LoadTexture("Assets/MiniPixelPack2/Cars/Plat.png");
 
 	b2Vec2 start = { 332 * SCALE - 600, 330 * SCALE };
-
 	map = new Map(App->physics, 0, 0, 79 * 16, 4 * 16, this, LAND);
 	UI = new UIManager(App);
 
-	player = new Player(App->physics, start.x - 20, start.y, car.width, car.height, this, car, LAND, map);
+	player = new Player(App->physics, start.x - 20, start.y, car.width, car.height, this, car, LAND);
 	ia_1 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carP, LAND, 1);
 	ia_2 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carS, LAND, 2);
 	ia_3 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carB, LAND, 3);
@@ -42,7 +41,6 @@ bool ModuleGame::Start()
 	jumpFx = App->audio->LoadFx("Assets/Audio/jump.wav");
 	driftFx = App->audio->LoadFx("Assets/Audio/drift.wav");
 	gearFx = App->audio->LoadFx("Assets/Audio/gear.wav");
-	//runFx = App->audio->LoadFx("Assets/Audio/run.wav");
 
 	return ret;
 }
@@ -52,7 +50,12 @@ bool ModuleGame::CleanUp()
 {
 	LOG("Unloading Intro scene");
 
-
+	delete player;
+	delete ia_1;
+	delete ia_2;
+	delete ia_3;
+	delete map;
+	delete UI;
 
 	return true;
 }
@@ -109,15 +112,8 @@ update_status ModuleGame::Update()
 		if (IsKeyDown(KEY_W) || GetGamepadAxisMovement(0, GAMEPAD_AXIS_RIGHT_TRIGGER) > 0.5f)
 		{
 			player->MoveForward();
-			//if (!isRunFxPlaying) {
-			//	App->audio->PlayFx(runFx);
-			//	isRunFxPlaying = true;
-			//}
+
 		}
-		//else if (isRunFxPlaying) {
-		//	App->audio->StopFx(runFx);
-		//	isRunFxPlaying = false;
-		//}
 		if (IsKeyDown(KEY_S) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT))
 		{
 			player->MoveBackwards();
@@ -194,7 +190,7 @@ update_status ModuleGame::Update()
 
 		if (UI->inGame == true)
 		{
-			player = new Player(App->physics, start.x, start.y, car.width, car.height, this, car, LAND, map);
+			player = new Player(App->physics, start.x, start.y, car.width, car.height, this, car, LAND);
 			ia_1 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carP, LAND, 1);
 			ia_2 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carS, LAND, 2);
 			ia_3 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carB, LAND, 3);
@@ -228,7 +224,12 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		{
 			player->SetFriction(0.4f);
 		}
-
+		if (bodyA->entity->colType == ColliderTypes::CAR) 
+		{
+			ia_1->SetFriction(0.4f);
+			ia_2->SetFriction(0.4f);
+			ia_3->SetFriction(0.4f);
+		}
 		break;
 	case ColliderTypes::FINISHLINE:
 

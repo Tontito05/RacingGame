@@ -12,11 +12,11 @@
             "scaleInDock": 1
         },
         "AltMap.tmx": {
-            "scale": 4,
+            "scale": 11,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 227.625,
-                "y": 354.625
+                "x": 1142.0454545454545,
+                "y": 606.590909090909
             }
         },
         "Map.tmx": {
