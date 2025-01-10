@@ -99,8 +99,12 @@ private:
 
 	Application* app;
 
+	//Music
 	uint32 menuMusic;
 	uint32 inGameMusic;
+	uint32 finishMusic;
+
+	//Sfx
 	uint32 clickFx;
-	
+	uint32 finishFx;	
 };
