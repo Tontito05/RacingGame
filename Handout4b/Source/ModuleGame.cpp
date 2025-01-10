@@ -114,7 +114,7 @@ update_status ModuleGame::Update()
 			player->state = STATES::END_DRIFTING;
 		}
 		
-		if (IsKeyDown(KEY_SPACE) && App->scene_intro->UI->inGame|| IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN))
+		if (IsKeyDown(KEY_SPACE) && App->scene_intro->UI->inGame|| IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN && App->scene_intro->UI->inGame))
 		{
 			player->TryJump();
 			if (player->jump == true)
