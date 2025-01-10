@@ -122,3 +122,13 @@ bool ModuleAudio::StopFx(unsigned int id)
 
 	return ret;
 }
+
+//Set volume
+void ModuleAudio::SetVolume(float volume) {
+	// Set volume for all sound effects
+	for (unsigned int i = 0; i < fx_count; i++) {
+		SetSoundVolume(fx[i], volume);
+	}
+	// Set volume for music
+	SetMusicVolume(music, volume);
+}

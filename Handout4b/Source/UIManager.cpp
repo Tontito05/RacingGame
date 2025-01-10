@@ -124,13 +124,17 @@ update_status UIManager::Update()
 
 		if (IsKeyReleased(PauseMenu->key) || IsGamepadButtonReleased(0, PauseMenu->button))
 		{
+			App->audio->SetVolume(1.0f);
 			App->audio->PlayFx(clickFx);
 			menuState = INGAME;
 		}
 		if (IsKeyReleased(MainMenu->key) || IsGamepadButtonReleased(0, MainMenu->button))
 		{
+			App->audio->SetVolume(1.0f);
 			App->audio->PlayFx(clickFx);
 			menuState = MAIN_MENU;
+			App->audio->StopFx(inGameMusic);
+			App->audio->PlayFx(menuMusic);
 		}
 
 		break;
@@ -142,6 +146,7 @@ update_status UIManager::Update()
 		{
 			App->audio->PlayFx(clickFx);
 			menuState = PAUSE_MENU;
+			App->audio->SetVolume(0.4f);
 		}
 		
 		break;
