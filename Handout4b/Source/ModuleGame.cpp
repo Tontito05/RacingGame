@@ -218,9 +218,7 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 
 		break;
 	case ColliderTypes::FINISHLINE:
-		if (UI->activeFinish)
 		UI->menuState = UIManager::MenuStates::FINISH;
-		UI->activeFinish = false;
 		break;
 	case ColliderTypes::NULLCOL:
 		cout << "WARNING: " << bodyB << "'s ColliderType is NULL" << endl;
@@ -257,7 +255,6 @@ void ModuleGame::EndCollision(PhysBody* bodyA, PhysBody* bodyB)
 		break;
 	
 	case ColliderTypes::FINISHLINE:
-		UI->activeFinish = true;
 		break;
 	}
 

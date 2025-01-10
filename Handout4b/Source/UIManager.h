@@ -71,7 +71,6 @@ public:
 
 	bool activeGear;
 	bool activeJump;
-	bool activeFinish = true;
 	float PlayerVelocity;
 
 private:
