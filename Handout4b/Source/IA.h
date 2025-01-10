@@ -5,8 +5,8 @@ class IA : public Car
 {
 public:
 	//IA constructor
-	IA(ModulePhysics* physics, int x, int y, int width, int height, Module* listener, Texture2D texture, Group type, int rank)
-		: Car(physics, x, y, width, height, listener, texture, type, ColliderTypes::CAR)
+	IA(ModulePhysics* physics, int x, int y, Module* listener, Group type, int rank)
+		: Car(physics, x, y, listener, type, ColliderTypes::CAR,GetType(rank))
 	{
 
 		//Set the waypoints
@@ -235,6 +235,25 @@ public:
 
 	}
 
+	TypeCar GetType(int rank) 
+	{ 
+		switch (rank)
+		{
+		case 1:
+			return TypeCar::IA_1;
+			break;
+		case 2:
+			return TypeCar::IA_2;
+			break;
+		case 3:
+			return TypeCar::IA_3;
+			break;
+		default:
+			break;
+		}
+			
+	}
+
 	//IA functions////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Pattern to follow the finish line and the road
@@ -248,6 +267,7 @@ public:
 
 	float speed;
 	bool finished = false;
+	int Level =0;
 
 private:
 

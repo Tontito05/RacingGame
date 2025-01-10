@@ -17,16 +17,40 @@ enum class STATES
 	JUMPING,
 	FALLING
 };
+enum class TypeCar
+{
+	PLAYER,
+	IA_1,
+	IA_2,
+	IA_3
+};
 
 class Car : public PhysicEntity
 {
 public:
 
-	Car(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Texture2D _texture, Group type, ColliderTypes Ctype)
-		: PhysicEntity(physics->CreateRectangle(_x, _y, width* SCALE, height* SCALE, type, this), _listener, Ctype)
-		, texture(_texture)
+	Car(ModulePhysics* physics, int _x, int _y,  Module* _listener, Group type, ColliderTypes Ctype,TypeCar car)
+		: PhysicEntity(physics->CreateRectangle(_x, _y, 16* SCALE, 9* SCALE, type, this), _listener, Ctype)
 	{
 		recoveryTime.Start();
+		switch (car)
+		{
+		case TypeCar::PLAYER:
+			texture = LoadTexture("Assets/MiniPixelPack2/Cars/Player.png");
+			break;
+		case TypeCar::IA_1:
+			texture = LoadTexture("Assets/MiniPixelPack2/Cars/Plat.png");
+			break;
+		case TypeCar::IA_2:
+			texture = LoadTexture("Assets/MiniPixelPack2/Cars/Silver.png");
+			break;
+		case TypeCar::IA_3:
+			texture = LoadTexture("Assets/MiniPixelPack2/Cars/Bronze.png");
+			break;
+		default:
+			break;
+		}
+
 	}
 
 	void Update() override 
@@ -168,8 +192,8 @@ class Player : public Car
 public:
 
 	//Player constructor
-	Player(ModulePhysics* physics, int _x, int _y, int width, int height, Module* _listener, Texture2D _texture, Group type)
-		: Car(physics, _x, _y, width, height, _listener, _texture, type, ColliderTypes::PLAYER)
+	Player(ModulePhysics* physics, int _x, int _y, Module* _listener, Group type)
+		: Car(physics, _x, _y, _listener, type, ColliderTypes::PLAYER, TypeCar::PLAYER)
 	{
 		//Set the gears
 		Gears.push_back({ 1,1 });

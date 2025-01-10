@@ -22,19 +22,15 @@ bool ModuleGame::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
-	car = LoadTexture("Assets/MiniPixelPack2/Cars/Player.png");
-	carB = LoadTexture("Assets/MiniPixelPack2/Cars/Bronze.png");
-	carS = LoadTexture("Assets/MiniPixelPack2/Cars/Silver.png");
-	carP = LoadTexture("Assets/MiniPixelPack2/Cars/Plat.png");
 
 	b2Vec2 start = { 332 * SCALE - 600, 330 * SCALE };
 	map = new Map(App->physics, 0, 0, 79 * 16, 4 * 16, this, LAND);
 	UI = new UIManager(App);
 
-	player = new Player(App->physics, start.x - 20, start.y, car.width, car.height, this, car, LAND);
-	ia_1 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carP, LAND, 1);
-	ia_2 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carS, LAND, 2);
-	ia_3 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carB, LAND, 3);
+	player = new Player(App->physics, start.x - 20, start.y,  this,  LAND);
+	ia_1 = new IA(App->physics, start.x, start.y,  this,  LAND, 1);
+	ia_2 = new IA(App->physics, start.x, start.y,  this, LAND, 2);
+	ia_3 = new IA(App->physics, start.x, start.y,  this,  LAND, 3);
 
 	
 	//Load sound fx
@@ -189,10 +185,10 @@ update_status ModuleGame::Update()
 
 		if (UI->inGame == true)
 		{
-			player = new Player(App->physics, start.x, start.y, car.width, car.height, this, car, LAND);
-			ia_1 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carP, LAND, 1);
-			ia_2 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carS, LAND, 2);
-			ia_3 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carB, LAND, 3);
+			player = new Player(App->physics, start.x, start.y, this,  LAND);
+			ia_1 = new IA(App->physics, start.x, start.y,  this,  LAND, 1);
+			ia_2 = new IA(App->physics, start.x, start.y,  this,  LAND, 2);
+			ia_3 = new IA(App->physics, start.x, start.y,  this,  LAND, 3);
 			UI->inGame = false;
 		}
 
