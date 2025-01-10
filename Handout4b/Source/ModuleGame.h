@@ -40,16 +40,12 @@ public:
 	//
 	Player* player;
 	Map* map;
-	IA* ia_3;
-	IA* ia_2;
-	IA* ia_1;
+	IA* ia;
 	UIManager* UI;
 
 	//Textures TODO
 	Texture2D car;
-	Texture2D carB;
-	Texture2D carS;
-	Texture2D carP;
+	Texture2D carOpponent;
 
 	vec2<int> ray;
 	bool ray_on;
