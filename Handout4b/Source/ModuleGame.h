@@ -49,5 +49,6 @@ public:
 
 	//Sfx
 	uint32 driftFx;
+	uint32 jumpFx;
 
 };

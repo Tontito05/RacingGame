@@ -29,7 +29,10 @@ bool ModuleGame::Start()
 	player = new Player(App->physics, 332*SCALE -600, 330 * SCALE, car.width,car.height,this,car,LAND, map);
 	mud = new Mud(App->physics, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, 40, 40, this, LAND);
 	UI = new UIManager(App);
-
+	
+	//Load sound fx
+	jumpFx = App->audio->LoadFx("Assets/Audio/jump.wav");
+	driftFx = App->audio->LoadFx("Assets/Audio/drift.wav");
 
 	return ret;
 }
@@ -114,6 +117,10 @@ update_status ModuleGame::Update()
 		if (IsKeyDown(KEY_SPACE)|| IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN))
 		{
 			player->TryJump();
+			if (player->jump == true)
+			{
+				App->audio->PlayFx(jumpFx);
+			}
 		}
 
 		player->GearBack();
