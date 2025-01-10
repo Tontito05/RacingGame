@@ -21,12 +21,18 @@ bool ModuleGame::Start()
 {
 	LOG("Loading Intro assets");
 	bool ret = true;
+	carB = LoadTexture("Assets/MiniPixelPack2/Cars/Bronze.png");
+	carS = LoadTexture("Assets/MiniPixelPack2/Cars/Silver.png");
+	carP = LoadTexture("Assets/MiniPixelPack2/Cars/Plat.png");
 
+	b2Vec2 start = { 332 * SCALE - 600, 330 * SCALE };
+
+	ia_1 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carB, LAND, 1);
+	ia_2 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carS, LAND, 2);
+	ia_3 = new IA(App->physics, start.x, start.y, car.width, car.height, this, carP, LAND, 3);
 	car = LoadTexture("Assets/MiniPixelPack2/Cars/Player.png");
-	carOpponent = LoadTexture("Assets/MiniPixelPack2/Cars/Bronze.png");
-	ia = new IA(App->physics, 332*SCALE -632, 330*SCALE -50, carOpponent.width, carOpponent.height, this, carOpponent, LAND);
 	map = new Map(App->physics, 0, 0, 79 * 16, 4 * 16, this, LAND);
-	player = new Player(App->physics, 332*SCALE -600, 330 * SCALE, car.width,car.height,this,car,LAND, map);
+	player = new Player(App->physics,start.x,start.y, car.width,car.height,this,car,LAND, map);
 	UI = new UIManager(App);
 	
 	//Load sound fx
@@ -58,8 +64,9 @@ update_status ModuleGame::Update()
 		//Update Entities
 		map->Update();
 		player->Update();
-		ia->Pattern();
-		//ia->Update();
+		ia_1->Pattern();
+		ia_2->Pattern();
+		ia_3->Pattern();
 	}
 	UI->Update();
 
@@ -121,7 +128,7 @@ update_status ModuleGame::Update()
 				isDriftFxPlaying = true;
 			}
 		}
-		else if (player->state == STATES::DRIFTING && (IsKeyUp(KEY_LEFT_SHIFT) || ia->state == STATES::END_DRIFTING || GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_TRIGGER) > 0.5f))
+		else if (player->state == STATES::DRIFTING && (IsKeyUp(KEY_LEFT_SHIFT) || GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_TRIGGER) > 0.5f))
 		{
 			player->state = STATES::END_DRIFTING;
 			if (isDriftFxPlaying) {
@@ -167,25 +174,13 @@ update_status ModuleGame::Update()
 		UI->menuState = UIManager::MenuStates::FINISH;
 		player->SetXvelocity(0);
 		player->SetYvelocity(0);
-		ia->SetXvelocity(0);
-		ia->SetYvelocity(0);
 
 		player = new Player(App->physics, 332 * SCALE - 600, 330 * SCALE, car.width, car.height, this, car, LAND, map);
-		ia = new IA(App->physics, 332 * SCALE - 632, 330 * SCALE - 64, carOpponent.width, carOpponent.height, this, carOpponent, LAND);
+		ia_1 = new IA(App->physics, 332 * SCALE - 632, 330 * SCALE - 64, car.width, car.height, this, carB, LAND,3);
+		ia_2 = new IA(App->physics, 332 * SCALE - 632, 330 * SCALE - 64, car.width, car.height, this, carS, LAND, 2);
+		ia_3 = new IA(App->physics, 332 * SCALE - 632, 330 * SCALE - 64, car.width, car.height, this, carP, LAND, 1);
 	}
 
-	//std::cout << GetMousePosition().x << "     " << GetMousePosition().y << endl;
-
-	// Update camera position to follow the player
-	float playerX, playerY;
-	playerX = player->body->body->GetPosition().x;
-	playerY = player->body->body->GetPosition().y;
-
-	float iaX, iaY;
-	iaX = ia->body->body->GetPosition().x;
-	iaY = ia->body->body->GetPosition().y;
-
-	//std::cout << "Player: " << playerX << " " << playerY << " IA: " << iaX << " " << iaY << endl;
 
 	return UPDATE_CONTINUE;
 }
