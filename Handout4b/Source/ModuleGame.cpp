@@ -45,7 +45,6 @@ bool ModuleGame::Start()
 	return ret;
 }
 
-// Load assets
 bool ModuleGame::CleanUp()
 {
 	LOG("Unloading Intro scene");
