@@ -200,17 +200,18 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderTypes::MAP:
 		
 		if (bodyA->entity->colType == ColliderTypes::CAR ) 
-		
-			bodyA->body->SetLinearDamping(50);
-		
+
+		{
+			player->SetFriction(0.5f);
+		}
+
 		break;
 	case ColliderTypes::MUD:
 		if (bodyA->entity->colType == ColliderTypes::CAR) 
-		
-			bodyA->body->SetLinearDamping(75);
-		break;
-	case ColliderTypes::FINISHLINE:
-		UI->menuState = UIManager::MenuStates::FINISH;
+		{
+			player->SetFriction(0.4f);
+		}
+
 		break;
 	case ColliderTypes::NULLCOL:
 		cout << "WARNING: " << bodyB << "'s ColliderType is NULL" << endl;
@@ -229,14 +230,14 @@ void ModuleGame::EndCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderTypes::MAP:
 		if (bodyA->entity->colType == ColliderTypes::CAR)
 		{
-			bodyA->body->SetLinearDamping(0);
+			player->SetFriction(0.2f);
 		}
 		break;
 	case ColliderTypes::MUD:
 
 		if (bodyA->entity->colType == ColliderTypes::CAR)
 		{
-			bodyA->body->SetLinearDamping(0);
+			player->SetFriction(0.2f);
 		};
 
 		break;
