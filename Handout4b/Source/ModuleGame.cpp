@@ -27,7 +27,6 @@ bool ModuleGame::Start()
 	ia = new IA(App->physics, 332*SCALE -632, 330*SCALE -64, carOpponent.width, carOpponent.height, this, carOpponent, LAND);
 	map = new Map(App->physics, 0, 0, 79 * 16, 4 * 16, this, LAND);
 	player = new Player(App->physics, 332*SCALE -600, 330 * SCALE, car.width,car.height,this,car,LAND, map);
-	mud = new Mud(App->physics, SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2, 40, 40, this, LAND);
 	UI = new UIManager(App);
 	
 	//Load sound fx
@@ -61,7 +60,6 @@ update_status ModuleGame::Update()
 		player->Update();
 		ia->Pattern();
 		//ia->Update();
-		mud->Update();
 	}
 	UI->Update();
 
