@@ -103,7 +103,4 @@ private:
 	uint32 inGameMusic;
 	uint32 clickFx;
 	
-
-	uint32 menuMusicMP3;
-	uint32 inGameMusicMP3;
 };

@@ -53,7 +53,7 @@ bool UIManager::Start()
 	menuState = TITLE_SCREEN;
 		
 	menuMusic = App->audio->LoadFx("Assets/Audio/menuMusic.wav");
-	//inGameMusic = App->audio->LoadFx("Assets/Audio/ingameMusic.wav");
+	inGameMusic = App->audio->LoadFx("Assets/Audio/ingameMusic.wav");
 	clickFx = App->audio->LoadFx("Assets/Audio/click.wav");
 		
 	App->audio->PlayFx(menuMusic);
@@ -79,7 +79,7 @@ update_status UIManager::Update()
 
 		if (IsKeyReleased(Controls->key) || IsGamepadButtonReleased(0, Controls->button))
 		{
-			App->audio->PlayFx(clickFx);
+			App->audio->PlayFx(clickFx);			
 			menuState = CONTROLS;			
 		}
 		else if (IsKeyReleased(Credits->key) || IsGamepadButtonReleased(0, Credits->button))
@@ -92,6 +92,7 @@ update_status UIManager::Update()
 			App->audio->PlayFx(clickFx);
 			menuState = INGAME;
 			App->audio->StopFx(menuMusic);
+			App->audio->PlayFx(inGameMusic);
 			timer.Start();
 		}
 		else if (IsKeyReleased(Back_Keyboard) || IsGamepadButtonReleased(0, Back_Controller))
@@ -147,14 +148,19 @@ update_status UIManager::Update()
 	case MenuStates::FINISH:
 
 		timer.Stop();
+		App->audio->StopFx(inGameMusic);
 
 		if (IsKeyReleased(Finish->key) || IsGamepadButtonReleased(0, Finish->button))
 		{
 			menuState = MAIN_MENU;
+			App->audio->PlayFx(clickFx);
+			App->audio->PlayFx(menuMusic);
 		}
 		if (IsKeyReleased(Back_Keyboard) || IsGamepadButtonReleased(0, Back_Controller))
 		{
 			menuState = MAIN_MENU;
+			App->audio->PlayFx(clickFx);
+			App->audio->PlayFx(menuMusic);
 		}
 
 		break;
