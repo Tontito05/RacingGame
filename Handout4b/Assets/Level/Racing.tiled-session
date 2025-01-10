@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Map.tmx",
+    "activeFile": "AltMap.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -13,7 +13,7 @@
         },
         "AltMap.tmx": {
             "scale": 1,
-            "selectedLayer": 0,
+            "selectedLayer": 1,
             "viewCenter": {
                 "x": 674.5,
                 "y": 384.5
@@ -64,10 +64,10 @@
     ],
     "project": "Racing.tiled-project",
     "recentFiles": [
-        "AltMap.tmx",
-        "Mud.tsx",
-        "Sprite Sheet Road def.tsx",
         "Map.tmx",
+        "Sprite Sheet Road def.tsx",
+        "Mud.tsx",
+        "AltMap.tmx",
         "Sprite Sheet Road defada.tsx",
         "Sprite Sheet Road.tsx",
         "Sprite Sheet Road defDef.tsx"

@@ -30,6 +30,7 @@ public:
 
 	bool isDriftFxPlaying;
 	bool isJumpFxPlaying;
+	bool isRunFxPlaying;
 
 public:
 
@@ -54,5 +55,6 @@ public:
 	uint32 driftFx;
 	uint32 jumpFx;
 	uint32 gearFx;
+	uint32 runFx;
 
 };

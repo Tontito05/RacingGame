@@ -34,6 +34,7 @@ bool ModuleGame::Start()
 	jumpFx = App->audio->LoadFx("Assets/Audio/jump.wav");
 	driftFx = App->audio->LoadFx("Assets/Audio/drift.wav");
 	gearFx = App->audio->LoadFx("Assets/Audio/gear.wav");
+	runFx = App->audio->LoadFx("Assets/Audio/run.wav");
 
 	return ret;
 }
@@ -100,6 +101,14 @@ update_status ModuleGame::Update()
 		if (IsKeyDown(KEY_W) || GetGamepadAxisMovement(0, GAMEPAD_AXIS_RIGHT_TRIGGER) > 0.5f)
 		{
 			player->MoveForward();
+			if (!isRunFxPlaying) {
+				App->audio->PlayFx(runFx);
+				isRunFxPlaying = true;
+			}
+		}
+		else if (isRunFxPlaying) {
+			App->audio->StopFx(runFx);
+			isRunFxPlaying = false;
 		}
 		if (IsKeyDown(KEY_S) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT))
 		{
@@ -175,7 +184,7 @@ update_status ModuleGame::Update()
 	iaX = ia->body->body->GetPosition().x;
 	iaY = ia->body->body->GetPosition().y;
 
-	std::cout << "Player: " << playerX << " " << playerY << " IA: " << iaX << " " << iaY << endl;
+	//std::cout << "Player: " << playerX << " " << playerY << " IA: " << iaX << " " << iaY << endl;
 
 	return UPDATE_CONTINUE;
 }
@@ -194,9 +203,9 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 		as cactus and rocks are also in the map class but we don't want anything to happen when colliding with them
 		*/
 		
-		if (bodyA->entity->colType == ColliderTypes::CAR && bodyB->body->GetFixtureList()->IsSensor() == true) 
+		if (bodyA->entity->colType == ColliderTypes::CAR ) 
 		{
-			//bodyA->entity->OnRoad = !bodyA->entity->OnRoad;
+			cout << "A" << endl;
 		}
 
 		break;
