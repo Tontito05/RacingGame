@@ -43,11 +43,15 @@ void Map::mapDecorationFromCSV(const vector<vector<int>>& map, float tileWidth, 
 			{
 				mPhysics->CreateRectangle(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this, b2_staticBody);
 			}
-            if (tileID == 197)
+            else if (tileID == 197)
             {
                 //MUD
                 mud = new Mud(mPhysics, x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, listener, LAND);
                 mudTiles.push_back(mud);
+            }
+            else 
+            {
+                mPhysics->CreateRectangleSensor(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this);
             }
         }
     }

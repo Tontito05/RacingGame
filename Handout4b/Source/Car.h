@@ -189,7 +189,7 @@ public:
 		{
 			Jump();
 		}
-		cout << PointInsidePoly({ body->body->GetPosition().x, body->body->GetPosition().y }, trackPoints) << endl;
+		//cout << PointInsidePoly({ body->body->GetPosition().x, body->body->GetPosition().y }, trackPoints) << endl;
 	}
 
 	//Check if it can change gears
