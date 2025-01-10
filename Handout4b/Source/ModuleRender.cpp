@@ -48,8 +48,11 @@ update_status ModuleRender::Update()
 	if (App->scene_intro->UI->inGame == true)
 	{
 		App->scene_intro->map->Render();
-		App->scene_intro->ia->Render();
+        App->scene_intro->ia_1->Render();
+        App->scene_intro->ia_2->Render();
+        App->scene_intro->ia_3->Render();
         App->scene_intro->player->Render();
+
 	}
 
     EndMode2D();

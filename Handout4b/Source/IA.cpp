@@ -1,6 +1,6 @@
 #include "IA.h"
 
-void IA::MoveAlwaysForward(float speed) {
+void IA::MoveAlwaysForward() {
 	// Get the current angle of the body
 	float angle = body->body->GetAngle();
 
@@ -30,9 +30,7 @@ void IA::Pattern()
 			float desiredAngle = atan2(direction.y, direction.x);
 			body->body->SetTransform(currentPosition, desiredAngle);
 
-			float speed = 2.75f;
-
-			MoveAlwaysForward(speed);
+			MoveAlwaysForward();
 		}
 
 		if (distance < 0.1f) {
