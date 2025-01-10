@@ -29,6 +29,7 @@ public:
 	void EndCollision(PhysBody* bodyA, PhysBody* bodyB);
 
 	bool isDriftFxPlaying;
+	bool isJumpFxPlaying;
 
 public:
 
