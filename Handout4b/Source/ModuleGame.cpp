@@ -199,21 +199,19 @@ void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderTypes::MAP:
 
 		/*EXPLANATION:
-		1 - We check that coltype is CAR in case other bodies which are not cars are colliding with the map
-		2 - We check that the fixture of the bodyB is a sensor because we are interested in checking the chain sensor that limits the road, the decoration such
-		as cactus and rocks are also in the map class but we don't want anything to happen when colliding with them
+		We check that coltype is CAR in case other bodies which are not cars are colliding with the map
 		*/
 		
 		if (bodyA->entity->colType == ColliderTypes::CAR ) 
 		{
-			cout << "A" << endl;
+			bodyA->body->SetLinearDamping(50);
 		}
 
 		break;
 	case ColliderTypes::MUD:
 		if (bodyA->entity->colType == ColliderTypes::CAR) 
 		{
-			player->SetFriction(0.5f);
+			bodyA->body->SetLinearDamping(75);
 		}
 
 		break;
@@ -232,11 +230,17 @@ void ModuleGame::EndCollision(PhysBody* bodyA, PhysBody* bodyB)
 	case ColliderTypes::CAR:
 		break;
 	case ColliderTypes::MAP:
-
+		if (bodyA->entity->colType == ColliderTypes::CAR)
+		{
+			bodyA->body->SetLinearDamping(0);
+		}
 		break;
 	case ColliderTypes::MUD:
 
-		player->SetFriction(0.2f);
+		if (bodyA->entity->colType == ColliderTypes::CAR)
+		{
+			bodyA->body->SetLinearDamping(0);
+		};
 
 		break;
 	case ColliderTypes::NULLCOL:
