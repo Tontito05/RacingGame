@@ -51,10 +51,15 @@ bool UIManager::Start()
 	Velocity.Initialise("Assets/UI_GENERAL/Font.png", '0', 48);
 
 	menuState = TITLE_SCREEN;
-		
+	
+	//Load music and sfx
 	menuMusic = App->audio->LoadFx("Assets/Audio/menuMusic.wav");
-	inGameMusic = App->audio->LoadFx("Assets/Audio/ingameMusic.wav");
+	inGameMusic = App->audio->LoadFx("Assets/Audio/ingameMusic.wav");	
+	finishMusic = App->audio->LoadFx("Assets/Audio/finishMusic.wav");
+
 	clickFx = App->audio->LoadFx("Assets/Audio/click.wav");
+	finishFx = App->audio->LoadFx("Assets/Audio/finishFx.wav");
+
 		
 	App->audio->PlayFx(menuMusic);
 
@@ -158,12 +163,14 @@ update_status UIManager::Update()
 		if (IsKeyReleased(Finish->key) || IsGamepadButtonReleased(0, Finish->button))
 		{
 			menuState = MAIN_MENU;
+			App->audio->StopFx(finishMusic);
 			App->audio->PlayFx(clickFx);
 			App->audio->PlayFx(menuMusic);
 		}
 		if (IsKeyReleased(Back_Keyboard) || IsGamepadButtonReleased(0, Back_Controller))
 		{
 			menuState = MAIN_MENU;
+			App->audio->StopFx(finishMusic);
 			App->audio->PlayFx(clickFx);
 			App->audio->PlayFx(menuMusic);
 		}
@@ -174,6 +181,12 @@ update_status UIManager::Update()
 		break;
 	}
 
+	if (IsKeyPressed(KEY_F))
+	{
+		menuState = FINISH;
+		App->audio->PlayFx(finishFx);
+		App->audio->PlayFx(finishMusic);		
+	}
 	
 
 	return UPDATE_CONTINUE;
