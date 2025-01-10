@@ -49,14 +49,17 @@ void Map::mapDecorationFromCSV(const vector<vector<int>>& map, float tileWidth, 
                 mud = new Mud(mPhysics, x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, listener, LAND);
                 mudTiles.push_back(mud);
             }
-            else 
-            {
-				if (tileID != 177 && tileID != 178 && tileID != 195 && tileID != 196)
-				{
-                    mPhysics->CreateRectangleSensor(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this);
+            else if (tileID != 177 && tileID != 178 && tileID != 195 && tileID != 196 && tileID != 257)
+			{
+                mPhysics->CreateRectangleSensor(x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, Group::LAND, this);
 
-				}
             }
+            else if (tileID == 257) 
+            {
+                finishLine = new FinishLine(mPhysics, x * tileWidth + tileWidth / 2, y * tileHeight + tileHeight / 2, tileWidth, tileHeight, listener, LAND);
+                fLineTiles.push_back(finishLine);
+            }
+           
         }
     }
 }

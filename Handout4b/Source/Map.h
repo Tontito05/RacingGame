@@ -5,6 +5,8 @@
 #include "Timer.h"
 #include "Globals.h"
 #include "Mud.h"
+#include "FinishLine.h"
+
 #include <iostream>
 #include <vector>
 
@@ -53,6 +55,9 @@ private:
 
 	Mud* mud;
 	vector<Mud*> mudTiles;
+
+	FinishLine* finishLine;
+	vector<FinishLine*> fLineTiles;
 
 
 };

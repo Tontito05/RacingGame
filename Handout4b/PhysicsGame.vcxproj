@@ -183,6 +183,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Source\FinishLine.h" />
     <ClInclude Include="Source\IA.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\Mud.h" />

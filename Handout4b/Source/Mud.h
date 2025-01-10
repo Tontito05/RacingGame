@@ -33,6 +33,6 @@ class Mud : public PhysicEntity
 
 	private:
 
-		Texture2D texture = LoadTexture("Assets/Mud.png");;
+		Texture2D texture;
 		float scale = 0.1f;
 };

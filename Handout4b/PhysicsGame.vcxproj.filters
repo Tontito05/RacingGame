@@ -36,6 +36,7 @@
     <ClInclude Include="Source\Timer.h" />
     <ClInclude Include="Source\UIManager.h" />
     <ClInclude Include="Source\Text.h" />
+    <ClInclude Include="Source\FinishLine.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Source\resources.rc" />

@@ -59,7 +59,6 @@ update_status ModuleGame::Update()
 		map->Update();
 		player->Update();
 		ia->Pattern();
-		//ia->Update();
 	}
 	UI->Update();
 
@@ -165,16 +164,18 @@ update_status ModuleGame::Update()
 	if (IsKeyPressed(KEY_F))
 	{
 		UI->menuState = UIManager::MenuStates::FINISH;
+
+	}
+	if (UI->menuState == UIManager::MenuStates::FINISH)
+	{
 		player->SetXvelocity(0);
 		player->SetYvelocity(0);
 		ia->SetXvelocity(0);
 		ia->SetYvelocity(0);
 
-		player = new Player(App->physics, 332 * SCALE - 600, 330 * SCALE, car.width, car.height, this, car, LAND, map);
-		ia = new IA(App->physics, 332 * SCALE - 632, 330 * SCALE - 64, carOpponent.width, carOpponent.height, this, carOpponent, LAND);
+		//player = new Player(App->physics, 332 * SCALE - 600, 330 * SCALE, car.width, car.height, this, car, LAND, map);
+		//ia = new IA(App->physics, 332 * SCALE - 632, 330 * SCALE - 64, carOpponent.width, carOpponent.height, this, carOpponent, LAND);
 	}
-
-	//std::cout << GetMousePosition().x << "     " << GetMousePosition().y << endl;
 
 	// Update camera position to follow the player
 	float playerX, playerY;
@@ -185,35 +186,31 @@ update_status ModuleGame::Update()
 	iaX = ia->body->body->GetPosition().x;
 	iaY = ia->body->body->GetPosition().y;
 
-	//std::cout << "Player: " << playerX << " " << playerY << " IA: " << iaX << " " << iaY << endl;
-
 	return UPDATE_CONTINUE;
 }
 
 void ModuleGame::OnCollision(PhysBody* bodyA, PhysBody* bodyB)
 {
+	//EXPLANATION: We check that coltype is CAR in case other bodies which are not cars are colliding with the map
+
 	switch (bodyB->entity->colType)
 	{
 	case ColliderTypes::CAR:
 		break;
 	case ColliderTypes::MAP:
-
-		/*EXPLANATION:
-		We check that coltype is CAR in case other bodies which are not cars are colliding with the map
-		*/
 		
 		if (bodyA->entity->colType == ColliderTypes::CAR ) 
-		{
+		
 			bodyA->body->SetLinearDamping(50);
-		}
-
+		
 		break;
 	case ColliderTypes::MUD:
 		if (bodyA->entity->colType == ColliderTypes::CAR) 
-		{
+		
 			bodyA->body->SetLinearDamping(75);
-		}
-
+		break;
+	case ColliderTypes::FINISHLINE:
+		UI->menuState = UIManager::MenuStates::FINISH;
 		break;
 	case ColliderTypes::NULLCOL:
 		cout << "WARNING: " << bodyB << "'s ColliderType is NULL" << endl;
