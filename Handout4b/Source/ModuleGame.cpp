@@ -8,7 +8,7 @@
 #include <iostream>
 
 
-ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start_enabled)
+ModuleGame::ModuleGame(Application* app, bool start_enabled) : Module(app, start_enabled), isDriftFxPlaying(false)
 {
 	ray_on = false;
 }
@@ -108,10 +108,15 @@ update_status ModuleGame::Update()
 		if ((IsKeyDown(KEY_LEFT_SHIFT) || GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_TRIGGER) > 0.5f) && player->jump == false)
 		{
 			player->state = STATES::DRIFTING;
+			if (!isDriftFxPlaying) {
+				App->audio->PlayFx(driftFx);
+				isDriftFxPlaying = true;
+			}
 		}
 		else if (player->state == STATES::DRIFTING && (IsKeyUp(KEY_LEFT_SHIFT) || ia->state == STATES::END_DRIFTING || GetGamepadAxisMovement(0, GAMEPAD_AXIS_LEFT_TRIGGER) > 0.5f))
 		{
 			player->state = STATES::END_DRIFTING;
+			isDriftFxPlaying = false;
 		}
 		
 		if (IsKeyDown(KEY_SPACE) && App->scene_intro->UI->inGame|| IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_DOWN && App->scene_intro->UI->inGame))

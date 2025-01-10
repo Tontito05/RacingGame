@@ -70,6 +70,7 @@ update_status UIManager::Update()
 		if (IsKeyReleased(TitleScreen->key) || IsGamepadButtonReleased(0, TitleScreen->button))
 		{
 			menuState = MAIN_MENU;
+			App->audio->PlayFx(clickFx);
 		}		
 
 		break;

@@ -28,6 +28,8 @@ public:
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB);
 	void EndCollision(PhysBody* bodyA, PhysBody* bodyB);
 
+	bool isDriftFxPlaying;
+
 public:
 
 	//AI
