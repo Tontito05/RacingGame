@@ -34,6 +34,7 @@ bool ModuleGame::Start()
 	jumpFx = App->audio->LoadFx("Assets/Audio/jump.wav");
 	driftFx = App->audio->LoadFx("Assets/Audio/drift.wav");
 	gearFx = App->audio->LoadFx("Assets/Audio/gear.wav");
+	runFx = App->audio->LoadFx("Assets/Audio/run.wav");
 
 	return ret;
 }
@@ -100,6 +101,14 @@ update_status ModuleGame::Update()
 		if (IsKeyDown(KEY_W) || GetGamepadAxisMovement(0, GAMEPAD_AXIS_RIGHT_TRIGGER) > 0.5f)
 		{
 			player->MoveForward();
+			if (!isRunFxPlaying) {
+				App->audio->PlayFx(runFx);
+				isRunFxPlaying = true;
+			}
+		}
+		else if (isRunFxPlaying) {
+			App->audio->StopFx(runFx);
+			isRunFxPlaying = false;
 		}
 		if (IsKeyDown(KEY_S) || IsGamepadButtonPressed(0, GAMEPAD_BUTTON_RIGHT_FACE_RIGHT))
 		{
