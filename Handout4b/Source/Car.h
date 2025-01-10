@@ -172,7 +172,6 @@ public:
 		: Car(physics, _x, _y, width, height, _listener, _texture, type)
 	{
 		map = _map;
-		trackPoints = B2Vec2ListFromArray(map->points, 224);
 		//Set the gears
 		Gears.push_back({ 1,1 });
 		Gears.push_back({ 2,2 });
@@ -189,7 +188,6 @@ public:
 		{
 			Jump();
 		}
-		//cout << PointInsidePoly({ body->body->GetPosition().x, body->body->GetPosition().y }, trackPoints) << endl;
 	}
 
 	//Check if it can change gears
@@ -202,9 +200,6 @@ public:
 	// Method to get the car's position
 	Vector2 GetPosition();
 
-	vector<b2Vec2> B2Vec2ListFromArray(const int* points, int numPoints);
-
-	bool PointInsidePoly(const b2Vec2& point, vector<b2Vec2> trackBoundaryPoints);
 
 	//Gears --> They set a maximum velocity to the car and also can be changed with G
 	std::vector<b2Vec2> Gears;

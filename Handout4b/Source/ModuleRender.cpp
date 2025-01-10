@@ -48,7 +48,6 @@ update_status ModuleRender::Update()
 	if (App->scene_intro->UI->inGame == true)
 	{
 		App->scene_intro->map->Render();
-        App->scene_intro->mud->Render();
 		App->scene_intro->player->Render();
 		App->scene_intro->ia->Render();
 	}

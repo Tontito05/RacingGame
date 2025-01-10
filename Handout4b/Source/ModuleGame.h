@@ -39,7 +39,6 @@ public:
 
 	//
 	Player* player;
-	Mud* mud;
 	Map* map;
 	IA* ia;
 	UIManager* UI;
