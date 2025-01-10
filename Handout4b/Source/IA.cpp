@@ -135,6 +135,9 @@ void IA::Pattern()
 	}
 	else {
 		std::cout << "Waypoints completed." << std::endl;
+		
+		SetXvelocity(0);
+		SetYvelocity(0);
 	}
 
 
