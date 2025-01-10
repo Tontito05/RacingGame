@@ -159,6 +159,7 @@ update_status UIManager::Update()
 
 		timer.Stop();
 		App->audio->StopFx(inGameMusic);
+		App->audio->PlayFx(finishMusic);
 
 		if (IsKeyReleased(Finish->key) || IsGamepadButtonReleased(0, Finish->button))
 		{
@@ -181,13 +182,6 @@ update_status UIManager::Update()
 
 	default:
 		break;
-	}
-
-	if (IsKeyPressed(KEY_F))
-	{
-		menuState = FINISH;
-		App->audio->PlayFx(finishFx);
-		App->audio->PlayFx(finishMusic);		
 	}
 	
 
